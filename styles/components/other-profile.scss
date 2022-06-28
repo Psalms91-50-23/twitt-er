@@ -1,0 +1,162 @@
+
+.other-user-home-container {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    flex: 1;
+}
+
+.sidebar-buttons-container {
+    display: flex;
+    height: auto;
+    padding-right: 10px;
+    padding-top: 10px;
+    flex-direction: column;
+    border-right: 1px solid var(--twitterBlue);
+    max-width: 300px;
+    min-width: 170px;
+    width: 100%;
+    flex: 0.3;
+    transition: all 0.2s ease-in-out;
+}
+
+.other-user-feed-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background-color: var(--blackOverlay);
+    margin: 10px 10px;
+    overflow-y: scroll;
+    box-sizing: content-box;
+    // margin-bottom: 80px;
+    // padding: 0px 20px;
+}
+
+.other-user-profile-container {
+    padding-bottom: 50px;
+}
+
+.other-user-widget-container {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    flex: 1;
+    max-width: 300px;
+    padding-top: 10px;
+    border-left: 1px solid var(--twitterBlue);
+}
+
+.other-user-images-container {
+    display: flex;
+    position: relative;
+    max-height: 250px;
+    height: 100%;
+    width: 100%;
+    transition: all 0.2s ease-in-out;
+    flex: 1;
+}
+
+.other-user-backdrop {
+    width: 100%;
+    height: 100%;
+}
+
+.other-user-profile-image {
+    position: absolute;
+    bottom: -75px;
+    left: 10px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: var(--white);
+    padding: 5px;
+}
+
+.other-user-feed {
+    padding: 30px 20px;
+}
+
+.other-user-widget {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--blackOverlay);
+    padding: 0px 10px;
+    // border-left: 1px solid var(--twitterBlue);
+}
+
+.other-user-news-container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    background-color: wheat;
+    width: 100%;
+    height: 50%;
+    overflow-y: scroll;
+}
+
+.other-user-follows-container {
+    display: flex;
+    height: 50vh;
+    width: 100%;
+    overflow-y: scroll;
+}
+
+.news-widget-container {
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+    box-sizing: border-box;
+    margin-top: 10px;
+    width: 100%;
+    overflow-y: scroll;
+    background-color: var(--blackOverlay);
+}
+
+.follows-widget-container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+/*  
+    660
+  .sidebar-container {
+    display: flex;
+    width: 100%;
+    height: auto;
+    flex: 0.1 !important;
+    width: 100%;
+    min-width: 90px;
+    padding-right: 10px;
+    padding-left: 10px;
+    box-sizing: border-box;
+  }
+
+*/
+
+@media screen and (max-width: 660px){ 
+
+    .other-user-feed {
+        padding: 30px 10px;
+    }
+
+    .sidebar-buttons-container {
+        width: 100%;
+        height: auto;
+        flex: 0.1 !important;
+        width: 100%;
+        min-width: 90px;
+        padding-right: 10px;
+        padding-left: 10px;
+        box-sizing: border-box;
+    }
+}
+
+@media screen and (max-width: 400px){ 
+    .sidebar-buttons-container {
+        min-width: 70px;
+    }
+}

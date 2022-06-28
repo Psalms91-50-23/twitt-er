@@ -1,0 +1,21 @@
+
+.footer-container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 50px;
+    justify-content: center;
+}
+
+.footer-title {
+    display: flex;
+    justify-content: center;
+    padding: 0px;
+    margin: 0px;
+}
+
+.footer-icons-container {
+    display: flex;
+    flex: row;
+    justify-content: center;
+}

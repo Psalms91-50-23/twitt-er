@@ -1,0 +1,81 @@
+
+.follow-container {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--white);
+    transition: all 0.5s ease-in-out ;
+    animation: fromRight 0.5s ease-in-out;
+}
+
+.search-people-follow-container {
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: auto;
+    background-color: var(--blackOverlay);
+    padding: 5px 10px;
+    box-sizing: border-box;
+}
+
+.follow-contents {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 50vw;
+    max-width: 450px;
+    height: 100vh;
+    flex: 0.6;
+    transition: all 0.2s ease-in-out;
+}
+
+.exit-container {
+    display: flex;
+    position: absolute;
+    width: auto;
+    top: 0;
+    right: -40px;
+
+}
+.exit-button {
+    display: flex;
+    width: 40px;
+    height: 40px;
+}
+
+.exit-button:hover {
+    transform: scale(1.2,1.2);
+    cursor: pointer;
+    color: var(--twitterBlue);
+}
+
+.search-input-follow {
+    display: flex;
+    font-size: 1em;
+    font-weight: 700;
+    width: 100%;
+    border: none;
+}
+.search-input-follow:focus {
+    outline: none;
+}
+
+@keyframes fromRight {
+    0%{
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .follow-contents {
+        flex: 0.7;
+    }
+}

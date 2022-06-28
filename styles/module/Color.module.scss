@@ -1,0 +1,28 @@
+$fade-primary-color: rgba(29, 161, 240, 0.7);
+$hover-primary-color: rgba(29, 161, 240, 1);
+$twitter-primary-color: rgba(29, 161, 242, 1);
+$button-fade-primary-color: rgb(29, 155, 240, 0.7);
+$button-fade-secondary-color: rgb(29, 155, 240, 0.2);
+$button-hover-primary-color: rgb(29, 155, 240, 1);
+$border-primary-color: rgba(29, 161, 242, 1);
+$background-white: rgba(255, 255, 255, 1);
+
+
+:export {
+  fadePrimary: $fade-primary-color;
+  hoverPrimary: $hover-primary-color;
+  twitterPrimary: $twitter-primary-color;
+  buttonHoverPrimary: $button-hover-primary-color;
+  buttonFadePrimary: $button-fade-secondary-color;
+  buttonFadeSecondary: $button-fade-secondary-color;
+  bgWhitePrimary: $background-white;
+  borderPrimary: $border-primary-color;
+}
+/* 
+  --twitterBlue: rgba(29, 161, 242,1);
+  --twitterBlueFade: rgba(29, 161, 242,0.7);
+  --initialTop: 0px;
+  --twitterBlueTwo: rgba(29,155,240,1);
+  --twitterBlueTwoFade: rgb(29,155,240,0.7);
+  --twitterBlueThreeFade: rgba(29,155,240,0.2)
+*/

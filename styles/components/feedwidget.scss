@@ -1,0 +1,25 @@
+
+
+.feed-widget-container {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    flex: 0.4;
+    width: 100%;
+    height: auto;
+    padding-left: 10px;
+    transition: all 0.2s ease-in-out;
+    overflow-y: scroll;
+    border-left: 1px solid var(--twitterBlue);
+}
+
+.feed-widget-content {
+    display: flex;
+    padding: 0px 10px;
+    background-color: var(--blackOverlay);
+    flex-direction: column;
+    margin-top: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    // margin-left: 10px;
+}

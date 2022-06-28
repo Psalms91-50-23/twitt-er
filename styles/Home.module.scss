@@ -1,0 +1,259 @@
+@import "./module/Color.module.scss";
+
+.container {
+  padding: 0 2rem;
+}
+
+.main {
+  min-height: 100vh;
+  padding: 4rem 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.home_contents {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  max-width: 400px;
+  width: 100%;
+  max-height: 400px;
+  height: 100%;
+  background-color: var(--white);
+  border: 5px solid var(--twitterBlue);
+  border-radius: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+  animation: fromLeft 0.5s ease-in-out;
+}
+
+.home_header_title {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  color: var(--twitterBlue);
+}
+
+.twitter_icon_left {
+  width: 35px;
+  height: 29px;
+  position: absolute;
+  left: 0;
+  background-image: url("../public/images/one-bird-face-right.svg");
+  background-repeat: no-repeat;
+  animation: flyRight 2s ease-in-out;
+}
+
+.twitter_icon_right {
+  position: absolute;
+  width: 35px;
+  height: 29px;
+  right: 0;
+  background-image: url("../public/images/bird_right.svg");
+  background-repeat: no-repeat;
+  animation: appearBird 3s ease-in-out;
+}
+
+.twitter_icon_right_rotated {
+  position: absolute;
+  width: 35px;
+  height: 29px;
+  right: 0;
+  background-image: url("../public/images/bird_right.svg");
+  background-repeat: no-repeat;
+}
+
+.home_registered_container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 0px 10px;
+}
+
+.title {
+  width: 100%;
+  color: var(--twitterBlue);
+  padding: 0;
+  margin: 0;
+}
+
+.title_home {
+  display: flex;
+  /* align-self: flex-start; */
+  justify-self: flex-start;
+  color:  var(--twitterBlue);
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  margin-left: 10px;
+}
+
+.home_create_container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 35px;
+  width: 100%;
+  border: 1px solid var(--twitterBlue);
+  color: var(--twitterBlue);
+  font-size: 15px;
+  padding: 5px;
+  margin: 5px 0px;
+  border-radius: 3px;
+  font-weight: 700;
+  background-color: transparent;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+  }
+}
+
+.btn:hover {
+  color: var(--white);
+  font-weight: 700;
+  cursor: pointer;
+  background-color:var(--twitterBlue);
+  .icon {
+    color: white;
+    transition: all 0.3s ease-in-out;
+    animation: fromLeft 0.5s ease-in-out;
+    margin-right: 10px;
+  }
+}
+
+.btn_home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 35px;
+  width: 100%;
+  border: 1px solid var(--twitterBlue);
+  color: var(--twitterBlue);
+  font-size: 15px;
+  padding: 5px;
+  margin: 5px 0px;
+  border-radius: 3px;
+  font-weight: 700;
+  background-color: transparent;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  margin-left: 10px;
+
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+  }
+}
+
+.btn_home:hover {
+  color: var(--white);
+  font-weight: 700;
+  cursor: pointer;
+  background-color: var(--twitterBlue);
+  .icon {
+    color: white;
+    transition: all 0.3s ease-in-out;
+    animation: fromLeft 0.5s ease-in-out;
+    margin-right: 10px;
+  }
+}
+
+.spinner_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.input_form_container {
+  position: relative;
+  background-color: var(--white);
+  width: 100%;
+}
+
+.button_container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+}
+
+.title_container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.login_bottom_container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: auto;
+}
+
+.error_msg {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+  font-size: 12px;
+  color: var(--errorColor);
+}
+
+@keyframes appearBird {
+  0% {
+    opacity: 0;
+    transform: rotateY(180deg);
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes flyRight {
+  0%{
+    opacity: 0;
+    left: 0;
+  }
+  100% {
+    opacity: 1;
+    left: calc(90% - 35px);
+  }
+}
+
+@keyframes fromLeft {
+  0%{
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100%{
+    opacity: 1;
+  }
+}

@@ -1,0 +1,44 @@
+
+.people-container {
+    /* display: flex;
+    flex-direction: row; */
+    height: auto;
+    width: 100%;
+    margin: 10px 0px;
+    padding: 5px 10px;
+}
+
+.people-container:hover {
+    background-color: rgba(128, 128, 128, 0.4);
+}
+
+.people-contents-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.people-image-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-right: 5px;
+}
+
+.people-image {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.people-username {
+    margin-left: 10px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.people-image:hover {
+    cursor: pointer;
+    border: 1px solid var(--white);
+}

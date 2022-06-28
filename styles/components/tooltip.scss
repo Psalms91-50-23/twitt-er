@@ -1,0 +1,25 @@
+/* Tooltip component */
+.tooltip-container {
+    display: flex;
+    padding: 3px;
+    display: flex;
+    position: absolute;
+    padding: 5px;
+    margin-top: 25px;
+    bottom: -40px;
+    background-color: var(--white);
+    border-radius: 5px;
+  }
+  
+  .tooltip-triangle {
+    position: absolute;
+    top: -10px;
+    border-bottom: 10px solid var(--white);
+    border-right: 5px solid transparent;
+    border-left: 5px solid transparent;
+  }
+  
+  .tooltip-msg {
+    font-size: 0.7rem;
+  }
+  

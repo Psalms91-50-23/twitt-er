@@ -1,0 +1,26 @@
+
+/* feed component css */
+.feed-container {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    flex: 1;
+    max-width: 1200px;
+    width: 100%;
+    height: auto;
+    padding: 10px 20px 0px 20px;
+    transition: all 0.2s ease-in-out;
+}
+  
+@media screen and (max-width: 820px){
+    .feed-container {
+        padding: 10px 0px 10px 10px;
+     }
+}
+
+@media screen and (max-width: 470px) {
+
+    .feed-container {
+        min-width: 200px;
+    }
+}

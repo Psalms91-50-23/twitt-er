@@ -1,0 +1,20 @@
+
+
+.create-user-contents {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 400px;
+    background-color: white;
+    width: 100%;
+    // z-index: 1;
+    border: 5px solid rgb(29, 161, 242);
+    border-radius: 10px;
+    box-sizing: border-box;
+    animation: fromRight 0.5s ease-in-out;
+    padding: 20px;
+    // padding: 0px 10px 20px 10px;
+}
+

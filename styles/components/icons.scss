@@ -1,0 +1,36 @@
+
+.line {
+    display: flex;
+    position: relative;
+    border-bottom: 2px solid white;
+    width: 90%;
+    bottom: 0px;
+    /* height: 10px; */
+    background-color: white;
+    /* animation: border 0.2s linear; */
+}
+
+.navbar-icon-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.nav-icon-text {
+    font-weight: 700;
+}
+
+@keyframes border {
+    0% {
+        width: 0px;
+        opacity: 0;
+        border-bottom: 0px solid white;
+    }
+    100%{
+        width: 90%;
+        opacity: 1;
+        border-bottom: 2px solid white;
+    }
+}
