@@ -46,7 +46,7 @@ const Signup = ({ users }) => {
 
   useEffect(() => {  
     setAllUsers(users);
-  }, [users])
+  }, [users,setAllUsers])
   
   useEffect(() => {
     setUserExistsError(false);
@@ -59,15 +59,15 @@ const Signup = ({ users }) => {
         setUserExistsError(true);
       }
     }
-  },[userName, password])
+  },[userName, password, setMissingPassword, 
+    setMissingUsername, setUserExistsError, setEmailError ])
 
   useEffect(() => {
     setMissingField(false);
-  }, [imageUrl])
+  }, [imageUrl, setMissingField])
   
   const resetFileInput = () => {
     // 👇️ reset input value
-    console.log({inputRef});
     inputRef.current.value = "";
   };
 
@@ -84,7 +84,6 @@ const Signup = ({ users }) => {
     if (selectedFile.type === 'image/png' || selectedFile.type === 'image/svg' || selectedFile.type === 'image/jpeg' || selectedFile.type === 'image/gif' || selectedFile.type === 'image/tiff') {
       setWrongImageType(false);
       setProfileImage(selectedFile);
-      console.log("profile image ",profileImage);
     } else {
       setLoading(false);
       setWrongImageType(true);
@@ -206,15 +205,11 @@ const Signup = ({ users }) => {
     setFileInput(!fileInput);
   }
 
-  console.log({fileSizeError});
-  console.log(profileImage)
   return (
-    // <div className="container">
     <div className={backgroundStyles.container_cloud_bg}>
         <div className={backgroundStyles.twitter_bird_bg}>
         <TwitterBird />
         <div className={signupStyles.create_user_contents}>
-          {/* <div className={homeStyles.home_contents}> */}
             <BirdieHands />
             <div className={homeStyles.home_header_title}>
               <h2>Sign-Up User</h2>
@@ -234,9 +229,6 @@ const Signup = ({ users }) => {
                 onSubmit={e => handleSubmitUser(e)}
                 className={signupStyles.input_form_container}
                 autoComplete="off"
-                // className={"input-form-container" + (loading ? " spinner-bg" : "")}
-                // autoComplete="off"
-                // className={"create-user-inputs-container" + (loading ? " spinner-bg" : "")
               >
                 <CustomInput 
                   title={"userName"} 
@@ -246,12 +238,6 @@ const Signup = ({ users }) => {
                   titleColor={"rgb(29, 161, 242)"}
                   headerText="UserName"
                   textPlaceHolder={"test123@ex-ample.com"}
-                  // setMissingField={setMissingField}
-                  // inputBorderWidth={1}
-                  // borderStyles
-                  // inputStyles={inputStyles}
-                  // titleFontWeight={"700"}
-                  // inputBgColor={"rgba(0, 128, 0, 0.501)"}
                 />
                 { emailError && (
                   <span className={homeStyles.error_msg}>
@@ -305,7 +291,6 @@ const Signup = ({ users }) => {
                     titleColor={"rgb(29, 161, 242)"}
                     headerText="User Profile Image Url"
                     textPlaceHolder={"Image Url..."}
-                    // setMissingField={setMissingField}
                   />
                 )
                 :

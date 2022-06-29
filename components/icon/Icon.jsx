@@ -53,6 +53,7 @@ const Icon = ({
               className={"icon-container" 
               + (isHover ? " icon-animation" : "")}
               src={urlFor(profileImg.asset._ref)}
+              alt="profile img"
             />
         )
         }
@@ -66,6 +67,7 @@ const Icon = ({
               className={"icon-container" 
               + (isHover ? " icon-animation" : "")}
               src={profileImg}
+              alt="profile img"
             />
           )
         }

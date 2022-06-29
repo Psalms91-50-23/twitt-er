@@ -11,25 +11,16 @@ import {
   ProfileWidget } from '../../components';
 import useMediaQuery from '../../hooks/useMediaQuery';
 
-const Profile = ({  userTweets, user, profile, newsData, otherUsers }) => {
+const Profile = ({  userTweets, user, profile, otherUsers }) => {
 
-  const router = useRouter();
+  const mediumToLargeDevices = useMediaQuery('(min-width: 905px)');
+  const { setOtherUsers } = useStateContext(); 
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [name, setName] = useState("");
-  // console.log("in other profile user ", user);
-  if( typeof window != "undefined" && router.isFallback){
-    return (
-      <div className="">
-        Loading...
-      </div>
-    )
-  }
-
-  const { setOtherUsers } = useStateContext(); 
 
   useEffect(() => {
     setOtherUsers(otherUsers)
-  }, [])
+  }, [setOtherUsers, otherUsers])
 
   useEffect(() => {
     if(name){
@@ -38,13 +29,9 @@ const Profile = ({  userTweets, user, profile, newsData, otherUsers }) => {
     }else {
       setFilteredUsers([])
     }
-  }, [name,otherUsers])
+  }, [name,otherUsers,setFilteredUsers])
   
 
-  const mediumToLargeDevices = useMediaQuery('(min-width: 905px)');
-  const smallToMediumDevices = useMediaQuery('(max-width: 660px)');
-  const [isLoading, setIsLoading] = useState(true);
-  const mediumDevice = useMediaQuery('(min-width: 905px)');
 
   return (
     <div className={backgroundStyles.moving_clouds_behind}>

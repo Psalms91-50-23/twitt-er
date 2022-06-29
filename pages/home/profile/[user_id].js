@@ -13,13 +13,13 @@ import { WormSpinner, Spinner } from "../../../components";
 
 const HomeProfile = ({ user, otherUsers, profile }) => {
 
+  const largeDevicesOnwards = useMediaQuery('(min-width: 900px)');
   const { 
     setTweetClicked, 
     setCurrentUserProfile,
     setUser, 
     setOtherUsers } = useStateContext();
 
-  const largeDevicesOnwards = useMediaQuery('(min-width: 900px)');
   const [isEdit, setIsEdit] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);

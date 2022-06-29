@@ -8,14 +8,14 @@ import { useRouter } from 'next/router';
 import { client } from '../lib/client';
 import { useStateContext } from '../context/StateContext';
 
-const home = ({users}) => {
+const Home = ({users}) => {
 
   const router = useRouter();
   const { setAllUsers } = useStateContext();
 
   useEffect(() => {
     setAllUsers(users)
-  }, [])
+  }, [setAllUsers, users])
 
   return (
     <div className={backgroundStyles.container_cloud_bg}>
@@ -86,4 +86,4 @@ export const getServerSideProps = async ({req,res}) => {
 
 }
 
-export default home;
+export default Home;
