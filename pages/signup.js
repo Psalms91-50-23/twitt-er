@@ -41,7 +41,6 @@ const Signup = ({ users }) => {
   const [latestUpdatedUsers, setLatestUpdatedUsers] = useState([]);
   const [fileSizeError, setFileSizeError] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
-  const [isUpload, setIsUpload] = useState(false);
   const [missingField, setMissingField] = useState(false);
 
   useEffect(() => {  
@@ -60,7 +59,7 @@ const Signup = ({ users }) => {
       }
     }
   },[userName, password, setMissingPassword, 
-    setMissingUsername, setUserExistsError, setEmailError ])
+    setMissingUsername, setUserExistsError, setEmailError, users ])
 
   useEffect(() => {
     setMissingField(false);
@@ -138,7 +137,7 @@ const Signup = ({ users }) => {
             }
           }
         };
-        const passwordDecoded = decodePassword(JSON.parse(passwordEncodedPattern), passwordEncoded);
+        // const passwordDecoded = decodePassword(JSON.parse(passwordEncodedPattern), passwordEncoded);
         client.createIfNotExists(doc).then((newUser) => {
           addNewUser(newUser);
           const profileDoc = {

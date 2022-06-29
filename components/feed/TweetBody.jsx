@@ -10,7 +10,6 @@ const TweetBody = () => {
     currentUserTweets } = useStateContext();
   const router = useRouter();
   // const url = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v2021-03-25/data/query/development?query=*[ _type == "tweet"&&tweetedBy._ref=="${user._id}]`;
-  const [currentUser, setCurrentUser] = useState(user);
   const [tweets, setTweets] = useState([]);
     
   useEffect(() => {
@@ -18,14 +17,14 @@ const TweetBody = () => {
     if(currentUserTweets){
       setTweets(currentUserTweets);
     }
-  }, [currentUserTweets])
+  }, [currentUserTweets, setTweets])
 
   useEffect(() => {
     //updates tweets after loading goes to falsy
     if(!isLoading){
       setTweets(currentUserTweets);
     }
-  }, [isLoading])
+  }, [isLoading, setTweets, currentUserTweets])
   
 
   return (

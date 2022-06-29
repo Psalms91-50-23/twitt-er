@@ -76,17 +76,17 @@ const TweetOverlay = ({
 
   useEffect(() => {
     setFieldError(false);
-    setTweetDoc({...tweetDoc, tweetImageUrl: imageUrl})
+    setTweetDoc( tdoc => ({...tdoc, tweetImageUrl: imageUrl}));
   },[imageUrl, setFieldError, setTweetDoc])
 
   useEffect(() => {
       setFieldError(false);
-      setTweetDoc({...tweetDoc, tweetVideoUrl: videoUrl})
+      setTweetDoc( tdoc => ({...tdoc, tweetVideoUrl: videoUrl}))
   }, [videoUrl, setTweetDoc, setFieldError ])
 
   useEffect(() => {
       setFieldError(false);
-      setTweetDoc({...tweetDoc, tweetTitle: tweet})
+      setTweetDoc(tdoc => ({...tdoc, tweetTitle: tweet}))
   }, [tweet, setFieldError, setTweetDoc])
   
 
