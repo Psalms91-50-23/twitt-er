@@ -1,25 +1,17 @@
 import homeStyles from '../styles/Home.module.scss';
 import backgroundStyles from '../styles/module/Background.module.scss';
 import { useEffect, useState } from 'react';
-import cookie from 'js-cookie';
-import Link from 'next/link';
 import { useRouter }  from 'next/router';
-import { TiArrowBack } from "react-icons/ti";
 import { AiFillHome } from "react-icons/ai";
-import { FcGoogle } from 'react-icons/fc';
-import { CustomInput, TwitterBird, BirdieHands, LoginIcon, Spinner } from '../components';
+import { CustomInput, TwitterBird, BirdieHands, Spinner } from '../components';
 import { useStateContext } from '../context/StateContext';
-// import { Login } from '../components';
-import { client } from '../lib/client';
 import { MdLogin, MdCreate } from 'react-icons/md'
-import { findUser, isPasswordMatch, isEmailMatch, 
-    userLogin, matchSecret, loginUser, 
+import { findUser, isPasswordMatch, isEmailMatch,  matchSecret, loginUser, 
     getNewImageExtension, getOldImageExtension } from '../lib/functions';
-import { CgLoupe } from 'react-icons/cg';
 // import Router from "next/router";
 const baseURL = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v1/data/query/development?query=`
 
-const login = ({ users }) => {
+const Login = ({ users }) => {
   const router = useRouter();
   const { setUser } = useStateContext();
   const [userName, setUserName] = useState("");
@@ -68,7 +60,6 @@ const login = ({ users }) => {
 }
 
   return (
-    // <div className="container">
     <div className={backgroundStyles.container_cloud_bg}>
        <div className={backgroundStyles.twitter_bird_bg}>
           <TwitterBird />
@@ -196,4 +187,4 @@ export const getServerSideProps = async (req,res) => {
     }
   }
   
-export default login
+export default Login

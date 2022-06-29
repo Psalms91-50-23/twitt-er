@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import Image from 'next/image';
 
 const News = ({newz}) => {
 
@@ -8,6 +8,7 @@ const News = ({newz}) => {
   return (
     <div className="news-container">
         <h4 className="news-title">{newz.title}</h4>
+        
         <img 
             className="news-image"
             src={newz.urlToImage} alt="" 

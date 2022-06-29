@@ -81,7 +81,7 @@ const Navbar = () => {
           titleStyle={titleStyle} 
           containerStyle={navIconContainerStyle}
         />
-        { mediumToLargeDevices && router.pathname == "/home/profile/[user_id]" && (
+        { mediumToLargeDevices && (router.pathname == "/home/profile/[user_id]" || router.pathname == "/profile/[user_id]") && (
           <NavbarIcon 
              icon={<CgUserList size={20}/>} 
              title={""}

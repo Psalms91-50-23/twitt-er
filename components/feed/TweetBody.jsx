@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useStateContext } from '../../context/StateContext';
 import { useRouter } from 'next/router';
 
-const TweetBody = ({ userTweets, tweetUser }) => {
+const TweetBody = () => {
   const { 
     user, 
     isLoading,

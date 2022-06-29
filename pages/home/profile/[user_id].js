@@ -1,24 +1,24 @@
 import { useState, useEffect } from 'react';
 import { client, urlFor } from '../../../lib/client';
+import Image from 'next/image';
 import { 
   SidebarMenu, 
   ProfileWidget,  
   RoundButton } from '../../../components';
 import { useStateContext } from '../../../context/StateContext';
 import useMediaQuery from '../../../hooks/useMediaQuery';
-import { useRouter } from 'next/router';
 import { ImCross } from 'react-icons/im';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { WormSpinner, Spinner } from "../../../components";
 
-const currentUserProfile = ({ user, otherUsers, profile }) => {
+const HomeProfile = ({ user, otherUsers, profile }) => {
 
-  const router = useRouter();
-  if(typeof window !== 'undefined' && router.isFallback){
-    return (
-      <div className="">Loading...</div>
-    )
-  } 
+  // const router = useRouter();
+  // if(typeof window !== 'undefined' && router.isFallback){
+  //   return (
+  //     <div className="">Loading...</div>
+  //   )
+  // } 
 
   const { 
     setTweetClicked, 
@@ -31,20 +31,20 @@ const currentUserProfile = ({ user, otherUsers, profile }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
   const [profileImgUrlBackdrop, setProfileImgUrlBackdrop] = useState("");
-  const [profileData, setProfileData] = useState(null);
+  const [profileData, setProfileData] = useState(null); //end profile data after onchange
   const [userProfile, setUserProfile] = useState(profile);
   const [fileImage, setFileImage] = useState(null);
   const [thisUser, setThisUser] = useState(user);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [name, setName] = useState("");
+  const [fileSizeError, setFileSizeError] = useState(false);
 
   const { 
     bio, 
     firstName, 
     lastName, 
     profileBackDrop } = userProfile;
-    console.log({otherUsers});
-   console.log({userProfile});
+
   useEffect(() => {
     setProfileData(profile);
     setCurrentUserProfile(profile);
@@ -53,12 +53,9 @@ const currentUserProfile = ({ user, otherUsers, profile }) => {
 
   useEffect(() => {
     if(name){
-      console.log("1")
       const usersFiltered = otherUsers.filter(user => user.userName.includes(name));
-      console.log({usersFiltered});
       setFilteredUsers(usersFiltered)
     }else {
-      console.log("2");
       setFilteredUsers([])
     }
   }, [name,otherUsers])
@@ -76,14 +73,9 @@ const currentUserProfile = ({ user, otherUsers, profile }) => {
     // const { type, name } = selectedFile;
     if (selectedFile.type === 'image/png' || selectedFile.type === 'image/svg' || selectedFile.type === 'image/jpeg' || selectedFile.type === 'image/gif' || selectedFile.type === 'image/tiff') {
       setFileImage(selectedFile);
-      console.log("profile image ",fileImage);
     }
 
   };
-
-  const onChangeThisUser = (e) => {
-    setOnChangeUser({...thisUser, [e.target.name] : e.target.value})
-  }
 
   const onChangeProfile = (e) => {
 
@@ -91,7 +83,6 @@ const currentUserProfile = ({ user, otherUsers, profile }) => {
       setImageLoading(true);
       setUserProfile({...userProfile, [e.target.name] : e.target.value})
       if(e.target.value == profile.profileBackDrop){
-        console.log("1");
         setImageLoading(false);
       }
     } else{
@@ -102,14 +93,10 @@ const currentUserProfile = ({ user, otherUsers, profile }) => {
   const updateUserDetails = () => {
     setIsLoading(true);
     if(fileImage){
-      const doc = {
-        ...userProfile,
-        profileBackDrop: profileImgUrlBackdrop
-      }
+  
         client.assets
         .upload('image', fileImage, { contentType: fileImage.type, fileName: fileImage.name})
         .then(imgAsset => {
-          console.log({imgAsset});
           return client
           .patch(imgAsset._id)
           .set({
@@ -143,8 +130,13 @@ const currentUserProfile = ({ user, otherUsers, profile }) => {
             setThisUser(updatedUserRes)
             setUser(updatedUserRes)
 
+            const doc = {
+              ...userProfile,
+              profileBackDrop: profileBackDrop !== profile.profileBackDrop ? profileBackDrop : profile.profileBackDrop
+            }
+
             //updating profile table
-            client.patch(profileData._id)
+            client.patch(profile._id)
             .set(doc)
             .commit()
             .then(res => {
@@ -161,19 +153,9 @@ const currentUserProfile = ({ user, otherUsers, profile }) => {
 
        const profileDoc = {
          ...userProfile,
-         profileBackDrop: userProfile.profileBackDrop
+         profileBackDrop: profileBackDrop !== profile.profileBackDrop ? profileBackDrop : profile.profileBackDrop
        }
-      //  client.patch(onChangeUser._id)
-      //  .set(doc)
-      //  .commit()
-      //  .then(updatedUserRes => {
-      //    console.log({updatedUserRes});
-      //    setThisUser(updatedUserRes)
-      //    setUser(updatedUserRes)
-
-      //    //updating profile table
-      //   })
-      client.patch(profileData._id)
+      client.patch(profile._id)
       .set(profileDoc)
       .commit()
       .then(res => {
@@ -182,12 +164,10 @@ const currentUserProfile = ({ user, otherUsers, profile }) => {
         setIsEdit(!isEdit);
         setImageLoading(false);
         setIsLoading(false);
-        // router.reload();
       })
      }
   }
   
-
   const toggle = () => {
     setFileImage(null);
     setIsEdit(!isEdit)
@@ -207,7 +187,6 @@ const currentUserProfile = ({ user, otherUsers, profile }) => {
         <SidebarMenu 
           userDetails={thisUser} 
           setTweetClicked={setTweetClicked}
-          //  sidebarContainerStyle={style}
         />
       </div>
       <div className="current-user-container">
@@ -276,37 +255,6 @@ const currentUserProfile = ({ user, otherUsers, profile }) => {
                 </div>
                 <div className="profile-image-container">
                   <span className="name-text">Profile Image: </span>
-                  {/* <span className="profile-image-text">Profile Image: </span> */}
-                    {/* { isImageUrl ? (
-                      <input 
-                        type={"text"}
-                        name="imageUrl"
-                        className="image-input-url"
-                        placeholder="Image URL here..."
-                        // value={lastName}
-                        onChange={e => onChangeThisUser(e)}
-                      />
-                    )
-                      :
-                      (
-                        <input 
-                        type={"file"}
-                        name="profileImageBackdrop"
-                        className="image-input-comp"
-                        // value={lastName}
-                        onChange={e => uploadImage(e)}
-                      />
-                      )
-                    } */}
-                 
-                  {/* <button 
-                    className="toggle-profile-type"
-                    onClick={() => setIsImageUrl(!isImageUrl)}
-                  >
-                    {isImageUrl ? "File?" : "URL?"}
-                  </button> */}
-                  {/* <div className="profile-contents-container">
-                  </div> */}
                   <input 
                     type={"file"}
                     name="profileImageBackdrop"
@@ -388,33 +336,13 @@ const currentUserProfile = ({ user, otherUsers, profile }) => {
   )
 }
 
-
-// export const getStaticPaths = async () => {
-//     const query = `*[_type == "user"]`
-//     const users = await client.fetch(query);
-//     // console.log({users})
-//     const paths = users.map((user) => ({
-//         params: {
-//             user_id: `${user._id}`
-//         }
-//     }))
-//     // console.log("path in profile [user_id]",paths)
-//     return {
-//         paths,
-//         fallback: true
-//     }
-// }
-
-// export const getStaticProps = async (context) => {
-  // export const getStaticProps = async ({ params: { user_id }}) => {
-  export const getServerSideProps = async ({ params: { user_id }}) => {
+export const getServerSideProps = async ({ params: { user_id }}) => {
   
-    const baseURL = `https://r3d2pmc2.api.sanity.io/v1/data/query/development?query=`;
+    const baseURL = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v1/data/query/development?query=`;
     const query = encodeURIComponent(`*[_type == "user" && _id == '${user_id}'][0]`);
     const usersQuery = `*[_type == "user" && _id != '${user_id}']`;
     const profileQuery = encodeURIComponent(`*[_type == "profile" && userId._ref =='${user_id}']`);
     const user = await await fetch(`${baseURL}${query}`).then(res => res.json());
-    // const user = await client.fetch(query);
     const otherUsers = await client.fetch(usersQuery);
     const userProfile = await fetch(`${baseURL}${profileQuery}`).then(res => res.json());
 
@@ -427,4 +355,4 @@ const currentUserProfile = ({ user, otherUsers, profile }) => {
     }
 }
 
-export default currentUserProfile
+export default HomeProfile

@@ -1,7 +1,7 @@
 import cookie from "cookie";
 
 
-export default (req,res) => {
+export default async function(req,res){
     if(req.method === "POST"){
         res.setHeader(
             "Set-Cookie",

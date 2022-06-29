@@ -17,7 +17,7 @@ const NewsOverlay = () => {
         }else {
             setFilteredNews([])
         }
-    }, [name])
+    }, [name,latestNews])
     
   return (
     <div className="news-overlay-container">

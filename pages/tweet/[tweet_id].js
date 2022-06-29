@@ -15,10 +15,6 @@ const Tweet = ({tweet}) => {
 
 export async function getStaticPaths() {
   const query = `*[_type == "tweet"`;
-    // const paths = await client.fetch(
-    //   `*[_type == "tweet"]`
-    // )
-    // console.log({paths});
     const paths = users.map((user) => ({
       params: {
           user_id: `${user._id}`

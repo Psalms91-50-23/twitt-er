@@ -10,12 +10,9 @@ const FollowOverlay = () => {
 
     useEffect(() => {
         if(name){
-          console.log("1")
           const usersFiltered = otherUsers.filter(user => user.userName.toLowerCase().includes(name.toLowerCase()));
-          console.log({usersFiltered});
           setFilteredUsers(usersFiltered)
         }else {
-          console.log("2");
           setFilteredUsers([])
         }
       }, [name,otherUsers])

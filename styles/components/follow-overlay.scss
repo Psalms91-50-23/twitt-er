@@ -7,7 +7,7 @@
     z-index: 100;
     width: 100vw;
     height: 100vh;
-    background-color: var(--white);
+    background: linear-gradient(to bottom, #154277 0%,#576e71 30%,#e1c45e 70%,#b26339 100%);
     transition: all 0.5s ease-in-out ;
     animation: fromRight 0.5s ease-in-out;
 }
@@ -37,7 +37,7 @@
     display: flex;
     position: absolute;
     width: auto;
-    top: 0;
+    top: 10px;
     right: -40px;
 
 }
@@ -50,7 +50,24 @@
 .exit-button:hover {
     transform: scale(1.2,1.2);
     cursor: pointer;
-    color: var(--twitterBlue);
+    color: var(--white);
+}
+
+
+.search-news-container {
+    display: flex;
+    flex-direction: row;
+    background-color: var(--blackOverlay);
+    padding: 20px 10px;
+}
+
+.search-icon {
+    display: flex;
+    align-items: center;
+    height: 35px;
+    width: 35px;
+    padding: 3px;
+    background-color: var(--white);
 }
 
 .search-input-follow {

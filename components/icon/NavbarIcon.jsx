@@ -45,6 +45,7 @@ const NavbarIcon = ({
             className={"icon-container" 
             + (isHover ? " icon-animation" : "")}
             src={urlFor(profileImg.asset._ref)}
+            alt={"profile img"}
           />
       )
       }
@@ -58,6 +59,7 @@ const NavbarIcon = ({
             className={"icon-container" 
             + (isHover ? " icon-animation" : "")}
             src={profileImg}
+            alt={"profile img"}
           />
         )
       }

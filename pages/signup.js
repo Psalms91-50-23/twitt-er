@@ -9,8 +9,7 @@ import { client } from "../lib/client";
 import { TiArrowBack } from "react-icons/ti";
 import { AiFillHome } from "react-icons/ai";
 import { useRouter }  from 'next/router';
-import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
-import { Input, CustomInput, TwitterBird, BirdieHands, Spinner, SignupUser }  from '../components';
+import { CustomInput, TwitterBird, BirdieHands, Spinner }  from '../components';
 import { MdLogin, MdCreate } from 'react-icons/md'
 import { findUser, encodePassword, getEncodedPattern,
         decodePassword, validateEmail } from '../lib/functions';
@@ -19,10 +18,10 @@ import { MdComputer } from "react-icons/md";
 import { GiSpiderWeb } from "react-icons/gi";
 
 
-const signup = ({ users }) => {
+const Signup = ({ users }) => {
 
   const router = useRouter();
-  const { setUpdatedUsers, updatedUsers, addNewUser, allUsers, setAllUsers } = useStateContext();
+  const {  addNewUser, setAllUsers } = useStateContext();
   // const [allUsers, setAllUsers] = useState(user)
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -33,9 +32,7 @@ const signup = ({ users }) => {
   const [userExistsError, setUserExistsError] = useState(false);
   const [fileInput, setFileInput] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
-  // const [userImage, setUserImage] = useState(null);
   const [imageString, setImageString] = useState(false);
-  // const [imageAsset, setImageAsset] = useState();
   const [loading, setLoading] = useState(false);
   const [wrongImageType, setWrongImageType] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
@@ -100,7 +97,6 @@ const signup = ({ users }) => {
     if(!userName) return setMissingUsername(true);
     if(!validateEmail(userName)) return setEmailError(true);  
     if(!password) return setMissingPassword(true);
-      // setLoading(true);
       const passwordEncoded = encodePassword(password);
       const passwordEncodedPattern = JSON.stringify(getEncodedPattern());
       let doc = {
@@ -112,24 +108,13 @@ const signup = ({ users }) => {
         imageUrl,
         _createdAt: new Date().toISOString()
       }
-    // if(!imageUrl){
     if(profileImage && userName && password && !imageUrl){
 
-      console.log("image url ", imageUrl);
-      console.log("profile image ", profileImage);
-      // if(profileImage.size > 20000){
-      //   console.log("file size test ");
-      //   setFileSizeError(true);
-      //   resetFileInput();
-      //   return 
-      // }
       setLoading(true);
       const { name, type } = profileImage;
       client.assets
       .upload('image', profileImage, { contentType: type, filename: name })
       .then((imgAsset) => {
-        console.log("image asset in signup ", imgAsset);
-        // setImageAsset(imgAsset);
         return client
         .patch(imgAsset._id)
         .set({
@@ -144,7 +129,6 @@ const signup = ({ users }) => {
         .commit();
       })
       .then((response) => {
-        console.log({response});
         doc = {
           ...doc,
           profileImage: {
@@ -155,7 +139,6 @@ const signup = ({ users }) => {
             }
           }
         };
-        console.log({doc});
         const passwordDecoded = decodePassword(JSON.parse(passwordEncodedPattern), passwordEncoded);
         client.createIfNotExists(doc).then((newUser) => {
           addNewUser(newUser);
@@ -187,7 +170,6 @@ const signup = ({ users }) => {
     else{
 
       if(!imageUrl){
-        console.log("image url else condition", imageUrl);
         setMissingField(true);
         return
       }
@@ -283,12 +265,6 @@ const signup = ({ users }) => {
                   </span>
                 )
                 }
-                {/* { missingUsername && (
-                  <span className={homeStyles.error_msg}>
-                    Username field missing
-                  </span>
-                )
-                } */}
                 <CustomInput 
                   title={"password"} 
                   setPassword={setPassword} 
@@ -297,8 +273,6 @@ const signup = ({ users }) => {
                   titleColor={"rgb(29, 161, 242)"}
                   headerText="Password"
                   textPlaceHolder={"Enter Password..."}
-                  // setMissingField={setMissingField}
-            
                 />
                 { missingPassword && (
                   <span className={homeStyles.error_msg}>
@@ -312,8 +286,6 @@ const signup = ({ users }) => {
                     headerText={"Upload Image from Computer"} 
                     titleColor={"rgb(29, 161, 242)"}
                     uploadImage={uploadImage}
-                    // profileImage={profileImage}
-                    // setProfileImage={setProfileImage}
                   />
                 )
                 : null
@@ -339,10 +311,6 @@ const signup = ({ users }) => {
                 :
                 null
                 }
-                {/* { missingField && (
-                  <span className="error-msg">Missing fields, username, password, computer image or image url</span>
-                )
-                } */}
                 { missingField && (
                   <span className={homeStyles.error_msg}>Missing profile image URL or profile computer image</span>
                 )
@@ -396,8 +364,6 @@ const signup = ({ users }) => {
                         <AiFillHome size={15}/>
                       </span>
                       Home
-                      {/* <span className="home-button-title">
-                      </span> */}
                     </button>    
                   </div>
                 </div>
@@ -422,14 +388,9 @@ export const getServerSideProps = async ({req,res}) => {
   }
 
   const userQuery = `*[_type == "user"]`
-  // const users = await client.fetch(userQuery);
-  // console.log("users in signup ",users)
+
   const url = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v2022-05-10/data/query/development?query=${userQuery}`;
   const users = await fetch(url).then(res => res.json());
-  // const url = `https://r3d2pmc2.api.sanity.io/v2022-05-10/data/query/development?query=${userQuery}`;
-  // const result = await fetch(url).then(res => res.json());
-  // const usersFetched = result.result;
-  // console.log({usersFetched});
   return {
     props: {
       users: users.result
@@ -437,4 +398,4 @@ export const getServerSideProps = async ({req,res}) => {
   }
 }
 
-export default signup
+export default Signup

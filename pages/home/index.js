@@ -4,7 +4,7 @@ import { Sidebar, Feed, FeedWidget } from '../../components';
 import useMediaQuery from '../../hooks/useMediaQuery';
 import backgroundStyles from "../../styles/module/Background.module.scss";
 
-const dashboard = ({ foundUser, tweets, users, profile, newsData }) => {
+const Home = ({ foundUser, tweets, users, profile, newsData }) => {
     
   const mediumDevice = useMediaQuery('(min-width: 905px)');
   const { 
@@ -64,7 +64,7 @@ export const getServerSideProps = async({ req, res }) => {
   const profileQuery = encodeURIComponent(`*[_type == "profile" && userId._ref =='${userId}']`);
   const userTweetsQuery = encodeURIComponent(`*[_type == "tweet" && tweetedBy._ref == '${userId}'] | order(_createdAt desc)`);
 
-  const baseURL = `https://r3d2pmc2.api.sanity.io/v1/data/query/development?query=`;
+  const baseURL = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v1/data/query/development?query=`;
 
   const options = {
     method: 'GET',
@@ -95,4 +95,4 @@ export const getServerSideProps = async({ req, res }) => {
   }
 }
 
-export default dashboard
+export default Home
