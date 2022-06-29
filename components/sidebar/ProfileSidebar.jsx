@@ -30,6 +30,7 @@ const ProfileSidebar = ({user}) => {
                 <img 
                   className="home-profile-image"
                   src={loggedInUser?.profileImage? urlFor(loggedInUser.profileImage?.asset._ref) : loggedInUser?.imageUrl }
+                  alt="profile img"
                 />
             )
             : (

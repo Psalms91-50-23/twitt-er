@@ -72,22 +72,22 @@ const TweetOverlay = ({
         setIsLoading(false);
         setLoading(false);
     }
-  }, [tweetDoc.tweetTitle])
+  }, [tweetDoc.tweetTitle, setLoading, setIsLoading])
 
   useEffect(() => {
     setFieldError(false);
     setTweetDoc({...tweetDoc, tweetImageUrl: imageUrl})
-  },[imageUrl])
+  },[imageUrl, setFieldError, setTweetDoc])
 
   useEffect(() => {
       setFieldError(false);
       setTweetDoc({...tweetDoc, tweetVideoUrl: videoUrl})
-  }, [videoUrl])
+  }, [videoUrl, setTweetDoc, setFieldError ])
 
   useEffect(() => {
       setFieldError(false);
       setTweetDoc({...tweetDoc, tweetTitle: tweet})
-  }, [tweet])
+  }, [tweet, setFieldError, setTweetDoc])
   
 
   const uploadImage = (e) => {

@@ -13,13 +13,6 @@ import { WormSpinner, Spinner } from "../../../components";
 
 const HomeProfile = ({ user, otherUsers, profile }) => {
 
-  // const router = useRouter();
-  // if(typeof window !== 'undefined' && router.isFallback){
-  //   return (
-  //     <div className="">Loading...</div>
-  //   )
-  // } 
-
   const { 
     setTweetClicked, 
     setCurrentUserProfile,
@@ -49,7 +42,7 @@ const HomeProfile = ({ user, otherUsers, profile }) => {
     setProfileData(profile);
     setCurrentUserProfile(profile);
     setOtherUsers(otherUsers)
-  }, [])
+  }, [otherUsers, profile, setProfileData, setCurrentUserProfile, setOtherUsers])
 
   useEffect(() => {
     if(name){
@@ -58,7 +51,7 @@ const HomeProfile = ({ user, otherUsers, profile }) => {
     }else {
       setFilteredUsers([])
     }
-  }, [name,otherUsers])
+  }, [name,otherUsers, setFilteredUsers])
   
   
   const uploadImage = (e) => {

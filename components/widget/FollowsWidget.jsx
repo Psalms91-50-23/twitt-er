@@ -7,8 +7,8 @@ const FollowsWidget = () => {
 
   return (
     <div className="follows-widget-container">
-        { otherUsers.length ? otherUsers.map(otherUser => (
-            <People people={otherUser}/>
+        { otherUsers.length ? otherUsers.map((otherUser, index) => (
+            <People people={otherUser} key={`${otherUser._id}_${index}`}/>
         ))
         : null
         }

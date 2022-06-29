@@ -19,7 +19,9 @@ const Home = ({ foundUser, tweets, users, profile, newsData }) => {
     setCurrentUserTweets(tweets);
     setOtherUsers(users);
     setLatestNews(newsData);
-  },[]) 
+  },[_id, userName, imageUrl, profileImage, users, 
+    newsData, setOtherUsers, setOtherUsers, setCurrentUserTweets, 
+    setUser, tweets]) 
 
 
   return (
