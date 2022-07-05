@@ -12,7 +12,7 @@
   --whiteFade2: rgba(255,255,255,0.8);
   --errorColor: rgba(255, 0, 0, 1);
   --black: rgba(0,0,0,1);
-  --blackOverlay: rgba(0,0,0,0.2);
+  --blackOverlay: rgba(0,0,0,0.4);
   --blackOverlay2: rgba(0,0,0,0.4);
 }
 
@@ -151,170 +151,6 @@ a {
 }
 
 /* icon component css */
-.icon-component-container {
-  display: flex;
-  position: relative;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-}
-
-.border-bottom {
-  color: var(--white);
-  border-bottom: 2px solid var(--white);
-}
-
-.border-right {
-  color: var(--white);
-  border-right: 2px solid var(--white);
-}
-.border-left {
-  color: var(--white);
-  border-left: 2px solid var(--white);
-}
-.border-top {
-  color: var(--white);
-  border-top: 2px solid var(--white);
-}
-
-.icon-container {
-  display: flex;
-  align-items: center;
-  margin-right: 10px;
-}
-
-.icon-container:active {
-  transform: translate(1.2,1.2);
-}
-.icon-animation {
-  animation: fromLeft 0.3s ease-in-out;
-}
-
-.home-user-info {
-  padding: 5px;
-  margin-top: 25px;
-}
-
-/* feed component css */
-
-.head-tweet-container {
-  display: flex;
-  flex-direction: row;
-  height: auto;
-  background-color: var(--blackOverlay);
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  padding: 10px;
-  transition: all 0.2s ease-in-out;
-}
-
-.feed-textarea-container {
-  display: flex;
-  flex: 1;
-  position: relative;
-  width: 100%;
-}
-
-.tweet-head-worm-loading {
-  width: 100px;
-  height: 100px;
-}
-
-.tweet-overlay-textarea-container {
-  max-height: 200px;
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.feed-textarea {
-  display: flex;
-  max-height: 80px;
-  width: 100%;
-  height: 100%;
-  border: none;
-  font-size: 1.2rem;
-  resize: none;
-  margin-bottom: 10px;
-  padding: 10px 30px 10px 10px;
-  font-weight: 700;
-  background-color: var(--whiteFade);
-}
-
-.feed-tweet-buttons-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex: 1;
-  width: 100%;
-  margin-top: 10px;
-  height: auto;
-  box-sizing: border-box;
-}
-
-.delete-textarea {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  color: var(--twitterBlue);
-}
-
-.delete-textarea:active {
-  transition: all ease-in-out 0.3s;
-  transform: scale(1.2,1.2);
-}
-
-.delete-textarea:hover {
-  cursor: pointer;
-  color: var(--twitterBlueFade);
-}
-
-.feed-textarea:focus {
-  outline: none;
-}
-
-.tweet-file-input-container {
-  padding-right: 10px;
-  width: 100%;
-}
-
-.tweet-head-add-file-container {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  width: 100%;
-  height: auto;
-}
-
-.feed-file-upload-input {
-  font-size: 1rem;
-  color: var(--white);
-  padding: 1px 25px 1px 0px;
-  min-width: 240px;
-  width: 100%;
-  font-style: italic;
-  background-color: var(--twitterBlueTwo);
-}
-
-.cancel-file-input {
-  position: absolute;
-  top: 4px;
-  right: 3px;
-  color: var(--white);
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-}
-
-.cancel-file-input:active {
-  transform: scale(1.2,1.2);
-}
-
-.feed-file-upload-text {
-  font-size: 0.6rem;
-  color: var(--white);
-}
 
 /* sidebar component css */
 .sidebar-icon-component-container {
@@ -334,7 +170,6 @@ a {
 .feed-tweet-body-container {
   display: flex;
   flex-direction: column;
-
   width: 100%;
   height: auto;
   background-color: var(--blackOverlay);
@@ -345,6 +180,7 @@ a {
   overflow-y: scroll;
   /* hide scrollbar with firefox below code */
   scrollbar-width: none;
+  transition: all 0.2s ease-in-out;
 }
 
 /* hide scrollbar but still scroll for chrome safari and opera*/
@@ -498,6 +334,14 @@ a {
   width: 100%;
   height: 200px;
   transition: all 0.2 ease-in-out;
+}
+
+.react-player {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  height: auto;
+  transition: all 0.3s ease-in-out;
 }
 
 .date-of-tweet {
@@ -1309,15 +1153,15 @@ input:-webkit-autofill:active  {
   align-items: flex-end;
   background-repeat: no-repeat;
   max-width: 300px;
-  background-image: url("https://image.shutterstock.com/image-photo/old-brick-black-color-wall-260nw-1605128917.jpg");
+  background-image: url("https://thumbs.dreamstime.com/b/berlin-germany-jan-twitter-social-media-blue-bird-sign-logo-symbol-minimalist-design-painted-over-white-brick-wall-background-137526023.jpg");
   width: 100%;
-  max-height: 170px;
-  height: 100%;
+  height: 80%;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   border: 2px solid white;
   border-radius: 6px 6px 0px 0px;
   transition: all 0.2s ease-in-out;
+  background-size: cover;
 }
 
 .sidebar-content {
@@ -1471,11 +1315,13 @@ input:-webkit-autofill:active  {
 
 .tweet-cancel-icon {
   color: var(--white);
-  padding-right: 10px;
+  margin-right: 10px;
+  transition: all 0.3s ease-in-out;
 }
 
 .tweet-cancel-icon:hover {
   cursor: pointer;
+  transform: scale(1.2,1.2);
 }
 
 .tweet-cancel-icon:active {
@@ -1493,26 +1339,6 @@ input:-webkit-autofill:active  {
   display: flex;
   max-height: 350px;
   height: 100%;
-}
-
-.tweet-user-image-container {
-  display: flex;
-  width: auto;
-  height: 100%;
-}
-
-.tweet-user-image {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}
-
-.tweet-user-input-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding-left: 10px;
-  box-sizing: border-box;
 }
 
 .tweet-buttons-container {
@@ -1539,29 +1365,9 @@ input:-webkit-autofill:active  {
   padding: 10px;
 }
 
-.tweet-icons-container {
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  width: 100%;
-}
-
 .tweet-icon-buttons {
   display: flex;
   flex-direction: row;
-}
-
-.tweet-icons-user-inputs {
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  width: 100%;
-}
-
-.tweet-head-icons {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
 }
 
 .missing-field-msg {
@@ -1590,52 +1396,6 @@ input:-webkit-autofill:active  {
   outline: none;
 }
 
-.tweet-imageurl-input-container {
-  position: relative;
-  margin-right: 10px;
-  height: auto;
-  width: 100%;
-}
-
-.feed-imageurl-input {
-  // max-width: 300px;
-  padding: 3px 27px 3px 10px;
-  font-size: 14px;
-  width: 100%;
-  font-weight: 700;
-  border: none;
-}
-
-.feed-imageurl-input:focus {
-  outline: none;
-}
-
-.cancel-imageurl-input {
-  position: absolute;
-  right: 5px;
-  top: 4px;
-  color: var(--twitterBlue);
-  cursor: pointer;
-  transition: all 0.1s ease-in-out;
-}
-
-.back {
-  position: absolute;
-  top: 1px;
-  left: -30px;
-  cursor: pointer;
-  color: var(--twitterBlueTwo);
-  height: 25px;
-  border-radius: 50%;
-}
-
-.back:active {
-  transform: scale(1.2,1.2);
-}
-
-.back:hover{
-  background-color: var(--white);
-}
 
 .cancel-imageurl-input:active {
   transform: scale(1.2,1.2);
@@ -1896,9 +1656,7 @@ input:-webkit-autofill:active  {
   .sidebar-top {
     max-height: 200px;
   }
-  .profile-details-container { 
-    height: 150px;
-  }
+
 }
 
 @media screen and (max-width: 660px){
@@ -1917,12 +1675,8 @@ input:-webkit-autofill:active  {
     background-color: var(--blackOverlay2);
     border-radius: 0;
   }
-
   .feed-file-upload-input {
     min-width: 130px;
-  }
-  .tweet-imageurl-input-container {
-    margin-bottom: 10px;;
   }
   .tweet-file-input-container {
     padding: 0;
@@ -1938,6 +1692,12 @@ input:-webkit-autofill:active  {
 @media screen and (max-width: 470px) {
   .main-container {
     padding: 0px 0px;
+  }
+  .tweet-contents {
+    padding: 0px 20px 0px 5px;
+  }
+  .feed-tweet-body-container {
+    padding: 5px;
   }
   .tweet-buttons-container {
     flex-direction: column;
@@ -1955,6 +1715,9 @@ input:-webkit-autofill:active  {
   .feed-tweet-buttons-container {
     flex-direction: column;
   }
+  .react-player {
+    height: 150px;
+  }
   .tweeted-image {
     height: 150px;
   }
@@ -1971,6 +1734,9 @@ input:-webkit-autofill:active  {
 
 @media screen and (max-width: 300px) {
   .tweeted-image {
+    height: 100px;
+  }
+  .react-player {
     height: 100px;
   }
 }

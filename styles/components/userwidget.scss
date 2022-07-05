@@ -1,25 +1,34 @@
 
 
-.feed-widget-container {
+.user-widget-container {
     display: flex;
     position: relative;
     flex-direction: column;
     flex: 0.4;
-    width: 100%;
+    // width: 100%;
     height: auto;
     padding-left: 10px;
     transition: all 0.2s ease-in-out;
     overflow-y: scroll;
+    // max-width: 300px;
+    // width: 100%;
     border-left: 1px solid var(--twitterBlue);
 }
 
-.feed-widget-content {
+.user-widget-news-container {
     display: flex;
     padding: 0px 10px;
     background-color: var(--blackOverlay);
     flex-direction: column;
     margin-top: 10px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    // border-top-left-radius: 10px;
+    // border-top-right-radius: 10px;
+    overflow-y: scroll;
     // margin-left: 10px;
+}
+
+.user-widget-search-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
 }

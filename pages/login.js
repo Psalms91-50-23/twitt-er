@@ -1,3 +1,6 @@
+import axios from 'axios';
+import { sanityBaseURL } from '../lib/functions';
+import { queryAllUsers } from '../lib/queries';
 import homeStyles from '../styles/Home.module.scss';
 import backgroundStyles from '../styles/module/Background.module.scss';
 import { useEffect, useState } from 'react';
@@ -5,15 +8,18 @@ import { useRouter }  from 'next/router';
 import { AiFillHome } from "react-icons/ai";
 import { CustomInput, TwitterBird, BirdieHands, Spinner } from '../components';
 import { useStateContext } from '../context/StateContext';
+// import { client } from '../lib/client';
 import { MdLogin, MdCreate } from 'react-icons/md'
-import { findUser, isPasswordMatch, isEmailMatch,  matchSecret, loginUser, 
-    getNewImageExtension, getOldImageExtension } from '../lib/functions';
+import { findUser, isPasswordMatch, isEmailMatch,  
+  matchSecret, loginUser, getCurrentUserProfile } from '../lib/functions';
 // import Router from "next/router";
-const baseURL = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v1/data/query/development?query=`
+// const baseURL =`https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/${process.env.NEXT_PUBLIC_API_VERSION}/data/query/${process.env.NEXT_PUBLIC_PROJECT_TYPE}?query=`
+// const baseURL = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v1/data/query/?query=`
 
 const Login = ({ users }) => {
+  // console.log("users in login ", users);
   const router = useRouter();
-  const { setUser } = useStateContext();
+  const { setUser, setCurrentUserProfile } = useStateContext();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [foundUser, setFoundUser] = useState(null);
@@ -21,42 +27,44 @@ const Login = ({ users }) => {
   const [passwordError, setPasswordError] = useState(false);
   const [loading, setLoading] = useState(false);
 
+
   useEffect(() => {
     setEmailError(false);
     setPasswordError(false)
     if(users.length){
       if(userName.includes("@")){
-        const userFound = findUser(users, userName.toLowerCase());
+        const userFound = findUser(users, userName);
         if(userFound){
           setFoundUser(userFound);
         }
+
       }
     }
   }, [userName, users, password])
     
-  function signInUser(e){
+  async function signInUser(e){
     e.preventDefault();
     // if(!password || userName === "") return setMissingField(true);
     if(!foundUser) return setEmailError(true);
     if(isEmailMatch(foundUser, userName) === false) return setEmailError(true);
     if(!matchSecret(foundUser,process.env.NEXT_PUBLIC_SECRET)) return setSecretKeyError(true);
     if(!isPasswordMatch(foundUser, password)) return setPasswordError(true);
-    const { _id, userName, imageUrl } = foundUser;
+    const { _id, userName, imageUrl, profileImage } = foundUser;
     setLoading(true);
-    loginUser("/api/login", `${_id}${process.env.NEXT_PUBLIC_SECRET}`);
-    if(foundUser.profileImage){
-      const { profileImage } = foundUser;
-      const { _ref } = profileImage.asset;
-      const newExtension = getNewImageExtension(_ref);
-      const originalExtension = getOldImageExtension();
-      const newImage = _ref.replace('image-', `https://cdn.sanity.io/images/${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}/development/`).replace(originalExtension, newExtension);
-      setUser({ _id, userName, profileImage : newImage, imageUrl });
+   
+    if(foundUser){
+      loginUser("/api/login", `${_id}${process.env.NEXT_PUBLIC_SECRET}`);
+      setUser({ _id, userName, imageUrl, profileImage });
+      const userProfile = await getCurrentUserProfile(_id);
+      setCurrentUserProfile(userProfile)
+      // setUser({ _id, userName, profileImage : newImage, imageUrl });
       router.push("/home");
     }
-    else{
-      setUser({ _id, userName, profileImage: foundUser.profileImage ? foundUser.profileImage : "", imageUrl });
-      router.push(`/home`);
-  }   
+  //   else{
+  //     setUser({ _id, userName, profileImage: foundUser.profileImage, imageUrl });
+  //     // setUser({ _id, userName, profileImage: foundUser.profileImage ? foundUser.profileImage : "", imageUrl });
+  //     router.push(`/home`);
+  // }   
 }
 
   return (
@@ -162,9 +170,8 @@ const Login = ({ users }) => {
   )
 }
 
-export const getServerSideProps = async (req,res) => {
+export const getServerSideProps = async ({ req, res }) => {
 
-  
   if(req.cookies?.token){
     return {
         redirect: {
@@ -177,12 +184,13 @@ export const getServerSideProps = async (req,res) => {
     fetch ie await client.fetch(userQuery); doesn't have the latest data, unless 
      I get temp state from context but coming closing down tab and coming back
     still does give you latest data as state is deleted */
-    const userQuery = '*[_type == "user"]|order(_createdAt desc)';
-    const url = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v2022-05-10/data/query/development?query=${userQuery}`;
-    const users = await fetch(url).then(res => res.json());
+    const usersQuery = encodeURIComponent(queryAllUsers());
+    // const userQuery = encodeURIComponent('*[_type == "user"]|order(_createdAt desc)');
+    const url = `${sanityBaseURL}${usersQuery}`;
+    const users = await fetch(url).then(res => res.json()).catch(error => console.log(error.message));
     return {
       props: {
-        users: users.result
+        users: users.result ? users.result : []
       },
     }
   }

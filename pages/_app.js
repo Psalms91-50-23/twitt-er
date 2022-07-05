@@ -6,9 +6,10 @@ import '../styles/components/icons.scss';
 import "../styles/components/feed.scss";
 import "../styles/components/tweethead.scss";
 import "../styles/components/signup.scss";
+import "../styles/components/icon.scss";
 import "../styles/components/news.scss";
 import "../styles/components/tooltip.scss";
-import "../styles/components/feedwidget.scss";
+import "../styles/components/userwidget.scss";
 import "../styles/components/navicon.scss";
 import "../styles/components/footer.scss";
 import "../styles/components/follow-overlay.scss";
@@ -18,19 +19,15 @@ import { StateContext } from "../context/StateContext";
 import { Layout } from '../components';
 import { CookiesProvider } from "react-cookie";
 
-
-// function MyApp({ Component, pageProps: { session, ...pageProps }}) {
-function MyApp({ Component, pageProps /* : { session, ...pageProps } */ }) {
+function MyApp({ Component, pageProps }) {
   return (
-    // <SessionProvider session={session}>
-      <CookiesProvider>
-        <StateContext>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </StateContext>
-      </CookiesProvider>
-    // </SessionProvider>
+    <CookiesProvider>
+      <StateContext>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </StateContext>
+    </CookiesProvider>
   )
 }
 

@@ -1,6 +1,5 @@
 import cookie from "cookie";
 
-
 export default async function logout(req,res){
     if(req.method === "POST"){
         res.setHeader(

@@ -3,7 +3,7 @@ import { client } from "../lib/client";
 import Cookie from "js-cookie";
 import { useRouter }  from 'next/router';
 const Context = createContext();
-const baseUrl = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v2022-05-10/data/query/development?query=`;
+const baseUrl = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/${process.env.NEXT_PUBLIC_API_VERSION}/data/query/${process.env.NEXT_PUBLIC_PROJECT_TYPE}?query=`;
 
 export const StateContext = ({ children }) => {
 
@@ -63,7 +63,12 @@ export const StateContext = ({ children }) => {
     }, [Cookie.get("token")])
 
     const addNewUser = (newUser) => {
-        setAllUsers([...allUsers, newUser]);
+        console.log({allUsers})
+        if(allUsers?.length){
+            setAllUsers([...allUsers, newUser]);
+        }else {
+            setAllUsers([newUser])
+        }
     }
 
     const addTweet = (tweet, resetStates) => {
@@ -77,19 +82,23 @@ export const StateContext = ({ children }) => {
             .then(response => {
                 tempTweets.splice(0,1,response);
                 setCurrentUserTweets(tempTweets)
+                setIsLoading(false);
             })
             .catch(error => {
                 console.log({error});
             })
         }
-        else if(tweetTitle && tweetImageUrl && !tweet.tweetImage){
+        else if((tweetTitle && tweetImageUrl && !tweet.tweetImage) 
+            || (tweetTitle && tweetVideoUrl && !tweet.tweetImage)){
             tempTweets.splice(0,0,tweet);
             setCurrentUserTweets(tempTweets);
             resetStates();
             client.create(tweet)
             .then(response => {
+                // tempTweets.splice(0,0,response);
                 tempTweets.splice(0,1,response);
                 setCurrentUserTweets(tempTweets);
+                setIsLoading(false);
             })
             .catch(error => {
                 console.log({error});
@@ -139,7 +148,6 @@ export const StateContext = ({ children }) => {
             query: tweetIdQuery
         })
         .catch(error => console.log(error.message))
-        // .then(res => console.log("response ",res))
     }
 
     const otherProfileTweets = (tweets) => {

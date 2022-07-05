@@ -1,24 +1,27 @@
-import { useEffect, useState, createRef } from 'react';
+import { useState } from 'react';
 import { urlFor } from '../../lib/client';
 import ReactPlayer from 'react-player';
-import { Spinner, WormSpinner } from '../';
+import { WormSpinner } from '../';
 import useMediaQuery from '../../hooks/useMediaQuery';
 import { ImCross } from "react-icons/im";
 import { FaRegComment, FaComment } from "react-icons/fa";
 import { FiShare } from "react-icons/fi";
 import { AiOutlineRetweet, AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { client } from '../../lib/client';
 import { useStateContext } from '../../context/StateContext';
 import { format } from 'timeago.js';
-import { TweetIcon } from "../"
+import { TweetIcon } from "../";
+import { useRouter } from 'next/router';
 
 const Tweet = ({ tweet, user }) => {
 
+
   const { deleteTweet } = useStateContext();
+  const router = useRouter();
   const extraLargeDevices = useMediaQuery('(min-width: 1200px)');
   const smallDevices = useMediaQuery('(max-width: 400px)');
   const [dateOfTweet, setDateOfTweet] = useState(tweet._createdAt);
   const [isSelected, setIsSelected] = useState(false);
+  
 
   const iconContainer = {
     display: "flex",
@@ -33,17 +36,20 @@ const Tweet = ({ tweet, user }) => {
     <div className="tweet-container">
       <div className="tweet-triangle-speech"></div>
       <span className="birdie-tweet"></span>
-      <span 
-        className="delete-tweet"
-        onClick={() => deleteTweet(tweet._id)}
-      >
-        <ImCross size={20}/>
-      </span>
+      { router.pathname == "/home" && (
+        <span 
+          className="delete-tweet"
+          onClick={() => deleteTweet(tweet._id)}
+        >
+          <ImCross size={20}/>
+        </span>
+      )
+      }
       <div className="tweet-user-image">
-        { (user?.profileImage || user?.imageUrl ) ? (
+        { user?.imageUrl ? (
           <img 
             className="tweet-user-image"
-            src={user?.profileImage?.asset ? urlFor(user.profileImage.asset) : user?.imageUrl} alt="profile image" 
+            src={ user?.imageUrl && user.imageUrl } alt="profile image" 
           />
         )
           : (
@@ -73,28 +79,18 @@ const Tweet = ({ tweet, user }) => {
           ""
           }
           {
-            tweet.videoUrl ? (
-              // <iframe src={videoUrl && videoUrl}/>
+            tweet.tweetVideoUrl ? (   
             <ReactPlayer 
+              className="react-player"
               controls={true}
-              // onReady={() => setVideoUrl(tweet.videoUrl)}
-              config={{
-                youtube: {
-                  playerVars: { 
-                    showinfo: 1,
-                    origin: 'http://localhost:3000',
-                    controls: 1
-                    }
-                },
-              }}
               muted={false}
-              url={tweet.videoUrl}
+              url={tweet.tweetVideoUrl}
               width="auto"
-              height={extraLargeDevices ? "350px": smallDevices ? "150px" :"250px"}
+              // height={extraLargeDevices ? "350px": smallDevices ? "150px" :"250px"}
             />
           )
           :
-          ""
+          null
           }
           <div className="icons-tweet-container">
             <TweetIcon 

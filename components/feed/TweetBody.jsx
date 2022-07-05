@@ -13,7 +13,7 @@ const TweetBody = () => {
   const [tweets, setTweets] = useState([]);
     
   useEffect(() => {
-    //loads initial tweets
+
     if(currentUserTweets){
       setTweets(currentUserTweets);
     }
@@ -26,6 +26,9 @@ const TweetBody = () => {
     }
   }, [isLoading, setTweets, currentUserTweets])
   
+  if(typeof window === "undefined"){
+    <div className=""><span>Loading...</span></div>
+  }
 
   return (
     <div className="feed-tweet-body-container">

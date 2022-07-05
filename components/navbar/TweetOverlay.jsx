@@ -118,7 +118,7 @@ const TweetOverlay = ({
         // tweetImage: "",
         // publishedAt: "",
         tweetImageUrl: "",
-        videoUrl: "",
+        tweetVideoUrl: "",
         userId: "",
         tweetedBy: {
             _type: 'tweetedBy',
@@ -231,7 +231,7 @@ const TweetOverlay = ({
   }
 
   const titleStyle = {
-    color: "rgb(29,155,240)",
+    color: "rgba(29,155,240,1)",
     fontSize: "12px"
   }
 
@@ -377,7 +377,7 @@ const TweetOverlay = ({
                   buttonStyle={buttonStyles} 
                   buttonContainerStyle={ smallDevice? roundButtonContainer : buttonContainerStyle}
                   textColor={"rgb(255,255,255)"}
-                  buttonHoverColor={"rgba(29, 155, 240, 0.8)"}
+                  buttonHoverColor={"rgba(29, 155, 240, 1)"}
                   onClickEvent={newTweet}
                 />
               </div>

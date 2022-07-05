@@ -1,39 +1,221 @@
 .head-tweet-container {
-    display: flex;
-    /* position: relative; */
-    /* max-height: 180px; */
-    flex-direction: row;
-    /* width: 100%; */
-    height: auto;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    /* background-color: rgba(255, 255, 255, 0.7); */
-    padding: 10px;
-    transition: all 0.2s ease-in-out;
-  }
+  display: flex;
+  flex-direction: row;
+  height: auto;
+  background-color: var(--blackOverlay);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  /* background-color: rgba(255, 255, 255, 0.7); */
+  padding: 10px;
+  transition: all 0.2s ease-in-out;
+}
   
-  .feed-textarea {
-    display: flex;
-    max-height: 80px;
-    width: 100%;
-    height: 100%;
-    border: none;
-    font-size: 1.2rem;
-    resize: none;
-    margin-bottom: 10px;
-    padding: 10px 30px 10px 10px;
-    font-weight: 700;
-    background-color: rgba(255, 255, 255, 0.9);
-  }
+.tweet-user-image-container {
+  display: flex;
+  width: auto;
+  height: 100%;
+}
 
-  .feed-textarea-container {
-    display: flex;
-    flex: 1;
-    position: relative;
-    width: 100%;
-  }
+.tweet-user-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
 
-  .feed-textarea:focus {
-    outline: none;
+.feed-textarea {
+  display: flex;
+  max-height: 80px;
+  width: 100%;
+  height: 100%;
+  border: none;
+  font-size: 1.2rem;
+  resize: none;
+  margin-bottom: 10px;
+  padding: 10px 30px 10px 10px;
+  font-weight: 700;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.feed-textarea-container {
+  display: flex;
+  flex: 1;
+  position: relative;
+  width: 100%;
+}
+
+.feed-textarea:focus {
+  outline: none;
+}
+
+.tweet-user-input-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-left: 10px;
+  box-sizing: border-box;
+}
+
+.feed-tweet-buttons-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+  width: 100%;
+  margin-top: 10px;
+  height: auto;
+  box-sizing: border-box;
+}
+
+.tweet-head-worm-loading {
+  width: 100px;
+  height: 100px;
+}
+
+.tweet-overlay-textarea-container {
+  max-height: 200px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.delete-textarea {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: var(--twitterBlue);
+}
+
+.delete-textarea:active {
+  transition: all ease-in-out 0.3s;
+  transform: scale(1.2,1.2);
+}
+
+.delete-textarea:hover {
+  cursor: pointer;
+  color: var(--twitterBlueFade);
+}
+
+.feed-textarea:focus {
+  outline: none;
+}
+
+.tweet-head-icons {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.tweet-icons-container {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: 100%;
+}
+
+.tweet-icons-user-inputs {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: 100%;
+}
+
+.tweet-url-input-container {
+  position: relative;
+  margin-right: 10px;
+  height: auto;
+  width: 100%;
+}
+
+.feed-url-input {
+  padding: 3px 27px 3px 10px;
+  font-size: 14px;
+  width: 100%;
+  font-weight: 700;
+  border: none;
+}
+
+.feed-url-input:focus {
+  outline: none;
+}
+
+.cancel-url-input {
+  position: absolute;
+  right: 5px;
+  top: 4px;
+  color: var(--twitterBlue);
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+
+.back {
+  position: absolute;
+  top: 1px;
+  left: -30px;
+  cursor: pointer;
+  color: var(--twitterBlueTwo);
+  height: 25px;
+  border-radius: 50%;
+}
+
+.back:active {
+  transform: scale(1.2,1.2);
+}
+
+.back:hover{
+  background-color: var(--white);
+}
+
+.tweet-file-input-container {
+  padding-right: 10px;
+  width: 100%;
+}
+
+.tweet-head-add-file-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.feed-file-upload-input {
+  font-size: 1rem;
+  color: var(--white);
+  padding: 1px 25px 1px 0px;
+  min-width: 240px;
+  width: 100%;
+  font-style: italic;
+  background-color: var(--twitterBlueTwo);
+}
+
+.cancel-file-input {
+  position: absolute;
+  top: 4px;
+  right: 3px;
+  color: var(--white);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.cancel-file-input:active {
+  transform: scale(1.2,1.2);
+}
+
+.feed-file-upload-text {
+  font-size: 0.6rem;
+  color: var(--white);
+}
+
+@media screen and (max-width: 660px){
+  .tweet-url-input-container {
+    margin-bottom: 10px;;
   }
+}
+// .feed-videourl-input {
+//   padding: 3px 27px 3px 10px;
+//   font-size: 14px;
+//   width: 100%;
+//   font-weight: 700;
+//   border: none;
+// }
+

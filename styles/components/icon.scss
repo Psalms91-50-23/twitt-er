@@ -1,0 +1,45 @@
+.icon-component-container {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+  
+.border-bottom {
+    color: var(--white);
+    border-bottom: 2px solid var(--white);
+}
+
+.border-right {
+    color: var(--white);
+    border-right: 2px solid var(--white);
+}
+.border-left {
+    color: var(--white);
+    border-left: 2px solid var(--white);
+}
+.border-top {
+    color: var(--white);
+    border-top: 2px solid var(--white);
+}
+
+.icon-container {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.icon-container:active {
+    transform: translate(1.2,1.2);
+}
+.icon-animation {
+    animation: fromLeft 0.3s ease-in-out;   
+}
+
+.home-user-info {
+    padding: 5px;
+    margin-top: 25px;
+}

@@ -2,6 +2,7 @@
 .news-overlay-container {
     display: flex;
     position: fixed;
+    flex-direction: row;
     top: 0;
     left: 0;
     z-index: 100;
@@ -14,16 +15,22 @@
     flex-direction: row;
 }
 
+.news-main-contents {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    border: 1px solid white;
+}
+
 .news-overlay-contents {
     display: flex;
     flex-direction: column;
     position: relative;
-    width: 50vw;
-    height: 100vh;
     flex: 0.6;
-    padding: 0px 20px 20px 20px;
+    border: 1px solid white;
     transition: all 0.2s ease-in-out;
-    background-color: var(--blackOverlay);
     overflow-y: scroll;
 }
 
@@ -33,7 +40,7 @@
     flex-direction: row;
     width: 100%;
     height: auto;
-    background-color: var(--twitterBlue);
+    background-color: var(--blackOverlay);
     padding: 10px 10px;
     box-sizing: border-box;
     position: sticky;
@@ -41,31 +48,35 @@
     transition: all 0.2s ease-in-out;
 }
 
-.exit-news-overlay-container {
+.latest-news-container {
     display: flex;
-    position: absolute;
-    top: 0px;
-    right: 5px;
+    flex-direction: column;
+    padding: 0px 10px;
+    background-color: var(--blackOverlay2);
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    transition: all 0.2s ease-in-out;
+}
+
+.exit-news-container {
+    display: flex;
+    margin-top: 5px;
     height: 50px;
     width: 50px;
-    align-items: center;
-    justify-content: center;
+    transition: all 0.2s ease-in-out;
 }
 
 .exit-news-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
+    transition: all 0.3s ease-in-out;
 }
 
-.exit-news-overlay-container:hover {
+.exit-news-container:hover {
     cursor: pointer;
     .exit-news-button {
         color: var(--white);
-    }
-    
+        transform: scale(1.2,1.2);
+    }  
 }
 
 
@@ -79,8 +90,15 @@
     }
 }
 
+@media screen and (max-width: 600px) {
+    .news-overlay-contents {
+        flex: 0.85;
+    }
+
+}
+
 @media screen and (max-width: 400px) {
     .news-overlay-contents {
-        flex: 0.7;
+        flex: 0.85;
     }
 }

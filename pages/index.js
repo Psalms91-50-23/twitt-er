@@ -1,11 +1,11 @@
 
 import homeStyles from '../styles/Home.module.scss';
 import backgroundStyles from '../styles/module/Background.module.scss';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { TwitterBird, BirdieHands } from '../components';
 import { MdLogin, MdCreate } from 'react-icons/md';
 import { useRouter } from 'next/router';
-import { client } from '../lib/client';
+// import { client } from '../lib/client';
 import { useStateContext } from '../context/StateContext';
 
 const Home = ({users}) => {
@@ -64,7 +64,7 @@ const Home = ({users}) => {
   )
 }
 
-export const getServerSideProps = async ({req,res}) => {
+export const getServerSideProps = async ({ req, res }) => {
 
   if(req.cookies?.token){
       return {
@@ -74,15 +74,26 @@ export const getServerSideProps = async ({req,res}) => {
           }
       }
   }
-
-  const userQuery = `*[_type == "user"]`
-  const users = await client.fetch(userQuery);
+  const userQuery = encodeURIComponent(`*[_type == "user"]`);
+  const url = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/${process.env.NEXT_PUBLIC_API_VERSION}/data/query/${process.env.NEXT_PUBLIC_PROJECT_TYPE}?query=${userQuery}`;
+  // const users = await client.fetch(userQuery);
+  const users = await fetch(url).then(res => res.json());
 
   return {
     props: {
-      users
+      users: users.result || []
     }
   }
+  
+  // const userQuery = `*[_type == "user"]`
+  // const users = await client.fetch(userQuery);
+
+  // return {
+  //   props: {
+  //     users
+  //   }
+  // }
+
 
 }
 

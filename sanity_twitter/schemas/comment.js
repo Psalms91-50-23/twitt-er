@@ -14,9 +14,9 @@ export default {
             type: 'string'
         },
         {
-            name: 'commentedBy',
-            title: 'Commented By',
-            type: 'commentedBy',
+            name: 'tweetedBy',
+            title: 'TweetedBy',
+            type: 'tweetedBy'
         },
         {
             name: 'blockTweet',

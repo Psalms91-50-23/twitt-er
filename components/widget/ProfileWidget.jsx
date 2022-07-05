@@ -1,9 +1,7 @@
-import useMediaQuery from "../../hooks/useMediaQuery";
 import { People } from "../";
 
-const ProfileWidget = ({users}) => {
+const ProfileWidget = ({ users }) => {
 
-  const smallDevices = useMediaQuery('(max-width: 480px)')
   return (
     <div 
       className="profile-widget-container"

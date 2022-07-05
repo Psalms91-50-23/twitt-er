@@ -2,23 +2,19 @@ import { useState, useEffect } from 'react';
 import {useRef} from 'react';
 import { useStateContext } from '../../context/StateContext';
 import { ImCross } from "react-icons/im";
-import { urlFor, client } from '../../lib/client';
 import { Icon } from '../icon';
 import { AiOutlineFileImage } from "react-icons/ai";
 import { MdComputer } from "react-icons/md";
-import { FaArrowAltCircleLeft } from "react-icons/fa";
+import { FaArrowAltCircleLeft, FaPhotoVideo } from "react-icons/fa";
 import {  buttonStyles, buttonContainerStyle, feedIconStyles } from '../../styles/custom';
-import { RoundButton, CustomInput, Loading } from '../';
+import { RoundButton, Loading } from '../';
 import useMediaQuery from '../../hooks/useMediaQuery';
-import { useRouter } from 'next/router';
 import { v4 as uuidv4 } from 'uuid';
 import { WormSpinner } from "../";
 
 const TweetHead = () => {
     const { 
         user, 
-        setCurrentUserTweets,
-        currentUserTweets,
         setIsLoading,
         addTweet,
     } = useStateContext();
@@ -28,11 +24,10 @@ const TweetHead = () => {
     const inputRef = useRef(null);
     const [fieldError, setFieldError] = useState(false);
     const [tweetTitleError, setTweetTitleError] = useState(false);
-    const [tweet, setTweet] = useState("");
     const [loading, setLoading] = useState(false);
+    const [currentUser, setCurrentUser] = useState(user);
     //for video url
-    // const [videoUrl, setVideoUrl] = useState("");
-    // const [isVideoUrl, setIsVideoUrl] = useState(false);
+    const [isVideoUrl, setIsVideoUrl] = useState(false);
     //image url
     const [imageUrl, setImageUrl] = useState("");
     const [isImageUrl, setIsImageUrl] = useState(false);
@@ -53,6 +48,11 @@ const TweetHead = () => {
             _ref:""
         }
     })
+
+    useEffect(() => {
+        setCurrentUser(user);
+    }, [user])
+    
     const { tweetTitle, tweetImageUrl, tweetVideoUrl } = tweetDoc;
     
     useEffect(() => {
@@ -96,117 +96,6 @@ const TweetHead = () => {
         })
     }
 
-    const setIsLoadingTrue = () => {
-        setLoading(true);
-    }
-
-    const addNewTweet = () => {
-        if(!tweetTitle){
-            setTweetTitleError(true);
-            return
-        }
-        console.log({tweetTitle});
-        const { tweetImageUrl, tweetVideoUrl } = tweetDoc;
-        setIsLoading(true);
-        const date = new Date();
-        let doc = {
-            ...tweetDoc,
-            _createdAt: date.toISOString(),
-            _id: uuidv4(),
-            userId: user._id,
-            tweetTitle: tweet,
-            tweetedBy: {
-                _type: 'tweetedBy',
-                _ref: user._id
-            }
-        }
-
-        if(tweet){
-            addTweet(doc);
-            resetStates();
-        }else if((tweetImageUrl || tweetVideoUrl) && tweet) {
-            doc = {
-                tweetImageUrl: tweetImageUrl ? tweetImageUrl : "",
-                tweetVideoUrl: tweetVideoUrl? tweetVideoUrl : "",
-                tweetedBy: {
-                    _type: 'tweetedBy',
-                    _ref: user._id
-                }
-              }
-            addTweet(doc)
-            resetStates();
-        }
-        if(tweet){
-            console.log(doc);
-            resetStates();
-            addTweet(doc)
-        }
-        // else if((tweetImageUrl || tweetImage || videoUrl) && tweet){
-             if(tweetImageUrl || videoUrl){
-                 doc = {
-                     ...doc,
-                     tweetImageUrl: tweetImageUrl ? tweetImageUrl : "",
-                     tweetVideoUrl: tweetVideoUrl ? tweetVideoUrl : ""
-                 }
-                 console.log({doc})
-                 tempTweets.unshift(doc)
-                 setCurrentUserTweets(tempTweets)
-                  setComputerImgUploading(false);
-                 resetStates();
-                 setIsLoading(false);
-                 client.create(doc)
-                 .then(response => {
-                      var tempTweets = currentUserTweets;
-                      tempTweets.unshift(response)
-                      setCurrentUserTweets(tempTweets)
-                      setIsLoading(false);
-                      return
-                 })
-                 .catch(error => {
-                     console.log({error});
-                 })
-             }
-
-             console.log("before tweetImage");
-             if(tweetImage){
-                 setIsLoading(true);
-                 client.assets
-                 .upload('image', tweetImage, 
-                 { contentType: tweetImage.type, filename: tweetImage.name  })
-                 .then((document) => {
-
-                     doc = {
-                         ...doc,
-                         tweetImage: {
-                             _type: 'image',
-                             asset: {
-                                 _type: 'reference',
-                                 _ref: document._id
-                             }
-                         }
-                     }
-
-                     client.create(doc)
-                     .then(response => {
-                        //  save object to front of array with unshift
-                         tempTweets.unshift(response)
-                         setCurrentUserTweets(tempTweets)
-                         resetStates();
-                         setIsLoading(false);
-                         return
-                     })
-                     .catch(error => {
-                         console.log({error});
-                     })
-                })
-                .catch((error) => {
-                     console.log('Upload failed:', error.message);
-                     setIsLoading(false);
-                });
-            }            
-        
-    }
-
     const handleChange = (e) => {
         setTweetTitleError(false);
         if(e.target.name !== "tweetImage"){
@@ -214,24 +103,25 @@ const TweetHead = () => {
                 [e.target.name] : e.target.value,
                 tweetedBy: {
                     ...tweetDoc.tweetedBy,
-                    _ref: user._id,
+                    _ref: currentUser._id,
                 },
                 _id: uuidv4(),
-                userId: user._id
+                userId: currentUser._id
             });
         }else {
             const selectedFile = e.target.files[0];
             const { type } = selectedFile;
             if(selectedFile){
-                if ( type  === 'image/png' || type === 'image/svg' || type === 'image/jpeg' || type === 'image/gif' || type === 'image/tiff' || type === 'image/jpg') {
+                if ( type  === 'image/png' || type === 'image/svg' || type === 'image/jpeg' || type === 'image/gif' 
+                || type === 'image/tiff' || type === 'image/jpg' || type === 'image/webp') {
                     setTweetDoc({...tweetDoc, 
                         [e.target.name] : selectedFile,
                         tweetedBy: {
                             ...tweetDoc.tweetedBy,
-                            _ref: user._id,
+                            _ref: currentUser._id,
                         },
                         _id: uuidv4(),
-                        userId: user._id
+                        userId: currentUser._id
                     });
                     setWrongImageType(false);
                     setTweetImage(selectedFile)
@@ -269,14 +159,14 @@ const TweetHead = () => {
         inputRef.current.value = null;
     };
 
-   
   return (
     <div className="head-tweet-container">
         <div className="tweet-user-image-container">
-            { (user?.profileImage?.asset || user?.imageUrl ) ? (
+            { 
+            currentUser?.imageUrl ? (
                 <img 
                     className="tweet-user-image"
-                    src={user?.profileImage?.asset ? urlFor(user.profileImage.asset) : user?.imageUrl} alt="profile image" 
+                    src={user?.imageUrl ? user.imageUrl : ""} alt="profile image" 
                 />
             )
             : (
@@ -294,13 +184,9 @@ const TweetHead = () => {
             <div className="tweet-user-input-container">
                 <div className="feed-textarea-container">
                     <textarea 
-                    // name="" id="" 
-                    // cols="30" 
-                    // rows="10"
                     className="feed-textarea"
                     placeholder="What's on your mind?"
                     onChange={(e) => handleChange(e)}
-                    // onChange={(e) => setTweet(e.target.value)}
                     value={tweetTitle}
                     name="tweetTitle"
                     />
@@ -315,7 +201,7 @@ const TweetHead = () => {
                     <div className="tweet-icons-container">
                         <div className="tweet-icons-user-inputs">
                             <div className="tweet-head-icons">
-                                { !isImageUrl && !isFile && (
+                                { !isImageUrl && !isFile && !isVideoUrl && (
                                     <Icon 
                                         icon={<AiOutlineFileImage size={25}/>} 
                                         iconStyle={feedIconStyles}
@@ -326,10 +212,10 @@ const TweetHead = () => {
                                     />
                                     )
                                 }
-                                { isImageUrl && !isFile && (
-                                    <div className="tweet-imageurl-input-container">
+                                { isImageUrl && !isFile && !isVideoUrl && (
+                                    <div className="tweet-url-input-container">
                                         <input 
-                                            className="feed-imageurl-input"
+                                            className="feed-url-input"
                                             type="text" 
                                             onChange={(e) => handleChange(e)}
                                             value={tweetImageUrl} 
@@ -337,7 +223,7 @@ const TweetHead = () => {
                                             placeholder="Image url here..."
                                         />
                                         <span 
-                                            className="cancel-imageurl-input"
+                                            className="cancel-url-input"
                                             onClick={() => resetField("tweetImageUrl")}
                                         >
                                             <ImCross size={18}/>
@@ -351,7 +237,7 @@ const TweetHead = () => {
                                     </div>
                                     )
                                 }
-                                { !isFile && !isImageUrl && (
+                                { !isFile && !isImageUrl && !isVideoUrl && (
                                     <Icon 
                                         icon={<MdComputer size={25}/>} 
                                         iconStyle={feedIconStyles}
@@ -361,7 +247,7 @@ const TweetHead = () => {
                                     />
                                     )
                                 }
-                                { isFile && !isImageUrl && (
+                                { isFile && !isImageUrl && !isVideoUrl && (
                                     <div className="tweet-file-input-container">
                                         <div 
                                             className="tweet-head-add-file-container" 
@@ -375,7 +261,7 @@ const TweetHead = () => {
                                             />
                                             <span 
                                                 className="cancel-file-input"
-                                                onClick={() =>  resetFileInput()}   
+                                                onClick={() => resetFileInput()}   
                                             >
                                                 <ImCross size={18}/>
                                             </span>
@@ -387,16 +273,51 @@ const TweetHead = () => {
                                             </span>
                                         </div>
                                         <span className="feed-file-upload-text">
-                                            Recommendation: Use high-quality JPG, JPEG, SVG, PNG, GIF or TIFF less than 20MB
+                                            Recommendation: Use high-quality JPG, JPEG, SVG, PNG, WEBP, GIF or TIFF less than 20MB
                                         </span>
                                     </div>
                                     )
+                                }
+                                { !isVideoUrl && !isFile && !isImageUrl && (
+                                     <Icon 
+                                        icon={<FaPhotoVideo size={25}/>} 
+                                        iconStyle={feedIconStyles}
+                                        clickEvent={() => setIsVideoUrl(true)}
+                                        titleStyle={titleStyle}
+                                        containerStyle={containerStyle}
+                                    />
+                                    )
+                                }
+                                { isVideoUrl && !isFile && !isImageUrl && (
+                                    <div className="tweet-url-input-container">
+                                        <input 
+                                            className="feed-url-input"
+                                            type="text" 
+                                            onChange={(e) => handleChange(e)}
+                                            value={tweetVideoUrl} 
+                                            name="tweetVideoUrl"
+                                            placeholder="Video url here..."
+                                        />
+                                        <span 
+                                            className="cancel-url-input"
+                                            onClick={() => resetField("tweetVideoUrl")}
+                                        >
+                                            <ImCross size={18}/>
+                                        </span>
+                                        <span 
+                                            className="back"
+                                            onClick={() => setIsVideoUrl(false)}
+                                        >
+                                            <FaArrowAltCircleLeft size={25}/>
+                                        </span>
+                                    </div>
+                                 )
                                 }
                             </div>
                         </div>
                         { tweetTitleError  && (
                             <span className="missing-field-msg">
-                                Require text in text field
+                                Require text "what's on your mind" field
                             </span>
                         )
                         }
@@ -408,7 +329,7 @@ const TweetHead = () => {
                         } */}
                         { wrongImageType  && (
                             <span className="missing-field-msg">
-                                Require one of these fields: Image URL, Video URL or Computer Image from Desktop
+                                Require one of these fields: Image URL or Computer Image from Desktop
                             </span>
                         )
                         }

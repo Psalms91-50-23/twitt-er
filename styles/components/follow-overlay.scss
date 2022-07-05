@@ -20,6 +20,7 @@
     background-color: var(--blackOverlay);
     padding: 5px 10px;
     box-sizing: border-box;
+    transition: all 0.2s ease-in-out;
 }
 
 .follow-contents {
@@ -37,14 +38,16 @@
     display: flex;
     position: absolute;
     width: auto;
-    top: 10px;
+    top: 18px;
     right: -40px;
+    transition: all 0.2s ease-in-out;
 
 }
 .exit-button {
     display: flex;
     width: 40px;
     height: 40px;
+    transition: all 0.2s ease-in-out;
 }
 
 .exit-button:hover {

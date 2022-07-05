@@ -1,12 +1,12 @@
 import backgroundStyles from '../styles/module/Background.module.scss';
+import { queryAllUsers } from '../lib/queries';
+import { sanityBaseURL } from '../lib/functions';
 import homeStyles from '../styles/Home.module.scss';
 import signupStyles from '../styles/module/signup.module.scss';
 import { useState, useEffect } from 'react';
 import {useRef} from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import Link from 'next/link';
 import { client } from "../lib/client";
-import { TiArrowBack } from "react-icons/ti";
 import { AiFillHome } from "react-icons/ai";
 import { useRouter }  from 'next/router';
 import { CustomInput, TwitterBird, BirdieHands, Spinner }  from '../components';
@@ -19,9 +19,8 @@ import { GiSpiderWeb } from "react-icons/gi";
 
 
 const Signup = ({ users }) => {
-
   const router = useRouter();
-  const {  addNewUser, setAllUsers } = useStateContext();
+  const { addNewUser, setAllUsers } = useStateContext();
   // const [allUsers, setAllUsers] = useState(user)
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -44,7 +43,9 @@ const Signup = ({ users }) => {
   const [missingField, setMissingField] = useState(false);
 
   useEffect(() => {  
-    setAllUsers(users);
+    if(users){
+      setAllUsers(users);
+    }
   }, [users,setAllUsers])
   
   useEffect(() => {
@@ -113,6 +114,45 @@ const Signup = ({ users }) => {
       client.assets
       .upload('image', profileImage, { contentType: type, filename: name })
       .then((imgAsset) => {
+        console.log("image asset in signup ",imgAsset);
+
+        doc = {
+          ...doc,
+          profileImage: {
+            _type: 'image',
+            asset: {
+              _type: "reference",
+              _ref: imgAsset._id
+            }
+          },
+          imageUrl: imgAsset.url
+        };
+        // const passwordDecoded = decodePassword(JSON.parse(passwordEncodedPattern), passwordEncoded);
+        client.create(doc).then((newUser) => {
+          console.log("response new user in sign up ", newUser);
+          // addNewUser(newUser);
+          const profileDoc = {
+            _type: "profile",
+            _id: uuidv4(),
+            firstName: "",
+            lastName: "",
+            profileBackDropURL: "",
+            bio: "",
+            userId : {
+              _type: "reference",
+              _ref: newUser._id
+            },
+            _createdAt: new Date().toISOString(),
+          }
+          
+          client.createIfNotExists(profileDoc)
+          .then(res => {
+            // res
+            console.log("doc created after image upload ",res)
+            router.push("/login");
+          })
+        });
+
         return client
         .patch(imgAsset._id)
         .set({
@@ -127,39 +167,42 @@ const Signup = ({ users }) => {
         .commit();
       })
       .then((response) => {
-        doc = {
-          ...doc,
-          profileImage: {
-            _type: 'image',
-            asset: {
-              _type: "reference",
-              _ref: response._id
-            }
-          }
-        };
-        // const passwordDecoded = decodePassword(JSON.parse(passwordEncodedPattern), passwordEncoded);
-        client.createIfNotExists(doc).then((newUser) => {
-          addNewUser(newUser);
-          const profileDoc = {
-            _type: "profile",
-            _id: uuidv4(),
-            firstName: "",
-            lastName: "",
-            profileBackDrop: "",
-            bio: "",
-            userId : {
-              _type: "reference",
-              _ref: newUser._id
-            },
-            _createdAt: new Date().toISOString(),
-          }
+        console.log("response in signup ", response)
+        // doc = {
+        //   ...doc,
+        //   profileImage: {
+        //     _type: 'image',
+        //     asset: {
+        //       _type: "reference",
+        //       _ref: response._id
+        //     }
+        //   },
+        //   imageUrl: response.url
+        // };
+        // // const passwordDecoded = decodePassword(JSON.parse(passwordEncodedPattern), passwordEncoded);
+        // client.createIfNotExists(doc).then((newUser) => {
+        //   console.log("response new user in sign up ", newUser);
+        //   // addNewUser(newUser);
+        //   const profileDoc = {
+        //     _type: "profile",
+        //     _id: uuidv4(),
+        //     firstName: "",
+        //     lastName: "",
+        //     profileBackDropURL: "",
+        //     bio: "",
+        //     userId : {
+        //       _type: "reference",
+        //       _ref: newUser._id
+        //     },
+        //     _createdAt: new Date().toISOString(),
+        //   }
           
-          client.createIfNotExists(profileDoc)
-          .then(res => {
-            // res
-            router.push("/login");
-          })
-        });
+        //   client.createIfNotExists(profileDoc)
+        //   .then(res => {
+        //     // res
+        //     router.push("/login");
+        //   })
+        // });
       })
       .catch((error) => {
         console.log('Upload failed:', error.message);
@@ -174,13 +217,14 @@ const Signup = ({ users }) => {
       setLoading(true);
       client.createIfNotExists(doc)
       .then((newUser) => {
+        console.log("image url in signup after adding doc ",newUser);
         addNewUser(newUser);
         const profileDoc = {
           _type: "profile",
           _id: uuidv4(),
           firstName: "",
           lastName: "",
-          profileBackDrop: "",
+          profileBackDropURL: "",
           bio: "",
           userId : {
             _type: "reference",
@@ -236,11 +280,11 @@ const Signup = ({ users }) => {
                   borderColor={"rgb(29, 161, 242)"}
                   titleColor={"rgb(29, 161, 242)"}
                   headerText="UserName"
-                  textPlaceHolder={"test123@ex-ample.com"}
+                  textPlaceHolder={"min@ex-ample.com"}
                 />
                 { emailError && (
                   <span className={homeStyles.error_msg}>
-                    Email is Not correct Format eg testing@gmail.com / testing@hotmail.co.uk
+                    Email is Not correct Format eg testing@gmail.com / testing@hotmail.co.uk , min 3 chars eg 'min@hotmail.com'
                   </span>
                 )
                 }
@@ -281,7 +325,7 @@ const Signup = ({ users }) => {
                   </span>
                 )
                 }
-                {!fileInput ? (
+                { !fileInput && (
                   <CustomInput 
                     title={"url"} 
                     setImageUrl={setImageUrl} 
@@ -292,15 +336,13 @@ const Signup = ({ users }) => {
                     textPlaceHolder={"Image Url..."}
                   />
                 )
-                :
-                null
                 }
                 { missingField && (
-                  <span className={homeStyles.error_msg}>Missing profile image URL or profile computer image</span>
+                  <span className={homeStyles.error_msg}>Missing profile image URL or computer image</span>
                 )
                 }
-                {emailError && (
-                  <span className={homeStyles.error_msg}>Not a valid Email pattern</span>
+                { emailError && (
+                  <span className={homeStyles.error_msg}>Not a valid Email pattern, 3 characters min eg min@hotmail.com</span>
                 )
                 }
                 <div className={homeStyles.button_container}>
@@ -360,7 +402,7 @@ const Signup = ({ users }) => {
   )
 }
 
-export const getServerSideProps = async ({req,res}) => {
+export const getServerSideProps = async ({ req, res }) => {
 
   if(req.cookies?.token){
     return {
@@ -371,13 +413,12 @@ export const getServerSideProps = async ({req,res}) => {
     }
   }
 
-  const userQuery = `*[_type == "user"]`
-
-  const url = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v2022-05-10/data/query/development?query=${userQuery}`;
-  const users = await fetch(url).then(res => res.json());
+  const userQuery = encodeURIComponent(queryAllUsers());
+  const url = `${sanityBaseURL}${userQuery}`;
+  const users = await fetch(url).then(res => res.json()).catch(error => console.log(error.message));
   return {
     props: {
-      users: users.result
+      users: users.result ? users.result : []
     }
   }
 }

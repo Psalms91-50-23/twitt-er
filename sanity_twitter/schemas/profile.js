@@ -14,7 +14,7 @@ export default {
             type: 'string'
         },
         {
-            name: 'profileBackDrop',
+            name: 'profileBackDropURL',
             title: 'Profile URL Image Backdrop',
             type: 'string'
         },

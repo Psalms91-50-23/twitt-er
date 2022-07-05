@@ -10,6 +10,7 @@ import { useStateContext } from '../../context/StateContext';
 import { TweetOverlay, MenuOverlay, NewsOverlay } from "../"
 import { navIconContainer } from '../../styles/custom';
 import useMediaQuery from '../../hooks/useMediaQuery';
+import { useState, useEffect } from "react";
 
 const Navbar = () => {
   const { 
@@ -24,6 +25,14 @@ const Navbar = () => {
   const router = useRouter();
   const smallDevices = useMediaQuery('(max-width: 470px)');
   const mediumToLargeDevices = useMediaQuery('(max-width: 905px)');
+  const [loggedInUser, setLoggedInUser] = useState(user);
+
+  useEffect(() => {
+    setLoggedInUser(user)
+  }, [user,setLoggedInUser])
+  
+  // console.log("user in nav ",user);
+  // console.log({loggedInUser});
   
   const handleLogOut = () => {
     Cookie.remove("token");
@@ -62,13 +71,13 @@ const Navbar = () => {
         />
         <NavbarIcon 
           icon={<CgProfile size={20}/>} 
-          profileImg={ user?.profileImage? user?.profileImage : user?.imageUrl }
+          profileImg={ loggedInUser?.imageUrl && loggedInUser.imageUrl }
           title={"Profile"}
           borderBottom
           iconStyle={iconStyle}
           containerStyle={ smallDevices &&  navIconContainer}
           titleStyle={titleStyle}
-          clickEvent={ router.route !== "/home/profile/[user_id]" ? () => router.push(`/home/profile/${user?._id}`) : null }
+          clickEvent={ router.route !== "/home/profile/[user_id]" ? () => router.push(`/home/profile/${loggedInUser?._id}`) : null }
         />
       </div>
       <div className="navbar-icon-right-container">
@@ -106,10 +115,10 @@ const Navbar = () => {
         )
         }
       </div>
-      { isNews && mediumToLargeDevices && (
+      {/* { isNews && mediumToLargeDevices && (
         <NewsOverlay />
       )
-      }
+      } */}
       { isShowFollows && mediumToLargeDevices && (
         <FollowOverlay />
       )
@@ -120,7 +129,7 @@ const Navbar = () => {
       }
       {isTweetClicked && (
         <TweetOverlay 
-          currentUser={user} 
+          currentUser={loggedInUser} 
           hideTweet={() => setIsTweetClicked(false)}
           isTweetClicked={isTweetClicked}
         />

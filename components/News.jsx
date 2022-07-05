@@ -22,7 +22,7 @@ const News = ({newz}) => {
             }
             {   showMoreDescription && (
                 <>
-                    <p className="news-text" >{newz?.description}...<span className="show-more" onClick={() => setShowMoreDescription(!showMoreDescription)}>show less description</span></p>
+                    <p className="news-text" >{newz?.description}<span className="show-more" onClick={() => setShowMoreDescription(!showMoreDescription)}>show less description</span></p>
                 </>
             )
             }
@@ -34,7 +34,7 @@ const News = ({newz}) => {
             }
             { showMore && (
                 <>
-                    <p className="news-text" >{newz?.content}...<span className="show-more" onClick={() => setShowMore(!showMore)}>show less</span></p>
+                    <p className="news-text" >{newz?.content}<span className="show-more" onClick={() => setShowMore(!showMore)}>show less</span></p>
                 </>
             )
             }

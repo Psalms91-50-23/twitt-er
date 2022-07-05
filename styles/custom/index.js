@@ -40,7 +40,7 @@ export const iconStyles = {
  }
  
  export const buttonStyles = {
-  backgroundColor: "rgb(29, 155, 240)",
+  backgroundColor: "rgba(29, 155, 240,0.7)",
   border: "none",
   padding: "10px",
   color: "rgb(255,255,255)",

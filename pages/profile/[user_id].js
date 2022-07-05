@@ -1,5 +1,6 @@
 
 import { useRouter } from 'next/router';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useStateContext } from '../../context/StateContext';
 import { AiOutlineSearch } from 'react-icons/ai';
@@ -11,7 +12,7 @@ import {
   ProfileWidget } from '../../components';
 import useMediaQuery from '../../hooks/useMediaQuery';
 
-const Profile = ({  userTweets, user, profile, otherUsers }) => {
+const Profile = ({ userTweets, user, profile, otherUsers }) => {
 
   const mediumToLargeDevices = useMediaQuery('(min-width: 905px)');
   const { setOtherUsers } = useStateContext(); 
@@ -44,7 +45,7 @@ const Profile = ({  userTweets, user, profile, otherUsers }) => {
           <OtherUserFeed user={user} userTweets={userTweets} />
         </div>
         { mediumToLargeDevices && (
-          <div className="current-user-widget-container">
+          <div className="other-user-widget-container">
             <div className="search-people-container">
               <input 
                 className="search-input"
@@ -65,90 +66,19 @@ const Profile = ({  userTweets, user, profile, otherUsers }) => {
   )
 }
 
-// export const getStaticPaths = async () => {
+export const getServerSideProps = async ({ params: { user_id }}) => {
 
-//   const query = `*[_type == "user"]`
-//   const url = `https://r3d2pmc2.api.sanity.io/v2022-05-10/data/query/development?query=${query}`;
-//   const users = await fetch(url).then( res => res.json());
-//   const paths = users.result.map((user) => ({
-//       params: {
-//           user_id: `${user._id}`
-//       }
-//   }))
-//   return {
-//       paths,
-//       fallback: true
-//   }
-
-// }
-
-// export const getStaticProps = async ({ params: { user_id }}) => {
-  
-//   const userQuery = encodeURIComponent(`*[_type == "user" && _id == '${user_id}'][0]`);
-//   const tweetsQuery = encodeURIComponent(`*[_type == "tweet" && tweetedBy._ref == '${user_id}'] | order(_createdAt desc)`);
-//   const url =  `https://r3d2pmc2.api.sanity.io/v2022-05-10/data/query/development?query=`;
-//   const user = await fetch(`${url}${userQuery}`)
-//   .then( res => res.json())
-//   .catch(error => console.log(error.message));
-
-//   const userTweets = await fetch(`${url}${tweetsQuery}`)
-//   .then( res => res.json())
-//   .catch(error => console.log(error.message));
-//   console.log("user tweets, ", userTweets.result);
-
-//   return {
-//     props: {
-//       user: user.result,
-//       userTweets: userTweets.result
-//     }
-//   }
-// }
-
-export const getServerSideProps = async ({ params: { user_id}}) => {
-
-  const userQuery = encodeURIComponent(`*[_type == "user" && _id == '${user_id}'][0]`);
-  const usersQuery = encodeURIComponent(`*[_type == "user" && _id != '${user_id}']`);
-  const userProfileQuery = encodeURIComponent(`*[_type == "profile" && _id == '${user_id}'][0]`);
-  const tweetsQuery = encodeURIComponent(`*[_type == "tweet" && tweetedBy._ref == '${user_id}'] | order(_createdAt desc)`);
-  const url =  `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v2022-05-10/data/query/development?query=`;
-
-  const user = await fetch(`${url}${userQuery}`)
-  .then(res => res.json())
-  .catch(error => console.log(error.message));
-
-  const users = await fetch(`${url}${usersQuery}`)
-  .then(res => res.json())
-  .catch(error => console.log(error.message));
-
-  const userTweets = await fetch(`${url}${tweetsQuery}`)
-  .then( res => res.json())
-  .catch(error => console.log(error.message));
-
-  const userProfile = await fetch(`${url}${userProfileQuery}`)
-  .then( res => res.json())
-  .catch(error => console.log(error.message));
-
-  const options = {
-    method: 'GET',
-    headers: {
-      'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPID_CURRENT_NEWS_API_KEY,
-      'X-RapidAPI-Host': 'current-news.p.rapidapi.com'
-    }
-  };
-
-  let newsData = await fetch('https://current-news.p.rapidapi.com/news', options)
-    .then(response => response.json())
-    // .then(response => newsData = response)
-    .catch(err => console.error(err));
-  // console.log("user tweets, ", userTweets.result);
-
+  const data = await axios.get(`${process.env.NEXT_BASE_URL}/profile/${user_id}`);
+  const { user, userTweets, 
+    // newsData, 
+    profile, otherUsers } = data;
   return {
     props: {
-      user: user.result,
-      userTweets: userTweets.result,
-      profile: userProfile.result,
-      newsData,
-      otherUsers: users.result
+      user,
+      userTweets,
+      profile,
+      // newsData,
+      otherUsers
     },
   }
 }
