@@ -4,9 +4,9 @@ import { News } from "../";
 import { AiOutlineRight, AiOutlineSearch  } from "react-icons/ai";
 import { useState, useEffect } from "react";
 
-const NewsOverlay = () => {
+const NewsOverlay = ({ setIsNews, isNews }) => {
 
-    const { latestNews, setIsNews, isNews } = useStateContext();
+    const { latestNews } = useStateContext();
     const [filteredNews, setFilteredNews] = useState([]);
     const [name, setName] = useState("");
 

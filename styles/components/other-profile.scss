@@ -26,7 +26,7 @@
     display: flex;
     flex-direction: column;
     flex: 1;
-    background-color: var(--blackOverlay);
+    background-color: var(--blackOverlay2);
     margin: 10px 10px;
     overflow-y: scroll;
     box-sizing: content-box;
@@ -42,8 +42,8 @@
     display: flex;
     position: relative;
     flex-direction: column;
-    flex: 1;
-    max-width: 300px;
+    flex: 0.4;
+    // max-width: 300px;
     padding: 0px 10px;
     // padding-top: 10px;
     border-left: 1px solid var(--twitterBlue);
@@ -57,22 +57,59 @@
     width: 100%;
     transition: all 0.2s ease-in-out;
     flex: 1;
+    flex-direction: column;
 }
 
 .other-user-backdrop {
     width: 100%;
     height: 100%;
+    // border: 5px solid var(--white);
+}
+
+.other-user-contents-container {
+    display: flex;
+    position: relative;
+    margin-top: -70px;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+    box-sizing: content-box;
 }
 
 .other-user-profile-image {
-    position: absolute;
-    bottom: -75px;
-    left: 10px;
+    display: flex;
+    margin-left: 15px;
+    max-width: 150px;
+    max-height: 150px;
     width: 150px;
     height: 150px;
     border-radius: 50%;
     background-color: var(--white);
     padding: 5px;
+    transition: all 0.2s ease-in-out;
+}
+
+.other-user-bio-container {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    box-sizing: border-box;
+    margin-left: 10px;
+    margin-right: 10px;
+    // background-color: rgba(128, 128, 128, 0.3);
+    margin-top: 60px;
+    transition: all 0.2s ease-in-out;
+}
+
+.other-user-bio {
+    display: flex;
+    position: absolute;
+    height: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-right: 10px;
+    font-size: 14px;
+    color: var(--white);
 }
 
 .other-user-feed {
@@ -125,21 +162,9 @@
     overflow-y: scroll;
 }
 
-/*  
-    660
-  .sidebar-container {
-    display: flex;
-    width: 100%;
-    height: auto;
-    flex: 0.1 !important;
-    width: 100%;
-    min-width: 90px;
-    padding-right: 10px;
-    padding-left: 10px;
-    box-sizing: border-box;
-  }
-
-*/
+.no-tweets-msg {
+    color: var(--white);
+}
 
 @media screen and (max-width: 660px){ 
 
@@ -156,6 +181,19 @@
         padding-right: 10px;
         padding-left: 10px;
         box-sizing: border-box;
+    }
+}
+
+@media screen and (max-width: 550px){ 
+    .other-user-contents-container { 
+        margin-top: -40px;
+    }
+    .other-user-profile-image {
+        height: 90px;
+        width: 90px;
+    }
+    .other-user-bio-container { 
+        margin-top: 30px;
     }
 }
 

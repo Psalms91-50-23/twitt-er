@@ -1,4 +1,3 @@
-// import { SidebarMenu } from "./"
 import { HiHashtag } from 'react-icons/hi';
 import { MdNotificationsActive } from 'react-icons/md';
 import { CgMenuBoxed } from 'react-icons/cg';
@@ -8,8 +7,9 @@ import { useStateContext } from '../../context/StateContext';
 import { AiOutlineLeft } from "react-icons/ai";
 import { buttonStyles } from '../../styles/custom';
 
-const MenuOverlay = () => {
-    const { setIsTweetClicked, setIsMenuHidden } = useStateContext();
+const MenuOverlay = ({ setIsMenuHidden }) => {
+    const { setIsTweetClicked } = useStateContext();
+    
     const waitClick = () => {
         setTimeout(() => {
             setIsMenuHidden(true)

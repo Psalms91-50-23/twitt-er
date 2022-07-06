@@ -1,8 +1,5 @@
-import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { client, urlFor } from '../../../lib/client';
-import { updateProfile, updateUser, sanityBaseURL } from '../../../lib/functions';
-import { queryUser, queryProfile } from '../../../lib/queries';
+import { client } from '../../../lib/client';
 import { 
   SidebarMenu, 
   ProfileWidget,  
@@ -14,14 +11,13 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { WormSpinner, Spinner } from "../../../components";
 
 const HomeProfile = ({ user, otherUsers, profile }) => {
-  // console.log({user});
+
   const largeDevicesOnwards = useMediaQuery('(min-width: 900px)');
   const { 
     setTweetClicked, 
     setCurrentUserProfile,
     setUser, 
-    setOtherUsers, 
-    setIsLoading } = useStateContext();
+    setOtherUsers } = useStateContext();
 
   const [isEdit, setIsEdit] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -48,19 +44,12 @@ const HomeProfile = ({ user, otherUsers, profile }) => {
   })
 
   const { imageUrl } = thisUser;
-  // console.log("profile ",profile);
 
   const { 
     bio, 
     firstName, 
     lastName, 
     profileBackDropURL } = userProfile;
-
-  // const { 
-  //   bio, 
-  //   firstName, 
-  //   lastName, 
-  //   profileBackDropURL } = profileTemp;
 
   useEffect(() => {
     setCurrentUserProfile(profile);
@@ -77,83 +66,26 @@ const HomeProfile = ({ user, otherUsers, profile }) => {
       setFilteredUsers([])
     }
   }, [name,otherUsers, setFilteredUsers])
-  
-  
-  // useEffect(() => {
 
-  //     if(isUpdated){
-  //       console.log("top");
-  //       if(imageUrl || userFileImage){
-  //         console.log("inside imgurl and userfile");
-  //         const fetchLastUserUpdates = async () => {
-  //           console.log("async 1");
-  //           const userQuery = encodeURIComponent(queryUser(user._id));
-  //           // const userData = await 
-  //           client.fetch(`${sanityBaseURL}${userQuery}`)
-  //             .then(res => res.json())
-  //             .then(res => {
-  //               console.log("here in useEffect ",res);
-  //               setThisUser(res.result);
-  //               if(imageUrl){
-  //                 setImageUrl("");
-  //               }else {
-  //                 setUserFileImage("");
-  //               }
-  //               // setLoading(false);
-  //             })
-  //             .catch(error => console.log(error.message));
-  //             // return userData;
-  //           } 
-  //         fetchLastUserUpdates();
-  //       }
-  //       console.log("profile backdrop url || image");
-  //       if(profileBackDropURL || userBackdropImage){
-  //         console.log("inside url back and image");
-  //           const fetchLastProfileUpdates = async () => {
-  //             console.log("async ");
-  //               const profileQuery = encodeURIComponent(queryProfile(user._id));
-  //               // const profileData = await 
-  //               fetch(`${sanityBaseURL}${profileQuery}`)
-  //               .then(res => res.json())
-  //               .then(res => {
-  //                 console.log("here profile update ",res);
-  //                 if(profileBackDropURL){
-  //                   setUserProfile((profileData) => ({...profileData, profileBackDropURL : ""}))
-  //                 }else {
-  //                   setUserBackdropImage("");
-  //                 }
-  //               })
-  //               .catch(error => console.log(error.message));
-  //               // return profileData;
-  //           }
 
-  //           fetchLastProfileUpdates();
-  //         }
-  //         setIsUpdated(false);
-  //         setLoading(false);
-  //         setIsEdit(false);
-  //       }
-  // }, [setThisUser, loading, setLoading, user, isUpdated, setIsUpdated])
-
-  console.log({isUpdated});
   const uploadUserImage = (e) => {
     //file size in bytes below is 20mb in byte format
     const selectedFile = e.target.files[0];
-    console.log({selectedFile});
     const { type, name } = selectedFile;
     if(selectedFile?.size > 20000000){
       setFileSizeError(true);
       return;
     }
-    console.log("1");
     setFileSizeError(false);
-    // const { type, name } = selectedFile;
-    if (selectedFile.type === 'image/png' || selectedFile.type === 'image/svg' || selectedFile.type === 'image/jpeg' 
-    || selectedFile.type === 'image/gif' || selectedFile.type === 'image/tiff' || selectedFile.type === "image/webp") {
+    if (
+    selectedFile.type === 'image/png' 
+    || selectedFile.type === 'image/svg' 
+    || selectedFile.type === 'image/jpeg' 
+    || selectedFile.type === 'image/gif' 
+    || selectedFile.type === 'image/tiff' 
+    || selectedFile.type === "image/webp" ) {
       setUserFileImage(selectedFile);
-      console.log("2");
     }
-
   };
 
   const uploadBackdropImage = (e) => {
@@ -165,16 +97,16 @@ const HomeProfile = ({ user, otherUsers, profile }) => {
       return;
     }
     setFileSizeError(false);
-    // const { type, name } = selectedFile;
-    if (selectedFile.type === 'image/png' || selectedFile.type === 'image/svg' || selectedFile.type === 'image/jpeg' 
-    || selectedFile.type === 'image/gif' || selectedFile.type === 'image/tiff') {
-      // setUserFileImage(selectedFile);
+    if (
+    selectedFile.type === 'image/png' 
+    || selectedFile.type === 'image/svg' 
+    || selectedFile.type === 'image/jpeg' 
+    || selectedFile.type === 'image/gif' 
+    || selectedFile.type === 'image/tiff'
+    || selectedFile.type === "image/webp" ) {
       setUserBackdropImage(selectedFile);
     }
   };
-
-  // console.log("user file image ",userFileImage);
-  // console.log("user profile img backdrop ",userBackdropImage);
 
   const onChangeProfile = (e) => {
     if(e.target.name == "profileBackDropURL"){
@@ -187,110 +119,13 @@ const HomeProfile = ({ user, otherUsers, profile }) => {
       setUserProfile(profileDeets => ({...profileDeets, [e.target.name] : e.target.value}))
     }
   }
-
-  const updateUserImage = () => {
-
-    if(userFileImage && !imageUrl){
-
-      client.assets
-      .upload('image', userFileImage, { contentType: userFileImage.type, fileName: userFileImage.name})
-      .then(imgAsset => {
-
-        const uploadImgDoc = {
-          ...thisUser,
-          profileImage: {
-            _type: 'image',
-            asset: {
-              _type: "reference",
-              _ref: response._id
-            }
-          },
-          imageUrl: response.url
-        }
-        //updating user table  
-        client.patch(thisUser._id)
-        .set(uploadImgDoc)
-        .commit()
-        .then(updatedUserRes => {
-          setThisUser(updatedUserRes)
-          setUser(updatedUserRes)
-
-          // const doc = {
-          //   ...userProfile,
-          //   profileBackDrop: profileBackDrop !== profile.profileBackDrop ? profileBackDrop : profile.profileBackDrop
-          // }
-        })
-
-        return client
-        .patch(imgAsset._id)
-        .set({
-          profileImage: {
-            _type: 'image',
-            asset: {
-              _type: "reference",
-              _ref: imgAsset._id
-            }
-          }
-        })
-        .commit()
-      })
-      .then(response => {
-        const uploadImgDoc = {
-          ...thisUser,
-          profileImage: {
-            _type: 'image',
-            asset: {
-              _type: "reference",
-              _ref: response._id
-            }
-          },
-          imageUrl: response.url
-        }
-        //updating user table  
-        client.patch(thisUser._id)
-        .set(uploadImgDoc)
-        .commit()
-        .then(updatedUserRes => {
-          setThisUser(updatedUserRes)
-          setUser(updatedUserRes)
-        })
-    })
-    }
-    else if(imageUrl){
-
-      const uploadImgDoc = {
-        ...thisUser,
-        profileImage: {
-          _type: 'image',
-          asset: {
-            _type: "reference",
-            _ref: response._id
-          }
-        },
-        imageUrl: response.url
-      }
-      //updating user table  
-      client.patch(thisUser._id)
-      .set(uploadImgDoc)
-      .commit()
-      .then(updatedUserRes => {
-        setThisUser(updatedUserRes)
-        setUser(updatedUserRes)
-
-        // const doc = {
-        //   ...userProfile,
-        //   profileBackDrop: profileBackDrop !== profile.profileBackDrop ? profileBackDrop : profile.profileBackDrop
-        // }
-      })
-    }
-
-  }
   
   const updateDetails = async () => {
     setLoading(true);
     const updateProfile = () => {
       //update profile second
-      if((userBackdropImage && !profileBackDropURL) || (userBackdropImage && profileBackDropURL)){
+      if((userBackdropImage && !profileBackDropURL) 
+      || (userBackdropImage && profileBackDropURL)){
           client.assets
           .upload('image', userBackdropImage, { contentType: userBackdropImage.type, fileName: userBackdropImage.name})
           .then(imgAsset => {
@@ -325,8 +160,13 @@ const HomeProfile = ({ user, otherUsers, profile }) => {
             .catch(error => console.log(error.message));
           })
         }
-        else if((profileBackDropURL !== profile.profileBackDropURL && profileBackDropURL && !userBackdropImage)
-        || (profileBackDropURL === profile.profileBackDropURL && profileBackDropURL && !userBackdropImage)){
+        else if((
+          profileBackDropURL !== profile.profileBackDropURL 
+          && profileBackDropURL 
+          && !userBackdropImage)
+          || (profileBackDropURL === profile.profileBackDropURL 
+          && profileBackDropURL 
+          && !userBackdropImage)){
           const profileDoc = {
             ...userProfile,
             profileBackDropURL: profileBackDropURL !== profile.profileBackDropURL ? profileBackDropURL 
@@ -514,16 +354,6 @@ const HomeProfile = ({ user, otherUsers, profile }) => {
                     placeholder="Last name here..."
                   />
                 </div>
-                {/* <div className="profile-image-container">
-                  <span className="name-text">Profile Image: </span>
-                  <input 
-                    type={"file"}
-                    name="profileImageBackdrop"
-                    className="image-input-comp"
-                    // value={lastName}
-                    onChange={e => uploadImage(e)}
-                  />
-                </div> */}
                 <div className="backdrop-imageurl-container">
                   <span className="profile-image-text">Profile Image: </span>
                   <div className="profile-user-image-container">
@@ -536,7 +366,6 @@ const HomeProfile = ({ user, otherUsers, profile }) => {
                         className="image-input-url"
                         placeholder="Image URL here..."
                         onChange={e => setThisUser(userDeets =>({...userDeets, [e.target.name]:e.target.value}))}
-                        // onChange={e => setImageUrl(e.target.value)}
                       />)
                     }
                     { !isImageUrl && (
@@ -654,7 +483,6 @@ export const getServerSideProps = async ({ params: { user_id }}) => {
     const data = await fetch(`${process.env.NEXT_BASE_URL}/api/home/profile/${user_id}`)
     .then(res => res.json());
     const { user, otherUsers, profile } = data;
-    // console.log({data});
     return {
       props: { 
         user,

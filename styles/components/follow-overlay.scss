@@ -7,7 +7,7 @@
     z-index: 100;
     width: 100vw;
     height: 100vh;
-    background: linear-gradient(to bottom, #154277 0%,#576e71 30%,#e1c45e 70%,#b26339 100%);
+    background: var(--gradient);
     transition: all 0.5s ease-in-out ;
     animation: fromRight 0.5s ease-in-out;
 }

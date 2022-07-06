@@ -1,29 +1,34 @@
-import { urlFor } from '../lib/client';
 import { RoundButton } from './';
 import { useRouter } from 'next/router';
 import { useStateContext } from '../context/StateContext';
+// import { useState, useEffect } from 'react';
 
 const People = ({ people }) => {
 
   const router = useRouter();
-  const { setIsShowFollows } = useStateContext();
+  const { setIsShowFollows, isShowFollows } = useStateContext();
 
   const redirect = () => {
     router.push(`/profile/${people?._id}`);
     setTimeout(() => {
-      setIsShowFollows(false);
-    }, 500);
+      setIsShowFollows();
+    }, 300);
   }
+
+  console.log({isShowFollows})
   return (
     <div className="people-container">
       <div className="people-contents-container">
         <div className="people-image-container">
-          <img
-            className="people-image" 
-            src={people?.profileImage?.asset? urlFor(people.profileImage.asset._ref) : people.imageUrl } 
-            alt="profile image"
-            onClick={ () => redirect()}
-          />
+          { people.imageUrl && (
+            <img
+              className="people-image" 
+              src={people.imageUrl} 
+              alt="profile image"
+              onClick={() => redirect()}
+            />
+          )
+          }
           <span className="people-username">@{people.userName.split(/[@.]/)[0]}</span>
         </div>
         <RoundButton 

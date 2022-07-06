@@ -3,6 +3,7 @@ import { AiFillHome } from "react-icons/ai";
 import { GiNewspaper } from "react-icons/gi";
 import { CgProfile, CgUserList } from "react-icons/cg";
 import { MdLogout } from "react-icons/md";
+import { IoNewspaperSharp } from "react-icons/io5";
 import Cookie from 'js-cookie';
 import { NavbarIcon, FollowOverlay } from "../"
 import { useRouter } from 'next/router';
@@ -17,22 +18,21 @@ const Navbar = () => {
     user, 
     isTweetClicked,
     setIsTweetClicked,
-    isMenuHidden,
-    isShowFollows, 
-    setIsShowFollows, 
-    isNews, 
-    setIsNews } = useStateContext();
+    setIsShowFollows,
+    isShowFollows
+  } = useStateContext();
   const router = useRouter();
   const smallDevices = useMediaQuery('(max-width: 470px)');
   const mediumToLargeDevices = useMediaQuery('(max-width: 905px)');
   const [loggedInUser, setLoggedInUser] = useState(user);
+  const [isNews, setIsNews] = useState(false);
+  // const [isShowFollows, setIsShowFollows] = useState(false);
+  const [isMenuHidden, setIsMenuHidden] = useState(true);
+
 
   useEffect(() => {
     setLoggedInUser(user)
   }, [user,setLoggedInUser])
-  
-  // console.log("user in nav ",user);
-  // console.log({loggedInUser});
   
   const handleLogOut = () => {
     Cookie.remove("token");
@@ -104,7 +104,7 @@ const Navbar = () => {
         }
         { mediumToLargeDevices && router.pathname == "/home" && (
           <NavbarIcon 
-            icon={<GiNewspaper size={20}/>} 
+            icon={<IoNewspaperSharp size={20}/>} 
             title={""}
             iconStyle={iconStyle}
             borderBottom
@@ -115,16 +115,24 @@ const Navbar = () => {
         )
         }
       </div>
-      {/* { isNews && mediumToLargeDevices && (
-        <NewsOverlay />
+      { isNews && mediumToLargeDevices && (
+        <NewsOverlay 
+          isNews={isNews} 
+          setIsNews={setIsNews} 
+        />
       )
-      } */}
+      }
       { isShowFollows && mediumToLargeDevices && (
-        <FollowOverlay />
+        <FollowOverlay 
+          isShowFollows={isShowFollows} 
+          setIsShowFollows={setIsShowFollows} 
+        />
       )
       }
       { !isMenuHidden && (
-        <MenuOverlay />
+        <MenuOverlay 
+          setIsMenuHidden={setIsMenuHidden}
+        />
       )
       }
       {isTweetClicked && (

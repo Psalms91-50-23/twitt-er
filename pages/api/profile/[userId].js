@@ -1,13 +1,11 @@
 import { sanityBaseURL } from "../../../lib/functions";
-import { client } from "../../../lib/client";
 import { queryOtherUsers, queryUser, queryUserTweets, queryProfile } from "../../../lib/queries";
 
 export default async function(req,res){
-
-    if(req.method == "GET"){
+    if(req.method == "POST"){
         const { userId } = req.query;
         const userQuery = encodeURIComponent(queryUser(userId));
-        const otherUsersQuery = encodeURIComponent(queryOtherUsers(userId));
+        const otherUsersQuery = encodeURIComponent(queryOtherUsers(req.body.userId));
         const profileQuery = encodeURIComponent(queryProfile(userId));
         const userTweetsQuery = encodeURIComponent(queryUserTweets(userId));
         
@@ -25,15 +23,15 @@ export default async function(req,res){
                 fetch(`${sanityBaseURL}${profileQuery}`),
                 fetch(`${sanityBaseURL}${userQuery}`),
                 fetch(`${sanityBaseURL}${otherUsersQuery}`),
-                // fetch('https://current-news.p.rapidapi.com/news', options),
+                fetch('https://current-news.p.rapidapi.com/news', options),
             ])
             const finalData = await Promise.all(results.map(result => result.json()));
             res.status(200).json({
                 userTweets: finalData[0].result,
-                otherUsers: finalData[1].result,
+                profile: finalData[1].result,
                 user: finalData[2].result,
-                profile: finalData[3].result,
-                // newsData: finalData[4].news,
+                otherUsers: finalData[3].result,
+                newsData: finalData[4].news,
             });
         }catch(error){
             console.log(error.message);

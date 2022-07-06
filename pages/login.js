@@ -12,12 +12,8 @@ import { useStateContext } from '../context/StateContext';
 import { MdLogin, MdCreate } from 'react-icons/md'
 import { findUser, isPasswordMatch, isEmailMatch,  
   matchSecret, loginUser, getCurrentUserProfile } from '../lib/functions';
-// import Router from "next/router";
-// const baseURL =`https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/${process.env.NEXT_PUBLIC_API_VERSION}/data/query/${process.env.NEXT_PUBLIC_PROJECT_TYPE}?query=`
-// const baseURL = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v1/data/query/?query=`
 
 const Login = ({ users }) => {
-  // console.log("users in login ", users);
   const router = useRouter();
   const { setUser, setCurrentUserProfile } = useStateContext();
   const [userName, setUserName] = useState("");
@@ -44,7 +40,6 @@ const Login = ({ users }) => {
     
   async function signInUser(e){
     e.preventDefault();
-    // if(!password || userName === "") return setMissingField(true);
     if(!foundUser) return setEmailError(true);
     if(isEmailMatch(foundUser, userName) === false) return setEmailError(true);
     if(!matchSecret(foundUser,process.env.NEXT_PUBLIC_SECRET)) return setSecretKeyError(true);
@@ -57,14 +52,9 @@ const Login = ({ users }) => {
       setUser({ _id, userName, imageUrl, profileImage });
       const userProfile = await getCurrentUserProfile(_id);
       setCurrentUserProfile(userProfile)
-      // setUser({ _id, userName, profileImage : newImage, imageUrl });
       router.push("/home");
     }
-  //   else{
-  //     setUser({ _id, userName, profileImage: foundUser.profileImage, imageUrl });
-  //     // setUser({ _id, userName, profileImage: foundUser.profileImage ? foundUser.profileImage : "", imageUrl });
-  //     router.push(`/home`);
-  // }   
+ 
 }
 
   return (
@@ -185,7 +175,6 @@ export const getServerSideProps = async ({ req, res }) => {
      I get temp state from context but coming closing down tab and coming back
     still does give you latest data as state is deleted */
     const usersQuery = encodeURIComponent(queryAllUsers());
-    // const userQuery = encodeURIComponent('*[_type == "user"]|order(_createdAt desc)');
     const url = `${sanityBaseURL}${usersQuery}`;
     const users = await fetch(url).then(res => res.json()).catch(error => console.log(error.message));
     return {

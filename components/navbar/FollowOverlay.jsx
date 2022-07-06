@@ -3,8 +3,8 @@ import { useStateContext } from '../../context/StateContext';
 import { ProfileWidget } from '../widget';
 import { AiOutlineRight, AiOutlineSearch } from "react-icons/ai";
 
-const FollowOverlay = () => {
-    const { otherUsers, isShowFollows, setIsShowFollows } = useStateContext();
+const FollowOverlay = ({ isShowFollows, setIsShowFollows }) => {
+    const { otherUsers } = useStateContext();
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [name, setName] = useState("");
 
@@ -17,7 +17,6 @@ const FollowOverlay = () => {
         }
       }, [name,otherUsers])
       
-
   return (
     <div className="follow-container">
         <div className="follow-contents">

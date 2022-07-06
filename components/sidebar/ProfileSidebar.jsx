@@ -1,7 +1,4 @@
-import { useStateContext } from "../../context/StateContext";
 import { WormSpinner } from "../";
-import { urlFor } from "../../lib/client";
-import { useState, useEffect } from "react";
 
 const ProfileSidebar = ({ user, profile }) => {
 
@@ -17,7 +14,6 @@ const ProfileSidebar = ({ user, profile }) => {
                 <img 
                   className="home-profile-image"
                   src={user?.imageUrl && user.imageUrl}
-                  // src={loggedInUser?.profileImage? urlFor(loggedInUser.profileImage?.asset._ref) : loggedInUser?.imageUrl }
                   alt="profile img"
                 />
             )

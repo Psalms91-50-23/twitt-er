@@ -12,7 +12,7 @@ import { useRouter }  from 'next/router';
 import { CustomInput, TwitterBird, BirdieHands, Spinner }  from '../components';
 import { MdLogin, MdCreate } from 'react-icons/md'
 import { findUser, encodePassword, getEncodedPattern,
-        decodePassword, validateEmail } from '../lib/functions';
+        validateEmail } from '../lib/functions';
 import { useStateContext } from '../context/StateContext';
 import { MdComputer } from "react-icons/md";
 import { GiSpiderWeb } from "react-icons/gi";
@@ -20,8 +20,7 @@ import { GiSpiderWeb } from "react-icons/gi";
 
 const Signup = ({ users }) => {
   const router = useRouter();
-  const { addNewUser, setAllUsers } = useStateContext();
-  // const [allUsers, setAllUsers] = useState(user)
+  const { setAllUsers } = useStateContext();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
@@ -80,7 +79,6 @@ const Signup = ({ users }) => {
       return;
     }
     setFileSizeError(false);
-    // const { type, name } = selectedFile;
     if (selectedFile.type === 'image/png' || selectedFile.type === 'image/svg' || selectedFile.type === 'image/jpeg' || selectedFile.type === 'image/gif' || selectedFile.type === 'image/tiff') {
       setWrongImageType(false);
       setProfileImage(selectedFile);
@@ -114,23 +112,23 @@ const Signup = ({ users }) => {
       client.assets
       .upload('image', profileImage, { contentType: type, filename: name })
       .then((imgAsset) => {
-        console.log("image asset in signup ",imgAsset);
-
+        const { url, size, path, originalFilename, assetId, _id } = imgAsset;
         doc = {
           ...doc,
           profileImage: {
             _type: 'image',
             asset: {
               _type: "reference",
-              _ref: imgAsset._id
-            }
+              _ref: _id
+            },
+            originalFilename,
+            path,
+            size,
+            assetId,
           },
-          imageUrl: imgAsset.url
+          imageUrl: url
         };
-        // const passwordDecoded = decodePassword(JSON.parse(passwordEncodedPattern), passwordEncoded);
         client.create(doc).then((newUser) => {
-          console.log("response new user in sign up ", newUser);
-          // addNewUser(newUser);
           const profileDoc = {
             _type: "profile",
             _id: uuidv4(),
@@ -147,62 +145,9 @@ const Signup = ({ users }) => {
           
           client.createIfNotExists(profileDoc)
           .then(res => {
-            // res
-            console.log("doc created after image upload ",res)
             router.push("/login");
           })
         });
-
-        return client
-        .patch(imgAsset._id)
-        .set({
-          profileImage: {
-            _type: 'image',
-            asset: {
-              _type: "reference",
-              _ref: imgAsset._id
-            }
-          }
-        })
-        .commit();
-      })
-      .then((response) => {
-        console.log("response in signup ", response)
-        // doc = {
-        //   ...doc,
-        //   profileImage: {
-        //     _type: 'image',
-        //     asset: {
-        //       _type: "reference",
-        //       _ref: response._id
-        //     }
-        //   },
-        //   imageUrl: response.url
-        // };
-        // // const passwordDecoded = decodePassword(JSON.parse(passwordEncodedPattern), passwordEncoded);
-        // client.createIfNotExists(doc).then((newUser) => {
-        //   console.log("response new user in sign up ", newUser);
-        //   // addNewUser(newUser);
-        //   const profileDoc = {
-        //     _type: "profile",
-        //     _id: uuidv4(),
-        //     firstName: "",
-        //     lastName: "",
-        //     profileBackDropURL: "",
-        //     bio: "",
-        //     userId : {
-        //       _type: "reference",
-        //       _ref: newUser._id
-        //     },
-        //     _createdAt: new Date().toISOString(),
-        //   }
-          
-        //   client.createIfNotExists(profileDoc)
-        //   .then(res => {
-        //     // res
-        //     router.push("/login");
-        //   })
-        // });
       })
       .catch((error) => {
         console.log('Upload failed:', error.message);
@@ -217,8 +162,6 @@ const Signup = ({ users }) => {
       setLoading(true);
       client.createIfNotExists(doc)
       .then((newUser) => {
-        console.log("image url in signup after adding doc ",newUser);
-        addNewUser(newUser);
         const profileDoc = {
           _type: "profile",
           _id: uuidv4(),
@@ -233,10 +176,9 @@ const Signup = ({ users }) => {
           _createdAt: new Date().toISOString(),
         }
         client.createIfNotExists(profileDoc)
-        .then(res => {
+        .then(() => {
           router.push("/login");
         })
-        // router.push("/login");
       })
       .catch((error) => {
         console.log('Upload failed:', error.message);

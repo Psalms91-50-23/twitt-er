@@ -1,6 +1,4 @@
 
-import { useRouter } from 'next/router';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useStateContext } from '../../context/StateContext';
 import { AiOutlineSearch } from 'react-icons/ai';
@@ -12,7 +10,11 @@ import {
   ProfileWidget } from '../../components';
 import useMediaQuery from '../../hooks/useMediaQuery';
 
-const Profile = ({ userTweets, user, profile, otherUsers }) => {
+const Profile = ({ 
+  userTweets, 
+  user, 
+  profile, 
+  otherUsers }) => {
 
   const mediumToLargeDevices = useMediaQuery('(min-width: 905px)');
   const { setOtherUsers } = useStateContext(); 
@@ -57,7 +59,10 @@ const Profile = ({ userTweets, user, profile, otherUsers }) => {
                 <AiOutlineSearch size={25}/>
               </span>
             </div>
-            <ProfileWidget users={ filteredUsers?.length ? filteredUsers : otherUsers}/>
+            <ProfileWidget 
+              users={ filteredUsers?.length ? filteredUsers 
+              : otherUsers}
+            />
         </div>
         )
         }
@@ -66,18 +71,41 @@ const Profile = ({ userTweets, user, profile, otherUsers }) => {
   )
 }
 
-export const getServerSideProps = async ({ params: { user_id }}) => {
+export const getServerSideProps = async ({ params: { user_id }, req, res }) => {
 
-  const data = await axios.get(`${process.env.NEXT_BASE_URL}/profile/${user_id}`);
-  const { user, userTweets, 
-    // newsData, 
-    profile, otherUsers } = data;
+  if(!req.cookies.token){
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false
+      }
+    }
+  }
+  let userId;
+  if(req.cookies.token){
+    userId = req.cookies.token.split(process.env.NEXT_PUBLIC_SECRET)[0];
+  }
+
+  const data = await fetch(`${process.env.NEXT_BASE_URL}/api/profile/${user_id}`, {
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8'
+    },
+    method: "POST",
+    body: JSON.stringify({ userId })
+  }).then(res => res.json());
+
+  const { 
+    user, 
+    userTweets, 
+    newsData, 
+    profile, 
+    otherUsers } = data;
   return {
     props: {
       user,
       userTweets,
       profile,
-      // newsData,
+      newsData,
       otherUsers
     },
   }

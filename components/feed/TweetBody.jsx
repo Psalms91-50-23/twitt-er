@@ -1,15 +1,13 @@
 import { Tweet } from '..';
 import { useState, useEffect } from 'react';
 import { useStateContext } from '../../context/StateContext';
-import { useRouter } from 'next/router';
 
 const TweetBody = () => {
   const { 
     user, 
     isLoading,
     currentUserTweets } = useStateContext();
-  const router = useRouter();
-  // const url = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v2021-03-25/data/query/development?query=*[ _type == "tweet"&&tweetedBy._ref=="${user._id}]`;
+
   const [tweets, setTweets] = useState([]);
     
   useEffect(() => {

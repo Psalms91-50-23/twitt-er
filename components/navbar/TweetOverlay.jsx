@@ -60,13 +60,7 @@ const TweetOverlay = ({
           _ref:""
       }
   })
-
-  // useEffect(() => {
-  //   if(!isTweetClicked){
-  //     setIsSlideLeft(true);
-  //   }
-  // }, [isTweetClicked])
-
+  
   useEffect(() => {
     if(!tweetDoc.tweetTitle){
         setIsLoading(false);

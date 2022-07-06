@@ -296,7 +296,7 @@ const TweetHead = () => {
                                             onChange={(e) => handleChange(e)}
                                             value={tweetVideoUrl} 
                                             name="tweetVideoUrl"
-                                            placeholder="Video url here..."
+                                            placeholder="Youtube video url here..."
                                         />
                                         <span 
                                             className="cancel-url-input"

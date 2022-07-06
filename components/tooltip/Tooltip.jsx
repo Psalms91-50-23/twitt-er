@@ -1,5 +1,5 @@
 
-const Tooltip = ({tooltip}) => {
+const Tooltip = ({ tooltip }) => {
   return (
     <div className="tooltip-container">
         <div className="tooltip-triangle"></div>

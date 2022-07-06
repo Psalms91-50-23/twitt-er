@@ -24,15 +24,15 @@ export default async function handler(req, res) {
                 fetch(`${sanityBaseURL}${profileQuery}`), 
                 fetch(`${sanityBaseURL}${userQuery}`),
                 fetch(`${sanityBaseURL}${otherUsersQuery}`),
-                // fetch('https://current-news.p.rapidapi.com/news', options),
+                fetch('https://current-news.p.rapidapi.com/news', options),
             ])
             const finalData = await Promise.all(results.map(result => result.json()));
             res.status(200).json({ 
                 tweets: finalData[0].result, 
                 profile: finalData[1].result, 
                 currentUser: finalData[2].result,
-                otherUsers: finalData[3].result
-                // newsData: finalData[4].news, 
+                otherUsers: finalData[3].result,
+                newsData: finalData[4].news, 
             });
         }catch(error){
             console.log(error.message);

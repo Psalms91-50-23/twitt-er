@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import Image from 'next/image';
 
-const News = ({newz}) => {
+const News = ({ newz }) => {
 
     const [showMore, setShowMore] = useState(false);
     const [showMoreDescription, setShowMoreDescription] = useState(false)

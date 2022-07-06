@@ -1,12 +1,9 @@
-import { SidebarMenu, ProfileSidebar, WormSpinner } from "../";
-import { useEffect, useState } from "react";
+import { SidebarMenu, WormSpinner } from "../";
 import useMediaQuery from '../../hooks/useMediaQuery';
-
 
 const Sidebar = ({ userDetails, profile }) => {
 
   const smallDevices = useMediaQuery('(max-width: 660px)');
-
 
   return (
     <div className="sidebar-container">
@@ -21,7 +18,6 @@ const Sidebar = ({ userDetails, profile }) => {
                    <img 
                      className="home-profile-image"
                      src={userDetails?.imageUrl && userDetails.imageUrl}
-                     // src={loggedInUser?.profileImage? urlFor(loggedInUser.profileImage?.asset._ref) : loggedInUser?.imageUrl }
                      alt="profile img"
                    />
                )

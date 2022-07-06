@@ -2,8 +2,9 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { client } from "../lib/client";
 import Cookie from "js-cookie";
 import { useRouter }  from 'next/router';
+import { queryUser, queryUserTweets, queryAllUsers, queryTweet } from "../lib/queries";
+import { sanityBaseURL } from "../lib/functions"; 
 const Context = createContext();
-const baseUrl = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/${process.env.NEXT_PUBLIC_API_VERSION}/data/query/${process.env.NEXT_PUBLIC_PROJECT_TYPE}?query=`;
 
 export const StateContext = ({ children }) => {
 
@@ -11,20 +12,14 @@ export const StateContext = ({ children }) => {
     const [user, setUser] = useState(null);
     const [allUsers, setAllUsers] = useState([]);
     const [isTweetClicked, setIsTweetClicked] = useState(false);
-    // const [userId, setUserId] = useState(Cookie.get("token") ? Cookie.get("token").split(process.env.NEXT_PUBLIC_SECRET)[0] : false);
-    const [tempTweet, setTempTweet] = useState(null);
-    const [isUrl, setIsUrl] = useState(false);
     const [currentUserTweets, setCurrentUserTweets] = useState([]);
-    const [updatedUsers, setUpdatedUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [isMenuHidden, setIsMenuHidden] = useState(true);
     const [otherUser, setOtherUser] = useState(null);
     const [otherUserTweets, setOtherUserTweets] = useState([]);
     const [currentUserProfile, setCurrentUserProfile] = useState(null);
-    const [isShowFollows, setIsShowFollows] = useState(false);
     const [otherUsers, setOtherUsers] = useState(null);
     const [latestNews, setLatestNews] = useState([]);
-    const [isNews, setIsNews] = useState(false);
+    const [isShowFollows, setIsShowFollows] = useState(false);
 
     useEffect(() => {
 
@@ -34,26 +29,26 @@ export const StateContext = ({ children }) => {
 
         if(Cookie.get("token")){
             const userId = Cookie.get("token").split(process.env.NEXT_PUBLIC_SECRET)[0];
-            const userQuery = encodeURIComponent(`*[_type == "user" && _id == '${userId}']`);
-            const userTweetsQuery = encodeURIComponent(`*[_type == "tweet" && userId == '${userId}'] | order(_createdAt desc)`);
-            fetch(`${baseUrl}${userQuery}`)
-            .then(res => res.json())
-            .then(userData => {
-                setUser(userData.result[0]);
-                fetch(`${baseUrl}${userTweetsQuery}`)
-                .then(res => res.json())
-                .then(userTweets => {
-                    setCurrentUserTweets(userTweets.result);
-                })
-                .catch(error => {console.log(error.message)})
-            })
-            .catch(error => {
-                console.log(error.message);
-            })
+            const userQuery = encodeURIComponent(queryUser(userId));
+            const userTweetsQuery = encodeURIComponent(queryUserTweets(userId));
+            const fetchData = async () => {
+                try {
+                    const results = await Promise.all([
+                        fetch(`${sanityBaseURL}${userQuery}`),
+                        fetch(`${sanityBaseURL}${userTweetsQuery}`)
+                    ])
+                    const finalData = await Promise.all(results.map(result => result.json()));
+                    // console.log("final data in context ", finalData);
+                    setUser(finalData[0].result);
+                    setCurrentUserTweets(finalData[1].result);
+                }catch(error){
+                    console.log(error.message);
+                }
+            }
+            fetchData();
         }
         else{
-            const allUserQuery = `*[_type == "user"] | order(_createdAt asc)`;
-            fetch(`${baseUrl}${allUserQuery}`)
+            fetch(`${sanityBaseURL}${encodeURIComponent(queryAllUsers())}`)
             .then(res => res.json())
             .then(users => {
                 setAllUsers(users.result);
@@ -63,7 +58,6 @@ export const StateContext = ({ children }) => {
     }, [Cookie.get("token")])
 
     const addNewUser = (newUser) => {
-        console.log({allUsers})
         if(allUsers?.length){
             setAllUsers([...allUsers, newUser]);
         }else {
@@ -110,16 +104,22 @@ export const StateContext = ({ children }) => {
             client.assets
             .upload('image', tweetImage, 
             { contentType: tweetImage.type, filename: tweetImage.name })
-            .then((document) => {
+            .then((imgAsset) => {
+                const { url, size, path, originalFilename, assetId, _id } = imgAsset;
                 doc = {
                     ...tweet,
                     tweetImage: {
                         _type: 'image',
                         asset: {
                             _type: 'reference',
-                            _ref: document._id
+                            _ref: _id
                         }
-                    }
+                    },
+                    originalFilename,
+                    path,
+                    size,
+                    assetId,
+                    tweetImageUrl: url
                 }
 
                 client.create(doc)
@@ -143,7 +143,7 @@ export const StateContext = ({ children }) => {
     const deleteTweet = (id) => {
         const filteredTweets = currentUserTweets.filter(tweet => tweet._id !== id)
         setCurrentUserTweets(filteredTweets)
-        const tweetIdQuery = `*[_type=="tweet" && _id == '${id}']`;
+        const tweetIdQuery = queryTweet(id);
         client.delete({
             query: tweetIdQuery
         })
@@ -161,16 +161,10 @@ export const StateContext = ({ children }) => {
                 setUser,
                 setIsTweetClicked,
                 isTweetClicked,
-                isMenuHidden,
-                setIsMenuHidden,
                 setCurrentUserTweets,
                 currentUserTweets,
                 setIsLoading,
                 isLoading,
-                setTempTweet,
-                tempTweet,
-                setIsUrl,
-                isUrl,
                 addTweet,
                 otherUser,
                 setOtherUser,
@@ -183,14 +177,12 @@ export const StateContext = ({ children }) => {
                 setOtherUserTweets,
                 setCurrentUserProfile,
                 currentUserProfile,
-                isShowFollows,
-                setIsShowFollows,
                 setOtherUsers,
                 otherUsers,
                 setLatestNews,
                 latestNews,
-                setIsNews,
-                isNews  
+                isShowFollows,
+                setIsShowFollows, 
             }}
         >
             {children}
