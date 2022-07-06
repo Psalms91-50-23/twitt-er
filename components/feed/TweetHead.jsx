@@ -315,9 +315,9 @@ const TweetHead = () => {
                                 }
                             </div>
                         </div>
-                        { tweetTitleError  && (
+                        { tweetTitleError && (
                             <span className="missing-field-msg">
-                                Require text &quot;what's on your mind&quot; field
+                                Require text &apos;what&quot;s on your mind&apos; field
                             </span>
                         )
                         }
