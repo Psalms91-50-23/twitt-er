@@ -1,7 +1,7 @@
 import { sanityBaseURL } from "../../../lib/functions";
 import { queryOtherUsers, queryUser, queryUserTweets, queryProfile } from "../../../lib/queries";
 
-export default async function(req,res){
+export default async function handler(req,res){
     if(req.method == "POST"){
         const { userId } = req.query;
         const userQuery = encodeURIComponent(queryUser(userId));

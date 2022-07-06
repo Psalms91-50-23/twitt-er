@@ -28,19 +28,19 @@ const Home = ({
   
   useEffect(() => {
     setLatestNews(newsData);
-  }, [newsData])
+  }, [newsData,setLatestNews])
   
   useEffect(() => {
     setOtherUsers(otherUsers);
-  }, [otherUsers])
+  }, [otherUsers, setOtherUsers])
 
   useEffect(() => {
      setCurrentUserTweets(tweets);
-  }, [tweets])
+  }, [tweets, setCurrentUserTweets])
   
   useEffect(() => {
     setCurrentUserProfile(profile);
-  }, [profile]) 
+  }, [profile, setCurrentUserProfile]) 
 
   return (
     <div className="home-container">

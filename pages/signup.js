@@ -226,7 +226,7 @@ const Signup = ({ users }) => {
                 />
                 { emailError && (
                   <span className={homeStyles.error_msg}>
-                    Email is Not correct Format eg testing@gmail.com / testing@hotmail.co.uk , min 3 chars eg 'min@hotmail.com'
+                    Email is Not correct Format eg testing@gmail.com or min@hotmail.co.uk, 3 chars min
                   </span>
                 )
                 }
