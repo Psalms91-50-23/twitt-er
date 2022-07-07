@@ -12,8 +12,8 @@
   --whiteFade2: rgba(255,255,255,0.8);
   --errorColor: rgba(255, 0, 0, 1);
   --black: rgba(0,0,0,1);
-  --blackOverlay: rgba(0,0,0,0.3);
-  --blackOverlay2: rgba(0,0,0,0.5);
+  --blackOverlay: rgba(0,0,0,0.5);
+  --blackOverlay2: rgba(0,0,0,0.3);
   --gradient: linear-gradient(to bottom, #154277 0%,#576e71 30%,#e1c45e 70%,#b26339 100%);
 }
 
@@ -162,8 +162,8 @@ a {
 }
 
 .sidebar-icon-component-container:hover {
-  cursor: pointer;
   color: var(--white);
+  cursor: pointer;
   border-right: 2px solid var(--white);
   transition: all 0.2s ease-in-out;
 }
