@@ -10,6 +10,7 @@ import { useStateContext } from '../../context/StateContext';
 import { format } from 'timeago.js';
 import { TweetIcon } from "../";
 import { useRouter } from 'next/router';
+import useMediaQuery from '../../hooks/useMediaQuery';
 
 const Tweet = ({ tweet, user }) => {
 
@@ -17,7 +18,9 @@ const Tweet = ({ tweet, user }) => {
   const router = useRouter();
   const [dateOfTweet, setDateOfTweet] = useState(tweet._createdAt);
   const [isSelected, setIsSelected] = useState(false);
-
+  const largeDeviceOnwards = useMediaQuery('(min-width: 906px)');
+  const mediumToLargeDevices = useMediaQuery('(max-width: 905px)');
+  const smallDevices = useMediaQuery('(max-width: 660px)');
   const iconContainer = {
     display: "flex",
     alignItems: "center",
@@ -99,11 +102,11 @@ const Tweet = ({ tweet, user }) => {
           {
             tweet.tweetVideoUrl && (   
             <ReactPlayer 
-              className="react-player"
               controls={true}
               muted={false}
               url={tweet.tweetVideoUrl}
               width="auto"
+              height={ largeDeviceOnwards ? "300px" : !smallDevices && mediumToLargeDevices ? "300px" : "200px"}
             />
           )
           }

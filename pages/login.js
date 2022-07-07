@@ -21,15 +21,6 @@ const Login = ({ users }) => {
   const [passwordError, setPasswordError] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   first
-  
-  //   return () => {
-  //     second
-  //   }
-  // }, [third])
-  
-
   useEffect(() => {
     setEmailError(false);
     setPasswordError(false)

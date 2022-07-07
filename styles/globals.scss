@@ -340,14 +340,6 @@ a {
   transition: all 0.2 ease-in-out;
 }
 
-.react-player {
-  display: flex;
-  flex: 1;
-  width: 100%;
-  height: auto;
-  transition: all 0.3s ease-in-out;
-}
-
 .date-of-tweet {
   display: flex;
   margin: 5px 0px;
@@ -1677,6 +1669,7 @@ input:-webkit-autofill:active  {
     min-width: 60px;
     min-height: 300px;
   }
+
   .sidebar-menu-container {
     padding: 0px;
   }
@@ -1724,9 +1717,7 @@ input:-webkit-autofill:active  {
   .feed-tweet-buttons-container {
     flex-direction: column;
   }
-  .react-player {
-    height: 150px;
-  }
+
   .tweeted-image {
     height: 150px;
   }
@@ -1745,7 +1736,5 @@ input:-webkit-autofill:active  {
   .tweeted-image {
     height: 100px;
   }
-  .react-player {
-    height: 100px;
-  }
+
 }
