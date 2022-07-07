@@ -1,7 +1,6 @@
 import { Tweet } from '../';
 
 const OtherUserFeed = ({ userTweets, user }) => {
-  
   return (
     <div className="other-user-feed">
       { userTweets?.length ? userTweets.map(tweet => (

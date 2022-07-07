@@ -15,11 +15,16 @@ const Profile = ({
   user, 
   profile, 
   otherUsers }) => {
-
+  
   const mediumToLargeDevices = useMediaQuery('(min-width: 905px)');
-  const { setOtherUsers } = useStateContext(); 
+  const { setOtherUsers, setCurrentUserProfile } = useStateContext(); 
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [name, setName] = useState("");
+  const [isLoaded, setIsLoaded] = useState(false);
+  useEffect(() => {
+    setIsLoaded(true);
+  }, [])
+  
 
   useEffect(() => {
     setOtherUsers(otherUsers)
@@ -34,40 +39,48 @@ const Profile = ({
     }
   }, [name,otherUsers,setFilteredUsers])
   
-
+  useEffect(() => {
+    setCurrentUserProfile(profile);
+  }, [setCurrentUserProfile,profile])
+  
 
   return (
-    <div className={backgroundStyles.moving_clouds_behind}>
-      <div className="other-user-home-container">
-        <div className="sidebar-buttons-container">
-          <SidebarMenu />
-        </div>
-        <div className="other-user-feed-container">
-          <OtherTweetHead profile={profile} user={user} />
-          <OtherUserFeed user={user} userTweets={userTweets} />
-        </div>
-        { mediumToLargeDevices && (
-          <div className="other-user-widget-container">
-            <div className="search-people-container">
-              <input 
-                className="search-input"
-                type="text" 
-                name="name"
-                onChange={(e) => setName(e.target.value)}
-              />
-              <span className="search-icon">
-                <AiOutlineSearch size={25}/>
-              </span>
+    <>
+      { isLoaded && (
+        <div className={backgroundStyles.moving_clouds_behind}>
+          <div className="other-user-home-container">
+            <div className="sidebar-buttons-container">
+              <SidebarMenu />
             </div>
-            <ProfileWidget 
-              users={ filteredUsers?.length ? filteredUsers 
-              : otherUsers}
-            />
-        </div>
-        )
-        }
-      </div>
-    </div>
+            <div className="other-user-feed-container">
+              <OtherTweetHead profile={profile} user={user} />
+              <OtherUserFeed user={user} userTweets={userTweets} />
+            </div>
+            { mediumToLargeDevices && (
+              <div className="other-user-widget-container">
+                <div className="search-people-container">
+                  <input 
+                    className="search-input"
+                    type="text" 
+                    name="name"
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                  <span className="search-icon">
+                    <AiOutlineSearch size={25}/>
+                  </span>
+                </div>
+                <ProfileWidget 
+                  users={ filteredUsers?.length ? filteredUsers 
+                  : otherUsers}
+                />
+            </div>
+            )
+            }
+          </div>
+        </div>  
+      )
+      }
+    </>
   )
 }
 

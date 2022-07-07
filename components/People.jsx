@@ -1,7 +1,6 @@
 import { RoundButton } from './';
 import { useRouter } from 'next/router';
 import { useStateContext } from '../context/StateContext';
-// import { useState, useEffect } from 'react';
 
 const People = ({ people }) => {
 
@@ -11,11 +10,10 @@ const People = ({ people }) => {
   const redirect = () => {
     router.push(`/profile/${people?._id}`);
     setTimeout(() => {
-      setIsShowFollows();
-    }, 300);
+      setIsShowFollows(false);
+    }, 500);
   }
 
-  console.log({isShowFollows})
   return (
     <div className="people-container">
       <div className="people-contents-container">

@@ -20,8 +20,13 @@ const Home = ({
     setOtherUsers,
     setLatestNews, 
     setCurrentUserProfile } = useStateContext();
-  const { _id, userName, imageUrl, profileImage } = currentUser;
 
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, [])
+  
   useEffect(() => {
     setUser(currentUser);
   }, [currentUser, setUser])
@@ -43,25 +48,29 @@ const Home = ({
   }, [profile, setCurrentUserProfile]) 
 
   return (
-    <div className="home-container">
-      <div className={backgroundStyles.moving_clouds_behind}>
-       <div className={backgroundStyles.moving_bird_container}>
-        <div className={backgroundStyles.moving_clouds_front}>
-            <Sidebar 
-              userDetails={currentUser} 
-              profile={profile}
-            />
-            <Feed />
-            { mediumDevice && (
-              <UserWidget news={newsData}/>
-            )
-            }
+    <>
+      { isLoaded && (
+        <div className="home-container">
+          <div className={backgroundStyles.moving_clouds_behind}>
+          <div className={backgroundStyles.moving_bird_container}>
+            <div className={backgroundStyles.moving_clouds_front}>
+                <Sidebar 
+                  userDetails={currentUser} 
+                  profile={profile}
+                />
+                <Feed />
+                { mediumDevice && (
+                  <UserWidget news={newsData}/>
+                )
+                }
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      )
+      }
+    </>
   )
-
 }
 
 export const getServerSideProps = async ({ req, res }) => {

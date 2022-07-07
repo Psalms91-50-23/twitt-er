@@ -5,7 +5,8 @@ export default async function handler(req,res){
     if(req.method == "POST"){
         const { userId } = req.query;
         const userQuery = encodeURIComponent(queryUser(userId));
-        const otherUsersQuery = encodeURIComponent(queryOtherUsers(req.body.userId));
+        const otherUsersQuery = encodeURIComponent(queryOtherUsers(userId));
+        // const otherUsersQuery = encodeURIComponent(queryOtherUsers(req.body.userId));
         const profileQuery = encodeURIComponent(queryProfile(userId));
         const userTweetsQuery = encodeURIComponent(queryUserTweets(userId));
         

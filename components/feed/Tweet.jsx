@@ -17,7 +17,6 @@ const Tweet = ({ tweet, user }) => {
   const router = useRouter();
   const [dateOfTweet, setDateOfTweet] = useState(tweet._createdAt);
   const [isSelected, setIsSelected] = useState(false);
-  
 
   const iconContainer = {
     display: "flex",
