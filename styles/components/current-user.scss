@@ -33,6 +33,8 @@
     padding-top: 10px;
     overflow-y: scroll;
     -ms-overflow-style: none;
+    -ms-overflow-style: none;
+    scrollbar-width: none; /* Firefox */
     padding-left: 10px;
     flex: 1;
 }
@@ -45,7 +47,6 @@
     transition: all 0.2s ease-in-out;
     background-color: transparent;
 }
-
 
 .current-user-picture-container {
     display: flex;
@@ -390,7 +391,7 @@
     border-left: 1px solid var(--twitterBlue);
     padding: 0px 10px;
     margin-top: -10px;
-    // padding: 0px 10px 0px 10px;
+  
 }
 
 .search-people-container {
@@ -433,6 +434,8 @@
     transition: all 0.2s ease-in-out;
     overflow-y: scroll;
     padding: 0px 10px;
+    -ms-overflow-style: none;
+    scrollbar-width: none; 
 }
 
 .sliding-down {
