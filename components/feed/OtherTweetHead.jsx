@@ -7,7 +7,7 @@ const OtherTweetHead = ({ user, profile }) => {
         <img
           className={"other-user-backdrop"}
           src={ profile?.profileBackDropURL ? profile.profileBackDropURL 
-            : "https://m.media-amazon.com/images/I/71k3M9NXBZL._AC_SY355_.jpg"} 
+            : "/images/brick_twitter_bird.jpg"} 
           alt={ profile?.profileBackDropURL ? "profile backdrop" : "default profile backdrop" }
         />
         <div className="other-user-contents-container">
