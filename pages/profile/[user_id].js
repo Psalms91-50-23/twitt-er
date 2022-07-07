@@ -21,11 +21,11 @@ const Profile = ({
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [name, setName] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
+  
   useEffect(() => {
     setIsLoaded(true);
   }, [])
   
-
   useEffect(() => {
     setOtherUsers(otherUsers)
   }, [setOtherUsers, otherUsers])

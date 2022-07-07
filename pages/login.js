@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { sanityBaseURL } from '../lib/functions';
 import { queryAllUsers } from '../lib/queries';
 import homeStyles from '../styles/Home.module.scss';
@@ -8,7 +7,6 @@ import { useRouter }  from 'next/router';
 import { AiFillHome } from "react-icons/ai";
 import { CustomInput, TwitterBird, BirdieHands, Spinner } from '../components';
 import { useStateContext } from '../context/StateContext';
-// import { client } from '../lib/client';
 import { MdLogin, MdCreate } from 'react-icons/md'
 import { findUser, isPasswordMatch, isEmailMatch,  
   matchSecret, loginUser, getCurrentUserProfile } from '../lib/functions';

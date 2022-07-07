@@ -1,5 +1,5 @@
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useStateContext } from '../../context/StateContext';
 import { Sidebar, Feed, UserWidget } from '../../components';
 import useMediaQuery from '../../hooks/useMediaQuery';
