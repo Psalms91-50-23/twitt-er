@@ -96,6 +96,7 @@ const Tweet = ({ tweet, user }) => {
             <img 
               className="tweeted-image"
               src={tweet.tweetImageUrl && tweet.tweetImageUrl} alt="tweeted image" 
+              onClick={() => window.open(tweet.tweetImageUrl, '_blank', 'noopener,noreferrer')}
             />
             )
           }
@@ -106,7 +107,10 @@ const Tweet = ({ tweet, user }) => {
               muted={false}
               url={tweet.tweetVideoUrl}
               width="auto"
-              height={ largeDeviceOnwards ? "300px" : !smallDevices && mediumToLargeDevices ? "300px" : "200px"}
+              config={{ 
+                youtube: { playerVars: { origin: process.env.NEXT_BASE_URL } }
+               }}
+              height={ largeDeviceOnwards ? "350px" : !smallDevices && mediumToLargeDevices ? "300px" : "200px"}
             />
           )
           }

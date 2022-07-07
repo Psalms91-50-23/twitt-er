@@ -5,10 +5,10 @@ export default async function login(req,res) {
         res.setHeader(
             "Set-Cookie",
             cookie.serialize("token", req.body.token , {
-                // httpOnly: true,
+                // httpOnly: false,
                 secure: false,
                 maxAge: 60*60*24,
-                // sameSite: strict,
+                // sameSite: "none",
                 path: "/"
             })
         )
