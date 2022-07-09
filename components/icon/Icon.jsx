@@ -38,7 +38,12 @@ const Icon = ({
             : isHover && iconStyle && !isClicked ? iconStyle.hover 
             : isHover && iconStyle && isClicked ? iconStyle.active 
             : iconStyle ? iconStyle.normal : null}
+            // style={ !isHover && iconStyle && !isClicked ? iconStyle.normal 
+            // : isHover && iconStyle && !isClicked ? iconStyle.hover 
+            // : isHover && iconStyle && isClicked ? iconStyle.active 
+            // : iconStyle ? iconStyle.normal : null}
             className={ !iconStyle ? ("icon-container" + (isHover && !iconStyle ? " icon-animation" : "")) : ""}>
+            {/* className={ !iconStyle ? ("icon-container" + (isHover && !iconStyle ? " icon-animation" : "")) : ""}> */}
               {icon}
           </span>
           )

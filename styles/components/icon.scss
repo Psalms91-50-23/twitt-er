@@ -6,7 +6,8 @@
     align-items: center;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-    color: var(--white);
+    // background-color: var(--twitterBlueFade);
+    // color: var(--white);
 }
   
 .border-bottom {
@@ -31,6 +32,7 @@
     display: flex;
     align-items: center;
     margin-right: 10px;
+    color: var(--white);
 }
 
 .icon-container:active {

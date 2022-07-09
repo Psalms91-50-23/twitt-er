@@ -30,7 +30,6 @@ const Login = ({ users }) => {
         if(userFound){
           setFoundUser(userFound);
         }
-
       }
     }
   }, [userName, users, password])
@@ -51,8 +50,7 @@ const Login = ({ users }) => {
       setCurrentUserProfile(userProfile)
       router.push("/home");
     }
- 
-}
+  }
 
   return (
     <div className={backgroundStyles.container_cloud_bg}>
@@ -179,6 +177,6 @@ export const getServerSideProps = async ({ req, res }) => {
         users: users.result ? users.result : []
       },
     }
-  }
+}
   
 export default Login
