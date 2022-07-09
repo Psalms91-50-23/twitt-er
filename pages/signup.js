@@ -313,9 +313,6 @@ const Signup = ({ users }) => {
                         </span>
                       )
                       }
-                      {/* <span >
-                        Upload image from { fileInput ? "URL" : "Computer" }
-                      </span> */}
                   </button>
                   <button 
                     className={homeStyles.btn}

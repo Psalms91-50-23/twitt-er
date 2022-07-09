@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import { useStateContext } from '../../context/StateContext';
-import { Sidebar, Feed, UserWidget } from '../../components';
+import { Sidebar, Feed, UserWidget, WormSpinner } from '../../components';
 import useMediaQuery from '../../hooks/useMediaQuery';
 import backgroundStyles from "../../styles/module/Background.module.scss";
 
