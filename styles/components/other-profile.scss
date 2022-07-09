@@ -26,14 +26,12 @@
     display: flex;
     flex-direction: column;
     flex: 1;
-    background-color: var(--blackOverlay2);
+    background-color: var(--blackOverlay);
     margin: 10px 10px;
     overflow-y: scroll;
     box-sizing: content-box;
     -ms-overflow-style: none;
     scrollbar-width: none; /* Firefox */
-    // margin-bottom: 80px;
-    // padding: 0px 20px;
 }
 
 .other-user-profile-container {
@@ -63,7 +61,7 @@
 .other-user-backdrop {
     width: 100%;
     height: 100%;
-    // border: 5px solid var(--white);
+    border: 5px solid var(--white);
 }
 
 .other-user-contents-container {

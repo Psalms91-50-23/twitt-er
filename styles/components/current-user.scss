@@ -12,7 +12,7 @@
 
 .current-user-sidebar-container {
     display: flex;
-    // height: 100%;
+    height: 100vh;
     padding-right: 10px;
     padding-top: 10px;
     flex-direction: column;
@@ -30,6 +30,7 @@
     display: flex;
     flex-direction: row;
     width: 100%;
+    height: 100%;
     padding-top: 10px;
     overflow-y: scroll;
     -ms-overflow-style: none;
@@ -52,17 +53,15 @@
     display: flex;
     flex-direction: column;
     flex: 1;
-    max-height: 300px;
     position: relative;
     box-sizing: border-box;
     transition: all 0.2s ease-in-out;
-    margin-right: 10px;
 }
 
 .current-user-images-container {
     display: flex;
     position: relative;
-    // min-height: 200px;
+    max-height: 300px;
     height: 100%;
     width: 100%;
     transition: all 0.2s ease-in-out;
@@ -141,7 +140,7 @@
     position: relative;
     margin-top: 90px;
     width: 100%;
-    height: 100%;
+    height: auto;
     background-color: var(--blackOverlay);
 }
 
@@ -388,8 +387,10 @@
     display: flex;
     flex-direction: column;
     flex: 0.4;
+    margin-left: 10px;
     border-left: 1px solid var(--twitterBlue);
-    padding: 0px 10px;
+    padding-left: 10px;
+    // padding: 0px 10px 0px 0px;
     margin-top: -10px;
     height: 100vh;
   
@@ -423,7 +424,7 @@
     display: flex;
     flex-direction: column;
     transition: all 0.2s ease-in-out;
-    height: 100vh;
+    height: auto;
 }
 
 .profile-widget-contents {
