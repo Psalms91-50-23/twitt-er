@@ -9,6 +9,7 @@ import useMediaQuery from '../../../hooks/useMediaQuery';
 import { ImCross } from 'react-icons/im';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { WormSpinner, Spinner } from "../../../components";
+import backgroundStyles from "../../../styles/module/Background.module.scss"
 
 const HomeProfile = ({ user, otherUsers, profile }) => {
 
