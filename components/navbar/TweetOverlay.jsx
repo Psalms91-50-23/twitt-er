@@ -204,45 +204,6 @@ const TweetOverlay = ({
     }
   }
 
-  
-  // const handleChange = (e) => {
-  //   setTweetTitleError(false);
-
-  //   if(e.target.name !== "tweetImage"){
-  //       setTweetDoc({...tweetDoc, 
-  //           [e.target.name] : e.target.value,
-  //           tweetedBy: {
-  //               ...tweetDoc.tweetedBy,
-  //               _ref: user._id,
-  //           },
-  //           _id: uuidv4(),
-  //           // _createdAt: date.toISOString(),
-  //           userId: user._id
-  //       });
-  //   }else {
-  //       const selectedFile = e.target.files[0];
-  //       const { type } = selectedFile;
-  //       if(selectedFile){
-  //           if ( type  === 'image/png' || type === 'image/svg' || type === 'image/jpeg' || type === 'image/gif' || type === 'image/tiff' || type === 'image/jpg') {
-  //               setTweetDoc({...tweetDoc, 
-  //                   [e.target.name] : selectedFile,
-  //                   tweetedBy: {
-  //                       ...tweetDoc.tweetedBy,
-  //                       _ref: user._id,
-  //                   },
-  //                   _id: uuidv4(),
-  //                   // _createdAt: date.toISOString(),
-  //                   userId: user._id
-  //               });
-  //               setWrongImageType(false);
-  //               setTweetImage(selectedFile)
-  //           } else {
-  //             setWrongImageType(true);
-  //           }
-  //       }
-  //   }
-  // }
-
   const newTweet = () => {
     const { tweetTitle } = tweetDoc;
     if(!tweetTitle){
@@ -307,16 +268,6 @@ const TweetOverlay = ({
               <div className="tweet-buttons-container">
                 <div className="tweet-icons-container">
                   <div className="tweet-icon-buttons">
-                    {/* { !isImageUrl && !isFile && (
-                      <Icon 
-                        icon={<AiOutlineFileImage size={25}/>} 
-                        iconStyle={iconStyles}
-                        clickEvent={() => setIsImageUrl(true)}
-                        titleStyle={titleStyle}
-                        containerStyle={containerStyle}
-                      />
-                    )
-                    } */}
                     { !isImageUrl && !isFile && !isVideoUrl && (
                       <Icon 
                           icon={<AiOutlineFileImage size={25}/>} 
@@ -352,40 +303,6 @@ const TweetOverlay = ({
                       </div>
                       )
                     }
-                    {/* { isImageUrl && !isFile && (
-                      <div className="tweet-imageurl-input-container">
-                          <input 
-                              className="feed-imageurl-input"
-                              type="text" 
-                              onChange={(e) => handleChange(e)}
-                              value={tweetImageUrl} 
-                              name="tweetImageUrl"
-                              placeholder="Image url here..."
-                          />
-                          <span 
-                              className="cancel-imageurl-input"
-                              onClick={() => resetField("tweetImageUrl")}
-                          >
-                              <ImCross size={18}/>
-                          </span>
-                          <span 
-                              className="back"
-                              onClick={() => setIsImageUrl(false)}
-                          >
-                            <FaArrowAltCircleLeft size={25}/>
-                          </span>
-                      </div>
-                      )
-                    } */}
-                    {/* { !isFile && !isImageUrl && (
-                      <Icon 
-                        icon={<MdComputer size={25}/>} 
-                        iconStyle={iconStyles} 
-                        clickEvent={() => setIsFile(true)}
-                        titleStyle={titleStyle}
-                      />
-                     )
-                    } */}
                     { !isFile && !isImageUrl && !isVideoUrl && (
                       <Icon 
                           icon={<MdComputer size={25}/>} 
@@ -429,86 +346,54 @@ const TweetOverlay = ({
                       </div>
                       )
                     }
-                  {/* { isFile && !isImageUrl && (
-                      <div className="tweet-file-input-container">
-                        <div className="tweet-head-add-file-container">    
-                          <input 
-                              type="file"
-                              className="feed-file-upload-input"
-                              name="tweetImage"
-                              onChange={e => handleChange(e)}
-                              ref={inputRef}
-                          />
-                          <span 
-                              className="cancel-file-input"
-                              onClick={() =>  resetFileInput()}   
-                          >
-                              <ImCross size={18}/>
-                          </span>
-                          <span 
-                            className="back"
-                            onClick={() => setIsFile(false)}
-                          >
-                            <FaArrowAltCircleLeft size={25}/>
-                          </span>
-                        </div>
+                    { !isVideoUrl && !isFile && !isImageUrl && (
+                      <Icon 
+                        icon={<FaPhotoVideo size={25}/>} 
+                        iconStyle={feedIconStyles}
+                        clickEvent={() => setIsVideoUrl(true)}
+                        titleStyle={titleStyle}
+                        containerStyle={containerStyle}
+                      />
+                      )
+                    }
+                    </div>
+                    { tweetTitleError  && (
+                        <span className="missing-field-msg">
+                            Require text in text field
+                        </span>
+                      )
+                    }
+                    { isVideoUrl && !isFile && !isImageUrl && (
+                      <div className="tweet-url-input-container">
+                        <input 
+                            className="feed-url-input"
+                            type="text" 
+                            onChange={(e) => handleChange(e)}
+                            value={tweetVideoUrl} 
+                            name="tweetVideoUrl"
+                            placeholder="Youtube video url here..."
+                        />
                         <span 
-                          style={{color: "rgb(0,0,0)", fontStyle: "italic", fontWeight: "500"}}
-                          className="feed-file-upload-text"
+                            className="cancel-url-input"
+                            onClick={() => resetField("tweetVideoUrl")}
                         >
-                          Recommendation: Use high-quality JPG, JPEG, SVG, PNG, GIF or TIFF less than 20MB
+                            <ImCross size={18}/>
+                        </span>
+                        <span 
+                            className="back"
+                            onClick={() => setIsVideoUrl(false)}
+                        >
+                            <FaArrowAltCircleLeft size={25}/>
                         </span>
                       </div>
-                    )
-                  } */}
-                   { !isVideoUrl && !isFile && !isImageUrl && (
-                    <Icon 
-                      icon={<FaPhotoVideo size={25}/>} 
-                      iconStyle={feedIconStyles}
-                      clickEvent={() => setIsVideoUrl(true)}
-                      titleStyle={titleStyle}
-                      containerStyle={containerStyle}
-                    />
-                    )
-                  }
-                  </div>
-                  { tweetTitleError  && (
-                      <span className="missing-field-msg">
-                          Require text in text field
-                      </span>
-                    )
-                  }
-                  { isVideoUrl && !isFile && !isImageUrl && (
-                    <div className="tweet-url-input-container">
-                      <input 
-                          className="feed-url-input"
-                          type="text" 
-                          onChange={(e) => handleChange(e)}
-                          value={tweetVideoUrl} 
-                          name="tweetVideoUrl"
-                          placeholder="Youtube video url here..."
-                      />
-                      <span 
-                          className="cancel-url-input"
-                          onClick={() => resetField("tweetVideoUrl")}
-                      >
-                          <ImCross size={18}/>
-                      </span>
-                      <span 
-                          className="back"
-                          onClick={() => setIsVideoUrl(false)}
-                      >
-                          <FaArrowAltCircleLeft size={25}/>
-                      </span>
-                    </div>
-                    )
-                  }
-                  { wrongImageType  && (
-                      <span className="missing-field-msg">
-                          Require one of these fields: Image URL, Video URL or Computer Image from Desktop
-                      </span>
-                    )
+                      )
                     }
+                    { wrongImageType  && (
+                        <span className="missing-field-msg">
+                            Require one of these fields: Image URL, Video URL or Computer Image from Desktop
+                        </span>
+                      )
+                      }
                 </div>
                 <RoundButton 
                   text={"Tweet"} 
