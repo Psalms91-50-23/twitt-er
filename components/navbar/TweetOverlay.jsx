@@ -5,12 +5,12 @@ import { urlFor } from '../../lib/client';
 import { RoundButton, Loading } from '../';
 import { Icon } from '../icon';
 import { MdComputer } from "react-icons/md";
-import { FaArrowAltCircleLeft } from "react-icons/fa";
+import { FaArrowAltCircleLeft, FaPhotoVideo } from "react-icons/fa";
 import { BsFillEmojiSmileFill, BsEmojiSmile } from "react-icons/bs";
 import { BiArrowBack } from "react-icons/bi";
 import { useStateContext } from '../../context/StateContext';
 import { AiOutlineFileImage } from "react-icons/ai";
-import { iconStyles, buttonStyles, buttonContainerStyle } from '../../styles/custom';
+import { iconStyles, buttonStyles, buttonContainerStyle, feedIconStyles  } from '../../styles/custom';
 import { v4 as uuidv4 } from 'uuid';
 import useMediaQuery from '../../hooks/useMediaQuery';
 
@@ -25,11 +25,8 @@ const TweetOverlay = ({
   setIsTweetClicked,
   addTweet,
   isLoading,
-  setIsLoading,
-  setCurrentUserTweets,
-  currentUserTweets } = useStateContext();
+  setIsLoading } = useStateContext();
 
-  const [isHover, setIsHover] = useState(false);
   const inputRef = useRef(null);
   const smallToMediumDevices = useMediaQuery('(max-width: 660px)');
   const smallDevice = useMediaQuery('(max-width: 470px)')
@@ -39,6 +36,7 @@ const TweetOverlay = ({
   const [loading, setLoading] = useState(false);
   //for video url
   const [videoUrl, setVideoUrl] = useState("");
+  const [isVideoUrl, setIsVideoUrl] = useState(false);
   // const [isVideoUrl, setIsVideoUrl] = useState(false);
   //image url
   const [imageUrl, setImageUrl] = useState("");
@@ -60,6 +58,8 @@ const TweetOverlay = ({
           _ref:""
       }
   })
+
+  const { tweetTitle, tweetImageUrl, tweetVideoUrl } = tweetDoc;
   
   useEffect(() => {
     if(!tweetDoc.tweetTitle){
@@ -109,8 +109,6 @@ const TweetOverlay = ({
         _id: "",
         _type: "tweet",
         tweetTitle: "",
-        // tweetImage: "",
-        // publishedAt: "",
         tweetImageUrl: "",
         tweetVideoUrl: "",
         userId: "",
@@ -169,43 +167,81 @@ const TweetOverlay = ({
     }
   }
 
+  
   const handleChange = (e) => {
     setTweetTitleError(false);
-
     if(e.target.name !== "tweetImage"){
         setTweetDoc({...tweetDoc, 
             [e.target.name] : e.target.value,
             tweetedBy: {
                 ...tweetDoc.tweetedBy,
-                _ref: user._id,
+                _ref: currentUser._id,
             },
             _id: uuidv4(),
-            // _createdAt: date.toISOString(),
-            userId: user._id
+            userId: currentUser._id
         });
     }else {
-        const selectedFile = e.target.files[0];
-        const { type } = selectedFile;
-        if(selectedFile){
-            if ( type  === 'image/png' || type === 'image/svg' || type === 'image/jpeg' || type === 'image/gif' || type === 'image/tiff' || type === 'image/jpg') {
-                setTweetDoc({...tweetDoc, 
-                    [e.target.name] : selectedFile,
-                    tweetedBy: {
-                        ...tweetDoc.tweetedBy,
-                        _ref: user._id,
-                    },
-                    _id: uuidv4(),
-                    // _createdAt: date.toISOString(),
-                    userId: user._id
-                });
-                setWrongImageType(false);
-                setTweetImage(selectedFile)
-            } else {
-              setWrongImageType(true);
-            }
-        }
+      const selectedFile = e.target.files[0];
+      const { type } = selectedFile;
+      if(selectedFile){
+          if ( type  === 'image/png' || type === 'image/svg' || type === 'image/jpeg' || type === 'image/gif' 
+          || type === 'image/tiff' || type === 'image/jpg' || type === 'image/webp') {
+              setTweetDoc({...tweetDoc, 
+                  [e.target.name] : selectedFile,
+                  tweetedBy: {
+                      ...tweetDoc.tweetedBy,
+                      _ref: currentUser._id,
+                  },
+                  _id: uuidv4(),
+                  userId: currentUser._id
+              });
+              setWrongImageType(false);
+              setTweetImage(selectedFile)
+          } else {
+            setWrongImageType(true);
+          }
+      }
     }
   }
+
+  
+  // const handleChange = (e) => {
+  //   setTweetTitleError(false);
+
+  //   if(e.target.name !== "tweetImage"){
+  //       setTweetDoc({...tweetDoc, 
+  //           [e.target.name] : e.target.value,
+  //           tweetedBy: {
+  //               ...tweetDoc.tweetedBy,
+  //               _ref: user._id,
+  //           },
+  //           _id: uuidv4(),
+  //           // _createdAt: date.toISOString(),
+  //           userId: user._id
+  //       });
+  //   }else {
+  //       const selectedFile = e.target.files[0];
+  //       const { type } = selectedFile;
+  //       if(selectedFile){
+  //           if ( type  === 'image/png' || type === 'image/svg' || type === 'image/jpeg' || type === 'image/gif' || type === 'image/tiff' || type === 'image/jpg') {
+  //               setTweetDoc({...tweetDoc, 
+  //                   [e.target.name] : selectedFile,
+  //                   tweetedBy: {
+  //                       ...tweetDoc.tweetedBy,
+  //                       _ref: user._id,
+  //                   },
+  //                   _id: uuidv4(),
+  //                   // _createdAt: date.toISOString(),
+  //                   userId: user._id
+  //               });
+  //               setWrongImageType(false);
+  //               setTweetImage(selectedFile)
+  //           } else {
+  //             setWrongImageType(true);
+  //           }
+  //       }
+  //   }
+  // }
 
   const newTweet = () => {
     const { tweetTitle } = tweetDoc;
@@ -216,8 +252,7 @@ const TweetOverlay = ({
     const date = new Date();
     setLoading(true);
     setIsLoading(true);
-    addTweet({...tweetDoc, _createdAt: date.toISOString()}, resetStates);
-    
+    addTweet({...tweetDoc, _createdAt: date.toISOString()}, resetStates);    
 }
 
   const containerStyle = {
@@ -233,8 +268,6 @@ const TweetOverlay = ({
     ...buttonContainerStyle,
     placeSelf: "center"
   }
-
-  const { tweetTitle, tweetImageUrl, tweetVideoUrl } = tweetDoc;
 
   return (
     <div 
@@ -274,7 +307,7 @@ const TweetOverlay = ({
               <div className="tweet-buttons-container">
                 <div className="tweet-icons-container">
                   <div className="tweet-icon-buttons">
-                    { !isImageUrl && !isFile && (
+                    {/* { !isImageUrl && !isFile && (
                       <Icon 
                         icon={<AiOutlineFileImage size={25}/>} 
                         iconStyle={iconStyles}
@@ -283,9 +316,43 @@ const TweetOverlay = ({
                         containerStyle={containerStyle}
                       />
                     )
-
+                    } */}
+                    { !isImageUrl && !isFile && !isVideoUrl && (
+                      <Icon 
+                          icon={<AiOutlineFileImage size={25}/>} 
+                          iconStyle={feedIconStyles}
+                          clickEvent={() => setIsImageUrl(true)}
+                          titleStyle={titleStyle}
+                          containerStyle={{...containerStyle}}
+                      />
+                      )
                     }
-                    { isImageUrl && !isFile && (
+                    { isImageUrl && !isFile && !isVideoUrl && (
+                      <div className="tweet-url-input-container">
+                        <input 
+                            className="feed-url-input"
+                            type="text" 
+                            onChange={(e) => handleChange(e)}
+                            value={tweetImageUrl} 
+                            name="tweetImageUrl"
+                            placeholder="Image url here..."
+                        />
+                        <span 
+                            className="cancel-url-input"
+                            onClick={() => resetField("tweetImageUrl")}
+                        >
+                            <ImCross size={18}/>
+                        </span>
+                        <span 
+                            className="back"
+                            onClick={() => setIsImageUrl(false)}
+                        >
+                            <FaArrowAltCircleLeft size={25}/>
+                        </span>
+                      </div>
+                      )
+                    }
+                    {/* { isImageUrl && !isFile && (
                       <div className="tweet-imageurl-input-container">
                           <input 
                               className="feed-imageurl-input"
@@ -309,8 +376,8 @@ const TweetOverlay = ({
                           </span>
                       </div>
                       )
-                    }
-                    { !isFile && !isImageUrl && (
+                    } */}
+                    {/* { !isFile && !isImageUrl && (
                       <Icon 
                         icon={<MdComputer size={25}/>} 
                         iconStyle={iconStyles} 
@@ -318,9 +385,51 @@ const TweetOverlay = ({
                         titleStyle={titleStyle}
                       />
                      )
-
+                    } */}
+                    { !isFile && !isImageUrl && !isVideoUrl && (
+                      <Icon 
+                          icon={<MdComputer size={25}/>} 
+                          iconStyle={feedIconStyles}
+                          clickEvent={() => setIsFile(true)}
+                          titleStyle={titleStyle}
+                          containerStyle={containerStyle}
+                      />
+                      )
                     }
-                    { isFile && !isImageUrl && (
+                    { isFile && !isImageUrl && !isVideoUrl && (
+                      <div className="tweet-file-input-container">
+                          <div 
+                              className="tweet-head-add-file-container" 
+                          >    
+                            <input 
+                                type="file"
+                                className="feed-file-upload-input"
+                                name="tweetImage"
+                                onChange={e => handleChange(e)}
+                                ref={inputRef}
+                            />
+                            <span 
+                                className="cancel-file-input"
+                                onClick={() => resetFileInput()}   
+                            >
+                                <ImCross size={18}/>
+                            </span>
+                            <span 
+                                className="back"
+                                onClick={() => setIsFile(false)}
+                            >
+                                <FaArrowAltCircleLeft size={25}/>
+                            </span>
+                          </div>
+                          <span 
+                            style={{ color: "rgba(0,0,0,1)", fontWeight: "700" }}
+                            className="feed-file-upload-text">
+                              Recommendation: Use high-quality JPG, JPEG, SVG, PNG, WEBP, GIF or TIFF less than 20MB
+                          </span>
+                      </div>
+                      )
+                    }
+                  {/* { isFile && !isImageUrl && (
                       <div className="tweet-file-input-container">
                         <div className="tweet-head-add-file-container">    
                           <input 
@@ -351,12 +460,47 @@ const TweetOverlay = ({
                         </span>
                       </div>
                     )
+                  } */}
+                   { !isVideoUrl && !isFile && !isImageUrl && (
+                    <Icon 
+                      icon={<FaPhotoVideo size={25}/>} 
+                      iconStyle={feedIconStyles}
+                      clickEvent={() => setIsVideoUrl(true)}
+                      titleStyle={titleStyle}
+                      containerStyle={containerStyle}
+                    />
+                    )
                   }
                   </div>
                   { tweetTitleError  && (
                       <span className="missing-field-msg">
                           Require text in text field
                       </span>
+                    )
+                  }
+                  { isVideoUrl && !isFile && !isImageUrl && (
+                    <div className="tweet-url-input-container">
+                      <input 
+                          className="feed-url-input"
+                          type="text" 
+                          onChange={(e) => handleChange(e)}
+                          value={tweetVideoUrl} 
+                          name="tweetVideoUrl"
+                          placeholder="Youtube video url here..."
+                      />
+                      <span 
+                          className="cancel-url-input"
+                          onClick={() => resetField("tweetVideoUrl")}
+                      >
+                          <ImCross size={18}/>
+                      </span>
+                      <span 
+                          className="back"
+                          onClick={() => setIsVideoUrl(false)}
+                      >
+                          <FaArrowAltCircleLeft size={25}/>
+                      </span>
+                    </div>
                     )
                   }
                   { wrongImageType  && (

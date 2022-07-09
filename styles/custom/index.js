@@ -56,48 +56,48 @@ export const iconStyles = {
 }
 
 export const feedIconStyles = {
-    normal: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        border: "none",
-        color: "rgba(255,255,255,0.8)",
-        width: "35px",
-        height: "35px",
-        backgroundColor: "rgba(29, 155, 240, 0.3)",
-        transition: "all 0.1s ease-in-out",
-        marginRight: "5px",
-        padding: "5px"
-      },
-       hover: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        border: "none",
-        color: "rgba(255,255,255,0.8)",
-        width: "35px",
-        height: "35px",
-        transition: "all 0.1s ease-in-out",
-        backgroundColor: "rgba(29, 155, 240, 0.3)",
-        borderRadius: "50%",
-        marginRight: "5px",
-        padding: "5px"
-      },
-      active: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        border: "none",
-        color: "rgba(255,255,255,0.8)",
-        width: "35px",
-        height: "35px",
-        transition: "all 0.1s ease-in-out",
-        transform: "scale(1.2,1.2)",
-        backgroundColor: "rgba(29, 155, 240, 0.3)",
-        borderRadius: "50%",
-        marginRight: "5px",
-        padding: "5px"
-      }
+  normal: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    border: "none",
+    color: "rgba(255,255,255,0.8)",
+    width: "35px",
+    height: "35px",
+    backgroundColor: "rgba(29, 155, 240, 0.5)",
+    transition: "all 0.1s ease-in-out",
+    marginRight: "5px",
+    padding: "5px"
+    },
+  hover: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    border: "none",
+    color: "rgba(255,255,255,0.8)",
+    width: "35px",
+    height: "35px",
+    transition: "all 0.1s ease-in-out",
+    backgroundColor: "rgba(29, 155, 240, 0.7)",
+    borderRadius: "50%",
+    marginRight: "5px",
+    padding: "5px"
+    },
+  active: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    border: "none",
+    color: "rgba(255,255,255,0.8)",
+    width: "35px",
+    height: "35px",
+    transition: "all 0.1s ease-in-out",
+    transform: "scale(1.2,1.2)",
+    backgroundColor: "rgba(29, 155, 240, 0.7)",
+    borderRadius: "50%",
+    marginRight: "5px",
+    padding: "5px"
+  }
 }
 
 export const navIconContainer = {

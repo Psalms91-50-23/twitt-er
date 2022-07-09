@@ -23,7 +23,7 @@ export const StateContext = ({ children }) => {
 
     useEffect(() => {
 
-        if(!Cookie.get("token")){
+        if(Cookie.get("token") === undefined){
             router.replace("/");    
         }
 

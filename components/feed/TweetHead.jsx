@@ -6,7 +6,7 @@ import { Icon } from '../icon';
 import { AiOutlineFileImage } from "react-icons/ai";
 import { MdComputer } from "react-icons/md";
 import { FaArrowAltCircleLeft, FaPhotoVideo } from "react-icons/fa";
-import {  buttonStyles, buttonContainerStyle, feedIconStyles } from '../../styles/custom';
+import { buttonStyles, buttonContainerStyle, feedIconStyles } from '../../styles/custom';
 import { RoundButton, Loading } from '../';
 import useMediaQuery from '../../hooks/useMediaQuery';
 import { v4 as uuidv4 } from 'uuid';
@@ -146,7 +146,6 @@ const TweetHead = () => {
         setLoading(true);
         setIsLoading(true);
         addTweet({...tweetDoc, _createdAt: date.toISOString()}, resetStates);
-        
     };
 
     const titleStyle = {
@@ -321,12 +320,6 @@ const TweetHead = () => {
                             </span>
                         )
                         }
-                        {/* { fieldError  && (
-                            <span className="missing-field-msg">
-                                Require one of these fields: Image URL, Video URL or Computer Image from Desktop
-                            </span>
-                        )
-                        } */}
                         { wrongImageType  && (
                             <span className="missing-field-msg">
                                 Require one of these fields: Image URL or Computer Image from Desktop

@@ -41,10 +41,10 @@ const Login = ({ users }) => {
     if(!matchSecret(foundUser,process.env.NEXT_PUBLIC_SECRET)) return setSecretKeyError(true);
     if(!isPasswordMatch(foundUser, password)) return setPasswordError(true);
     const { _id, userName, imageUrl, profileImage } = foundUser;
-    setLoading(true);
-   
+    
     if(foundUser){
-       loginUser("/api/login", `${_id}${process.env.NEXT_PUBLIC_SECRET}`);
+      setLoading(true);
+      loginUser("/api/login", `${_id}${process.env.NEXT_PUBLIC_SECRET}`);
       await setUser({ _id, userName, imageUrl, profileImage });
       const userProfile = await getCurrentUserProfile(_id);
       setCurrentUserProfile(userProfile)
@@ -157,14 +157,14 @@ const Login = ({ users }) => {
 
 export const getServerSideProps = async ({ req, res }) => {
 
-  if(req.cookies?.token){
-    return {
-        redirect: {
-          destination: "/home",
-          permanent: false
-        }
-    }
-  }
+  // if(req.cookies?.token){
+  //   return {
+  //       redirect: {
+  //         destination: "/home",
+  //         permanent: false
+  //       }
+  //   }
+  // }
     /*after signing up from signup route and pushing to here, the await client
     fetch ie await client.fetch(userQuery); doesn't have the latest data, unless 
      I get temp state from context but coming closing down tab and coming back

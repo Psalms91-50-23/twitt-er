@@ -1,4 +1,3 @@
-import { urlFor } from '../../lib/client';
 
 const OtherTweetHead = ({ user, profile }) => {
   return (
@@ -16,7 +15,6 @@ const OtherTweetHead = ({ user, profile }) => {
               className="other-user-profile-image"
               src={user?.imageUrl} alt="profile pic"
             />
-
           )
           }
           <div className="other-user-bio-container">
