@@ -108,7 +108,7 @@ const Tweet = ({ tweet, user }) => {
               url={tweet.tweetVideoUrl}
               width="auto"
               config={{ 
-                youtube: { playerVars: { origin: process.env.NEXT_BASE_URL } }
+                youtube: { playerVars: { origin: process.env.NEXT_BASE_URL_YOUTUBE } }
                }}
               height={ largeDeviceOnwards ? "350px" : !smallDevices && mediumToLargeDevices ? "300px" : "200px"}
             />
