@@ -280,211 +280,218 @@ const HomeProfile = ({ user, otherUsers, profile }) => {
     width: "100%"
   }
 
-  return (
-    <>
-      { isLoaded && (
-        <div className="current-user-main-container">
-          <div className="current-user-sidebar-container">
-            <SidebarMenu 
-              userDetails={thisUser} 
-              setTweetClicked={setTweetClicked}
-            />
-          </div>
-          <div className="current-user-container">
-            { loading ? (
-              <div className="spinner-bg-container">
-                <div className="spinner-bg-content">
-                  <WormSpinner />
-                </div>
-              </div>
-            )
-            : (
-            <div className="current-user-picture-container">
-              <div className="current-user-images-container">          
-                { imageLoading && (
-                  <div className="spinner-image">
-                    <Spinner 
-                      message={"Loading..."} 
-                      bgColor={"transparent"} 
-                      outerCircle={"rgb(29 161 242"}
-                      innerCircle={"rgba(255,255,255,1)"}
-                    />
-                  </div>
-                  )
-                }
-                { !imageLoading && (
-                  <img
-                    className={"current-user-backdrop"}
-                    src={ profileData?.profileBackDropURL ? profileData.profileBackDropURL 
-                    : `/images/brick_twitter_bird.jpg`} 
-                    alt={ profileData?.profileBackDropURL ? "profile backdrop" : "default profile backdrop" }
-                  />
-                )
-                }
-                <img 
-                  className="current-user-profile-image"
-                  src={ thisUser?.imageUrl && thisUser?.imageUrl } 
-                  alt="profile pic"
-                />
-                <div className="current-user-edit-button">
-                  <RoundButton 
-                    buttonStyle={buttonStyles}
-                    text={!isEdit && "Edit Profile"}
-                    icon={<ImCross size={18}/>}
-                    buttonHoverColor={"rgba(29,155,240,1)"}
-                    onClickEvent={() => setIsEdit(!isEdit)}
-                  />
-                </div>
-              </div>
-              <div className="profile-info-container">
-                { isEdit && (
-                  <div className={"edit-profile-container sliding-down"}>
-                    <div className="name-input-container">
-                      <span className="name-text">First Name: </span>
-                      <input 
-                        autoComplete="off"
-                        name="firstName"
-                        value={firstName}
-                        className="first-name-input"
-                        onChange={e => onChangeProfile(e)}
-                        placeholder="First name here..."
-                      />
-                    </div>
-                    <div className="name-input-container">
-                      <span className="name-text">Last Name: </span>
-                      <input 
-                        autoComplete="off"
-                        name="lastName"
-                        className="last-name-input"
-                        value={lastName}
-                        onChange={e => onChangeProfile(e)}
-                        placeholder="Last name here..."
-                      />
-                    </div>
-                    <div className="backdrop-imageurl-container">
-                      <span className="profile-image-text">Profile Image: </span>
-                      <div className="profile-user-image-container">
-                        { isImageUrl && (
-                          <input 
-                            autoComplete="off"
-                            type={"text"}
-                            name="imageUrl"
-                            value={imageUrl}
-                            className="image-input-url"
-                            placeholder="Image URL here..."
-                            onChange={e => setThisUser(userDeets =>({...userDeets, [e.target.name]:e.target.value}))}
-                          />)
-                        }
-                        { !isImageUrl && (
-                          <input 
-                            type={"file"}
-                            name="profileImage"
-                            className="image-input-comp"
-                            onChange={e => uploadUserImage(e)}
-                          />)
-                        }
-                        <button 
-                          className="toggle-profile-type"
-                          onClick={() => toggleUserImage()}
-                        >
-                          {isImageUrl ? "File?" : "URL?"}
-                        </button> 
-                      </div>
-                    </div>
-                    <div className="profile-contents-container">
-                      <span className="backdrop-text">Backdrop Image: </span>
-                      <div className="profile-backdrop-container">
-                      { isImageUrlBackdrop && (
-                          <input 
-                            autoComplete="off"
-                            name="profileBackDropURL"
-                            value={profileBackDropURL}
-                            className="background-image-input"
-                            onChange={e => onChangeProfile(e)}
-                            placeholder="Url of image here..."
-                          />
-                        )
-                      }
-                      { !isImageUrlBackdrop && 
-                        (
-                          <input 
-                            type={"file"}
-                            name="profileImageBackdrop"
-                            className="image-input-comp"
-                            onChange={e => uploadBackdropImage(e)}
-                          />
-                        )
-                      }
-                        <button 
-                          className="toggle-profile-type"
-                          onClick={() => toggleBackDropImage()}
-                        >
-                          { isImageUrlBackdrop ? "File?" : "URL?" }
-                        </button> 
-                      </div>
-                    </div>
-                    <div className="bio-input-container">
-                      <span className="name-text">Bio: </span>
-                      <textarea 
-                        name="bio"
-                        className="bio-input"
-                        rows="auto"
-                        value={bio}
-                        resize={"none"}
-                        onChange={e => onChangeProfile(e)}
-                        placeholder="Enter your life story..."
-                      />
-                    </div>
-                    <div className="submit-edit-container">
-                      <RoundButton 
-                          buttonStyle={buttonStyles}
-                          onClickEvent={() => updateDetails()}
-                          text={"Submit"}
-                          icon={<ImCross size={18}/>}
-                          buttonHoverColor={"rgba(29,155,240,1)"}
-                      />
-                    </div>
-                  </div>
-                )
-                }
-                <div className="details-container">
-                  <p>
-                    First Name: {profileData?.firstName}
-                  </p>
-                  <p>
-                    Last Name: {profileData?.lastName}
-                  </p>
-                  <p>
-                    Bio: {profileData?.bio}
-                  </p>
-                </div>
-              </div>
-            </div>
-            )
-            }
-            { largeDevicesOnwards && (
-              <div className="current-user-widget-container">
-                <div className="search-people-container">
-                  <input 
-                    autoComplete="off"
-                    className="search-input"
-                    type="text" 
-                    name="name"
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                  <span className="search-icon">
-                    <AiOutlineSearch size={25}/>
-                  </span>
-                </div>
-                <ProfileWidget users={ filteredUsers?.length ? filteredUsers : otherUsers }/>
-              </div>
-            )
-            }
+  if(!isLoaded){
+    return (
+      <div className={backgroundStyles.moving_clouds_behind}>
+        <div className="spinner-bg-container">
+          <div className="spinner-bg-content">
+            <WormSpinner />
           </div>
         </div>
-      )
-      }
-    </>
+      </div>
+    )
+  }
+
+  return (
+    <div className="current-user-main-container">
+      <div className="current-user-sidebar-container">
+        <SidebarMenu 
+          userDetails={thisUser} 
+          setTweetClicked={setTweetClicked}
+        />
+      </div>
+      <div className="current-user-container">
+        { loading ? (
+          <div className="spinner-bg-container">
+            <div className="spinner-bg-content">
+              <WormSpinner />
+            </div>
+          </div>
+        )
+        : (
+        <div className="current-user-picture-container">
+          <div className="current-user-images-container">          
+            { imageLoading && (
+              <div className="spinner-image">
+                <Spinner 
+                  message={"Loading..."} 
+                  bgColor={"transparent"} 
+                  outerCircle={"rgb(29 161 242"}
+                  innerCircle={"rgba(255,255,255,1)"}
+                />
+              </div>
+              )
+            }
+            { !imageLoading && (
+              <img
+                className={"current-user-backdrop"}
+                src={ profileData?.profileBackDropURL ? profileData.profileBackDropURL 
+                : `/images/brick_twitter_bird.jpg`} 
+                alt={ profileData?.profileBackDropURL ? "profile backdrop" : "default profile backdrop" }
+              />
+            )
+            }
+            <img 
+              className="current-user-profile-image"
+              src={ thisUser?.imageUrl && thisUser?.imageUrl } 
+              alt="profile pic"
+            />
+            <div className="current-user-edit-button">
+              <RoundButton 
+                buttonStyle={buttonStyles}
+                text={!isEdit && "Edit Profile"}
+                icon={<ImCross size={18}/>}
+                buttonHoverColor={"rgba(29,155,240,1)"}
+                onClickEvent={() => setIsEdit(!isEdit)}
+              />
+            </div>
+          </div>
+          <div className="profile-info-container">
+            { isEdit && (
+              <div className={"edit-profile-container sliding-down"}>
+                <div className="name-input-container">
+                  <span className="name-text">First Name: </span>
+                  <input 
+                    autoComplete="off"
+                    name="firstName"
+                    value={firstName}
+                    className="first-name-input"
+                    onChange={e => onChangeProfile(e)}
+                    placeholder="First name here..."
+                  />
+                </div>
+                <div className="name-input-container">
+                  <span className="name-text">Last Name: </span>
+                  <input 
+                    autoComplete="off"
+                    name="lastName"
+                    className="last-name-input"
+                    value={lastName}
+                    onChange={e => onChangeProfile(e)}
+                    placeholder="Last name here..."
+                  />
+                </div>
+                <div className="backdrop-imageurl-container">
+                  <span className="profile-image-text">Profile Image: </span>
+                  <div className="profile-user-image-container">
+                    { isImageUrl && (
+                      <input 
+                        autoComplete="off"
+                        type={"text"}
+                        name="imageUrl"
+                        value={imageUrl}
+                        className="image-input-url"
+                        placeholder="Image URL here..."
+                        onChange={e => setThisUser(userDeets =>({...userDeets, [e.target.name]:e.target.value}))}
+                      />)
+                    }
+                    { !isImageUrl && (
+                      <input 
+                        type={"file"}
+                        name="profileImage"
+                        className="image-input-comp"
+                        onChange={e => uploadUserImage(e)}
+                      />)
+                    }
+                    <button 
+                      className="toggle-profile-type"
+                      onClick={() => toggleUserImage()}
+                    >
+                      {isImageUrl ? "File?" : "URL?"}
+                    </button> 
+                  </div>
+                </div>
+                <div className="profile-contents-container">
+                  <span className="backdrop-text">Backdrop Image: </span>
+                  <div className="profile-backdrop-container">
+                  { isImageUrlBackdrop && (
+                      <input 
+                        autoComplete="off"
+                        name="profileBackDropURL"
+                        value={profileBackDropURL}
+                        className="background-image-input"
+                        onChange={e => onChangeProfile(e)}
+                        placeholder="Url of image here..."
+                      />
+                    )
+                  }
+                  { !isImageUrlBackdrop && 
+                    (
+                      <input 
+                        type={"file"}
+                        name="profileImageBackdrop"
+                        className="image-input-comp"
+                        onChange={e => uploadBackdropImage(e)}
+                      />
+                    )
+                  }
+                    <button 
+                      className="toggle-profile-type"
+                      onClick={() => toggleBackDropImage()}
+                    >
+                      { isImageUrlBackdrop ? "File?" : "URL?" }
+                    </button> 
+                  </div>
+                </div>
+                <div className="bio-input-container">
+                  <span className="name-text">Bio: </span>
+                  <textarea 
+                    name="bio"
+                    className="bio-input"
+                    rows="auto"
+                    value={bio}
+                    resize={"none"}
+                    onChange={e => onChangeProfile(e)}
+                    placeholder="Enter your life story..."
+                  />
+                </div>
+                <div className="submit-edit-container">
+                  <RoundButton 
+                      buttonStyle={buttonStyles}
+                      onClickEvent={() => updateDetails()}
+                      text={"Submit"}
+                      icon={<ImCross size={18}/>}
+                      buttonHoverColor={"rgba(29,155,240,1)"}
+                  />
+                </div>
+              </div>
+            )
+            }
+            <div className="details-container">
+              <p>
+                First Name: {profileData?.firstName}
+              </p>
+              <p>
+                Last Name: {profileData?.lastName}
+              </p>
+              <p>
+                Bio: {profileData?.bio}
+              </p>
+            </div>
+          </div>
+        </div>
+        )
+        }
+        { largeDevicesOnwards && (
+          <div className="current-user-widget-container">
+            <div className="search-people-container">
+              <input 
+                autoComplete="off"
+                className="search-input"
+                type="text" 
+                name="name"
+                onChange={(e) => setName(e.target.value)}
+              />
+              <span className="search-icon">
+                <AiOutlineSearch size={25}/>
+              </span>
+            </div>
+            <ProfileWidget users={ filteredUsers?.length ? filteredUsers : otherUsers }/>
+          </div>
+        )
+        }
+      </div>
+    </div>
   )
 }
 

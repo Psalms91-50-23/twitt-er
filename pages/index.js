@@ -28,7 +28,7 @@ const Home = ({ users }) => {
               className={homeStyles.twitter_icon_left}
             >
             </div>
-            <h1>Twitt Er</h1>
+            <h1>Twitt-Er</h1>
             <div 
               className={homeStyles.twitter_icon_right}
             >

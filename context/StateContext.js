@@ -41,6 +41,7 @@ export const StateContext = ({ children }) => {
                     // console.log("final data in context ", finalData);
                     setUser(finalData[0].result);
                     setCurrentUserTweets(finalData[1].result);
+                    router.push("/home")
                 }catch(error){
                     console.log(error.message);
                 }
@@ -52,6 +53,7 @@ export const StateContext = ({ children }) => {
             .then(res => res.json())
             .then(users => {
                 setAllUsers(users.result);
+                router.push("/home")
             })
             .catch(error => {console.log(error.message)})
         }

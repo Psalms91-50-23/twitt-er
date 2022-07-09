@@ -9,6 +9,7 @@ import {
   OtherTweetHead,
   ProfileWidget } from '../../components';
 import useMediaQuery from '../../hooks/useMediaQuery';
+import { WormSpinner } from '../../components';
 
 const Profile = ({ 
   userTweets, 
@@ -43,44 +44,50 @@ const Profile = ({
     setCurrentUserProfile(profile);
   }, [setCurrentUserProfile,profile])
   
+  if(!isLoaded){
+    return (
+      <div className={backgroundStyles.moving_clouds_behind}>
+        <div className="spinner-bg-container">
+          <div className="spinner-bg-content">
+            <WormSpinner />
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <>
-      { isLoaded && (
-        <div className={backgroundStyles.moving_clouds_behind}>
-          <div className="other-user-home-container">
-            <div className="sidebar-buttons-container">
-              <SidebarMenu />
+    <div className={backgroundStyles.moving_clouds_behind}>
+      <div className="other-user-home-container">
+        <div className="sidebar-buttons-container">
+          <SidebarMenu />
+        </div>
+        <div className="other-user-feed-container">
+          <OtherTweetHead profile={profile} user={user} />
+          <OtherUserFeed user={user} userTweets={userTweets} />
+        </div>
+        { mediumToLargeDevices && (
+          <div className="other-user-widget-container">
+            <div className="search-people-container">
+              <input 
+                className="search-input"
+                type="text" 
+                name="name"
+                onChange={(e) => setName(e.target.value)}
+              />
+              <span className="search-icon">
+                <AiOutlineSearch size={25}/>
+              </span>
             </div>
-            <div className="other-user-feed-container">
-              <OtherTweetHead profile={profile} user={user} />
-              <OtherUserFeed user={user} userTweets={userTweets} />
-            </div>
-            { mediumToLargeDevices && (
-              <div className="other-user-widget-container">
-                <div className="search-people-container">
-                  <input 
-                    className="search-input"
-                    type="text" 
-                    name="name"
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                  <span className="search-icon">
-                    <AiOutlineSearch size={25}/>
-                  </span>
-                </div>
-                <ProfileWidget 
-                  users={ filteredUsers?.length ? filteredUsers 
-                  : otherUsers}
-                />
-            </div>
-            )
-            }
-          </div>
-        </div>  
-      )
-      }
-    </>
+            <ProfileWidget 
+              users={ filteredUsers?.length ? filteredUsers 
+              : otherUsers}
+            />
+        </div>
+        )
+        }
+      </div>
+    </div>  
   )
 }
 

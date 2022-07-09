@@ -44,8 +44,8 @@ const Login = ({ users }) => {
     setLoading(true);
    
     if(foundUser){
-      loginUser("/api/login", `${_id}${process.env.NEXT_PUBLIC_SECRET}`);
-      setUser({ _id, userName, imageUrl, profileImage });
+       loginUser("/api/login", `${_id}${process.env.NEXT_PUBLIC_SECRET}`);
+      await setUser({ _id, userName, imageUrl, profileImage });
       const userProfile = await getCurrentUserProfile(_id);
       setCurrentUserProfile(userProfile)
       router.push("/home");

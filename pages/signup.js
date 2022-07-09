@@ -35,7 +35,6 @@ const Signup = ({ users }) => {
   const [wrongImageType, setWrongImageType] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const inputRef = useRef(null);
-  // const [missingField, setMissingField] = useState(true)
   const [latestUpdatedUsers, setLatestUpdatedUsers] = useState([]);
   const [fileSizeError, setFileSizeError] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
@@ -79,7 +78,12 @@ const Signup = ({ users }) => {
       return;
     }
     setFileSizeError(false);
-    if (selectedFile.type === 'image/png' || selectedFile.type === 'image/svg' || selectedFile.type === 'image/jpeg' || selectedFile.type === 'image/gif' || selectedFile.type === 'image/tiff') {
+    if (
+      selectedFile.type === 'image/png' 
+      || selectedFile.type === 'image/svg' 
+      || selectedFile.type === 'image/jpeg' 
+      || selectedFile.type === 'image/gif' 
+      || selectedFile.type === 'image/tiff') {
       setWrongImageType(false);
       setProfileImage(selectedFile);
     } else {
@@ -297,9 +301,21 @@ const Signup = ({ users }) => {
                           : <MdComputer size={22}/>
                         }
                       </span>
-                      <span >
+                      { fileInput && (
+                        <span >
+                          Upload image from URL
+                        </span>
+                      )
+                      }
+                      { !fileInput && (
+                        <span >
+                          Upload image from Computer
+                        </span>
+                      )
+                      }
+                      {/* <span >
                         Upload image from { fileInput ? "URL" : "Computer" }
-                      </span>
+                      </span> */}
                   </button>
                   <button 
                     className={homeStyles.btn}

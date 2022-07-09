@@ -9,9 +9,8 @@ const People = ({ people }) => {
 
   const redirect = () => {
     router.push(`/profile/${people?._id}`);
-    setTimeout(() => {
-      setIsShowFollows(false);
-    }, 500);
+    setIsShowFollows(false);
+
   }
 
   return (
