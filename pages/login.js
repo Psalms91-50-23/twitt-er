@@ -157,14 +157,14 @@ const Login = ({ users }) => {
 
 export const getServerSideProps = async ({ req, res }) => {
 
-  // if(req.cookies?.token){
-  //   return {
-  //       redirect: {
-  //         destination: "/home",
-  //         permanent: false
-  //       }
-  //   }
-  // }
+  if(req.cookies?.token){
+    return {
+        redirect: {
+          destination: "/home",
+          permanent: false
+        }
+    }
+  }
     /*after signing up from signup route and pushing to here, the await client
     fetch ie await client.fetch(userQuery); doesn't have the latest data, unless 
      I get temp state from context but coming closing down tab and coming back
