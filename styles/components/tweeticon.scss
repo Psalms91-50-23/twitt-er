@@ -8,7 +8,6 @@
 .tweet-icon-container {
     display: flex;
     flex-direction: row;
-    // position: relative;;
     .tweet-icon {
         display: flex;
         position: relative;
@@ -20,15 +19,14 @@
         border-radius: 50%;
         width: 25px;
         height: 25px;
-        // background-color: var(--twitterBlueTwoFade);
-        // color: inherit;
      }   
 }
 
 .tweet-icon-container:hover {
     cursor: pointer;
     .tweet-icon {
-        background-color: var(--blackOverlay);
+        background-color: var(--twitterBlueTwoFade);
+        color: var(--white);
     }
 }
 
