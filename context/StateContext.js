@@ -9,6 +9,7 @@ const Context = createContext();
 export const StateContext = ({ children }) => {
 
     const router = useRouter();
+    const [token, setToken] = useState(Cookie.get("token") ? Cookie.get("token") : null);
     const [user, setUser] = useState(null);
     const [allUsers, setAllUsers] = useState([]);
     const [isTweetClicked, setIsTweetClicked] = useState(false);
@@ -22,13 +23,8 @@ export const StateContext = ({ children }) => {
     const [isShowFollows, setIsShowFollows] = useState(false);
 
     useEffect(() => {
-
-        if(!Cookie.get("token")){
-            router.replace("/");    
-        }
-
-        if(Cookie.get("token")){
-            const userId = Cookie.get("token").split(process.env.NEXT_PUBLIC_SECRET)[0];
+        if(token){
+            const userId = token.split(process.env.NEXT_PUBLIC_SECRET)[0];
             const userQuery = encodeURIComponent(queryUser(userId));
             const userTweetsQuery = encodeURIComponent(queryUserTweets(userId));
             const fetchData = async () => {
@@ -54,7 +50,7 @@ export const StateContext = ({ children }) => {
             })
             .catch(error => {console.log(error.message)})
         }
-    }, [Cookie.get("token")])
+    }, [token])
 
     const addNewUser = (newUser) => {
         if(allUsers?.length){
@@ -88,7 +84,6 @@ export const StateContext = ({ children }) => {
             resetStates();
             client.create(tweet)
             .then(response => {
-                // tempTweets.splice(0,0,response);
                 tempTweets.splice(0,1,response);
                 setCurrentUserTweets(tempTweets);
                 setIsLoading(false);
