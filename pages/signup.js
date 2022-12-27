@@ -78,7 +78,6 @@ const Signup = ({ users }) => {
 
   useEffect(() => {
     const start = false;
-    console.log("useeffect")
     console.log({missingFileImage});
     if(!start){
       if(profileImage){
@@ -107,16 +106,13 @@ const Signup = ({ users }) => {
 
   const uploadImage = (e) => {
     //file size in bytes below is 20mb in byte format
-    console.log("1");
     const selectedFile = e.target.files[0];
     const { type, name } = selectedFile;
     console.log({type});
     if(selectedFile?.size > 20000000){
-      console.log("2")
       setFileSizeError(true);
       return;
     }
-    console.log("3");
     setFileSizeError(false);
     if (
       selectedFile.type === 'image/png' 
@@ -130,7 +126,6 @@ const Signup = ({ users }) => {
       setProfileImage(selectedFile);
       setMissingFileImage(!missingFileImage);
     } else {
-      console.log("5")
       setLoading(false);
       setWrongImageType(true);
     }

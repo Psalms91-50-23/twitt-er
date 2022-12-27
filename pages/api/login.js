@@ -1,7 +1,6 @@
 import cookie from "cookie";
 
 export default async function login(req,res) {
-    console.log("token in backend body ", req.body.token);
     if(req.method === "POST"){
         res.setHeader(
             "Set-Cookie",
