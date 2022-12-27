@@ -41,7 +41,6 @@ export default async function handler(req, res) {
         ])
         const finalData = await Promise.all(results.map(result => result.json()));
         // console.log("bing data ",finalData[4].value);
-     
         res.status(200).json({ 
             tweets: finalData[0].result, 
             profile: finalData[1].result, 

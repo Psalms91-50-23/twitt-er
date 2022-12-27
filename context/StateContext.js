@@ -40,7 +40,6 @@ export const StateContext = ({ children }) => {
                     const finalData = await Promise.all(results.map(result => result.json()));
                     setUser(finalData[0].result);
                     setCurrentUserTweets(finalData[1].result);
-
                 }catch(error){
                     console.log(error.message);
                 }
@@ -55,7 +54,7 @@ export const StateContext = ({ children }) => {
             })
             .catch(error => {console.log(error.message)})
         }
-    }, [token])
+    }, [token,router])
 
     const addNewUser = (newUser) => {
         if(allUsers?.length){

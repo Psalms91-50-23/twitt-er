@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import { useStateContext } from '../../context/StateContext';
 import { Sidebar, Feed, UserWidget, WormSpinner } from '../../components';
-// import { useRouter }  from 'next/router';
 import useMediaQuery from '../../hooks/useMediaQuery';
 import backgroundStyles from "../../styles/module/Background.module.scss";
 
@@ -13,7 +12,7 @@ const Home = ({
   profile, 
   newsData 
 }) => {
-
+  console.log("news data testing if it appears in live which currently it doesnt ", newsData);
   const mediumDevice = useMediaQuery('(min-width: 905px)');
   const { 
     setCurrentUserTweets, 

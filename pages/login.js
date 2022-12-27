@@ -20,12 +20,6 @@ const Login = ({ users }) => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-      if(token){
-        router.push("/home");
-      }
-  }, [token, router])
   
   useEffect(() => {
     setEmailError(false);
