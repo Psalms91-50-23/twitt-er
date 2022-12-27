@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useStateContext } from '../../context/StateContext';
 import { Sidebar, Feed, UserWidget, WormSpinner } from '../../components';
+// import { useRouter }  from 'next/router';
 import useMediaQuery from '../../hooks/useMediaQuery';
 import backgroundStyles from "../../styles/module/Background.module.scss";
 
@@ -48,7 +49,6 @@ const Home = ({
   useEffect(() => {
     setCurrentUserProfile(profile);
   }, [profile, setCurrentUserProfile]) 
-
   if(!isLoaded){
     return (
       <div className={backgroundStyles.moving_clouds_behind}>

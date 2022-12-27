@@ -22,6 +22,12 @@ const Login = ({ users }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+      if(token){
+        router.push("/home");
+      }
+  }, [token, router])
+  
+  useEffect(() => {
     setEmailError(false);
     setPasswordError(false)
     if(users.length){
@@ -38,7 +44,7 @@ const Login = ({ users }) => {
     router.push("/home");
   }
 
-  async function signInUser(e, navRouter){
+  async function signInUser(e){
     e.preventDefault();
     if(!foundUser) return setEmailError(true);
     if(isEmailMatch(foundUser, userName) === false) return setEmailError(true);
