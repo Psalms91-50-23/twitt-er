@@ -20,6 +20,7 @@
     justify-content: center;
     background-image: url("../../public/images/cloud.svg");
     background-size: cover;
+    overflow-y: auto;
 }
 
 .twitter_bird_bg {
@@ -29,6 +30,7 @@
     justify-content: center;
     width: 100%;
     height: auto;
+    margin-top: 10rem;
 }
 
 .twitter_bird {

@@ -106,11 +106,12 @@ const Tweet = ({ tweet, user }) => {
               controls={true}
               muted={false}
               url={tweet.tweetVideoUrl}
-              width="auto"
+              width={ largeDeviceOnwards ? "15rem" : !smallDevices && mediumToLargeDevices ? "12rem" : "10rem"}
+              // width="auto"
               config={{ 
                 youtube: { playerVars: { origin: process.env.NEXT_BASE_URL_YOUTUBE } }
                }}
-              height={ largeDeviceOnwards ? "350px" : !smallDevices && mediumToLargeDevices ? "300px" : "200px"}
+              height={ largeDeviceOnwards ? "15rem" : !smallDevices && mediumToLargeDevices ? "12rem" : "10rem"}
             />
           )
           }

@@ -29,16 +29,18 @@ const Signup = ({ users }) => {
   const [missingPassword, setMissingPassword] = useState(false);
   const [userExistsError, setUserExistsError] = useState(false);
   const [fileInput, setFileInput] = useState(true);
-  const [showPassword, setShowPassword] = useState(false);
-  const [imageString, setImageString] = useState(false);
+  // const [showPassword, setShowPassword] = useState(false);
+  // const [imageString, setImageString] = useState(false);
   const [loading, setLoading] = useState(false);
   const [wrongImageType, setWrongImageType] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const inputRef = useRef(null);
-  const [latestUpdatedUsers, setLatestUpdatedUsers] = useState([]);
+  // const [latestUpdatedUsers, setLatestUpdatedUsers] = useState([]);
   const [fileSizeError, setFileSizeError] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
   const [missingField, setMissingField] = useState(false);
+  const [missingURLImage, setMissingURLImage] = useState(true);
+  const [missingFileImage, setMissingFileImage] = useState(true);
 
   useEffect(() => {  
     if(users){
@@ -62,7 +64,41 @@ const Signup = ({ users }) => {
 
   useEffect(() => {
     setMissingField(false);
-  }, [imageUrl, setMissingField])
+  }, [imageUrl, setMissingField, profileImage, missingFileImage, missingURLImage])
+
+  useEffect(() => {
+    const start = false;
+    if(!start){
+      if(!missingURLImage){
+        setMissingURLImage(true);
+      }
+    }
+    return () => start = true;
+  }, [ missingURLImage, setMissingURLImage ])
+
+  useEffect(() => {
+    const start = false;
+    console.log("useeffect")
+    console.log({missingFileImage});
+    if(!start){
+      if(profileImage){
+        setMissingFileImage(false);
+      }
+    }
+    return () => start = true;
+  }, [ setMissingFileImage, profileImage, missingFileImage ])
+
+  // useEffect(() => {
+  //   first
+  
+  //   return () => {
+  //     second
+  //   }
+  // }, [third])
+  
+  // useEffect(() => {
+  //   setMissingField(false);
+  // }, [imageUrl, setMissingField, profileImage, missingFileImage, missingURLImage])
   
   const resetFileInput = () => {
     // 👇️ reset input value
@@ -71,29 +107,55 @@ const Signup = ({ users }) => {
 
   const uploadImage = (e) => {
     //file size in bytes below is 20mb in byte format
+    console.log("1");
     const selectedFile = e.target.files[0];
     const { type, name } = selectedFile;
+    console.log({type});
     if(selectedFile?.size > 20000000){
+      console.log("2")
       setFileSizeError(true);
       return;
     }
+    console.log("3");
     setFileSizeError(false);
     if (
       selectedFile.type === 'image/png' 
       || selectedFile.type === 'image/svg' 
       || selectedFile.type === 'image/jpeg' 
       || selectedFile.type === 'image/gif' 
-      || selectedFile.type === 'image/tiff') {
+      || selectedFile.type === 'image/tiff'
+      || selectedFile.type === 'image/webp') {
+        console.log("4")
       setWrongImageType(false);
       setProfileImage(selectedFile);
+      setMissingFileImage(!missingFileImage);
     } else {
+      console.log("5")
       setLoading(false);
       setWrongImageType(true);
     }
   };
+
+  const toggleIsFileInput = () => {
+    setFileInput(!fileInput);
+    if(imageUrl){
+      setImageUrl("");
+      setMissingURLImage(true);
+    }
+  }
   
+  const errorType = () => {
+    if(!imageUrl && !profileImage){
+       return <span className={homeStyles.error_msg}>Missing profile image URL or computer image</span>
+    } else return ""
+  }
+
   const handleSubmitUser = (e) => {
     e.preventDefault();
+    console.log({missingFileImage});
+    console.log({missingURLImage});
+    if(!imageUrl && !profileImage) return
+    console.log("test pass missing")
     if(fileSizeError) return;
     if(!userName) return setMissingUsername(true);
     if(!validateEmail(userName)) return setEmailError(true);  
@@ -190,10 +252,10 @@ const Signup = ({ users }) => {
     }
   }
   
-  const toggleIsFileInput = () => {
-    setFileInput(!fileInput);
-  }
 
+console.log({imageUrl});
+console.log({missingURLImage});
+console.log({missingFileImage});
   return (
     <div className={backgroundStyles.container_cloud_bg}>
         <div className={backgroundStyles.twitter_bird_bg}>
@@ -258,7 +320,7 @@ const Signup = ({ users }) => {
                 {fileInput ? (
                   <CustomInput 
                     fileInput 
-                    headerText={"Upload Image from Computer"} 
+                    headerText={"Profile Image Upload from Computer"} 
                     titleColor={"rgb(29, 161, 242)"}
                     uploadImage={uploadImage}
                   />
@@ -283,10 +345,13 @@ const Signup = ({ users }) => {
                   />
                 )
                 }
-                { missingField && (
+                {
+                  errorType()
+                }
+                {/* { !missingURLImage && missingFileImage &&  (
                   <span className={homeStyles.error_msg}>Missing profile image URL or computer image</span>
                 )
-                }
+                } */}
                 { emailError && (
                   <span className={homeStyles.error_msg}>Not a valid Email pattern, 3 characters min eg min@hotmail.com</span>
                 )

@@ -21,9 +21,13 @@ export const StateContext = ({ children }) => {
     const [otherUsers, setOtherUsers] = useState(null);
     const [latestNews, setLatestNews] = useState([]);
     const [isShowFollows, setIsShowFollows] = useState(false);
-
+        
     useEffect(() => {
-        if(token){
+        const cookieToken = Cookie.get("token") ? Cookie.get("token") : ""
+        if(cookieToken){
+            setToken(cookieToken);
+        }
+        if(cookieToken || Cookie.get("token")){
             const userId = token.split(process.env.NEXT_PUBLIC_SECRET)[0];
             const userQuery = encodeURIComponent(queryUser(userId));
             const userTweetsQuery = encodeURIComponent(queryUserTweets(userId));
@@ -36,6 +40,7 @@ export const StateContext = ({ children }) => {
                     const finalData = await Promise.all(results.map(result => result.json()));
                     setUser(finalData[0].result);
                     setCurrentUserTweets(finalData[1].result);
+
                 }catch(error){
                     console.log(error.message);
                 }
@@ -176,7 +181,9 @@ export const StateContext = ({ children }) => {
                 setLatestNews,
                 latestNews,
                 isShowFollows,
-                setIsShowFollows, 
+                setIsShowFollows,
+                setToken,
+                token
             }}
         >
             {children}

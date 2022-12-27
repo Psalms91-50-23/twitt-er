@@ -24,14 +24,16 @@ const Navbar = () => {
   const router = useRouter();
   const smallDevices = useMediaQuery('(max-width: 470px)');
   const mediumToLargeDevices = useMediaQuery('(max-width: 905px)');
+  // const [userExists, setUserExists] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(user);
   const [isNews, setIsNews] = useState(false);
   // const [isShowFollows, setIsShowFollows] = useState(false);
   const [isMenuHidden, setIsMenuHidden] = useState(true);
 
-
   useEffect(() => {
-    setLoggedInUser(user)
+    if(user){
+      setLoggedInUser(user);
+    }
   }, [user,setLoggedInUser])
   
   const handleLogOut = () => {

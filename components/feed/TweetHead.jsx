@@ -50,7 +50,9 @@ const TweetHead = () => {
     })
 
     useEffect(() => {
-        setCurrentUser(user);
+        if(user){
+            setCurrentUser(user);
+        }
     }, [user])
     
     const { tweetTitle, tweetImageUrl, tweetVideoUrl } = tweetDoc;

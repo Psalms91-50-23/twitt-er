@@ -5,18 +5,18 @@ import {  AiOutlineSearch } from "react-icons/ai";
 const UserWidget = ({ news }) => {
 
   const [filteredNews, setFilteredNews] = useState([]);
-  const [name, setName] = useState("");
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
-      if(name){
-          const newsFiltered = news.filter( news =>  news.title.toLowerCase().includes(name.toLowerCase()));
+      if(search){
+          const newsFiltered = news.filter( news =>  news.name.toLowerCase().includes(search.toLowerCase()));
           setFilteredNews(newsFiltered)
       }else {
           setFilteredNews([])
       }
-  }, [name,news, setFilteredNews])
+  }, [search,news, setFilteredNews])
 
-  // console.log({news})
+
   return (
     <div className="user-widget-container">
       <div className="user-widget-search-container">
@@ -27,22 +27,23 @@ const UserWidget = ({ news }) => {
             autoComplete="off"
             className="search-input-follow"
             type="text" 
-            name="name"
-            onChange={(e) => setName(e.target.value)}
+            name="search"
+            placeholder="Filter by title"
+            onChange={(e) => setSearch(e.target.value)}
         />
       </div>
       <div className="user-widget-news-container">
-        <h1>Latest News</h1>
+        <h2>Latest News</h2>
         { filteredNews?.length ? filteredNews.map((newz, index) => (
           <News 
             newz={newz}
-            key={`${newz.id}_${index}`}
+            key={`${newz._type}_${index}`}
           />
         ))
         : news.map((newz, index) => (
           <News 
             newz={newz}
-            key={`${newz.id}_${index}`}
+            key={`${newz._type}_${index}`}
           />
         ))
         }

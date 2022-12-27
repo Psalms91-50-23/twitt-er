@@ -21,11 +21,11 @@
 }
 
 .news-descriptions {
-    font-size: 13px;
+    font-size: 0.7rem;
 }
 
 .news-text {
-    font-size: 13px;
+    font-size: 0.7rem;
     font-weight: 600;
     font-family: 'Poppins', sans-serif;
     transition: all 0.2s ease-in;
@@ -34,7 +34,7 @@
 .show-more {
     cursor: pointer;
     padding: 2px 5px;
-    font-size: 13px;
+    font-size: 0.7rem;
     color: rgba(255, 255, 255, 0.8);
     font-family: 'Poppins', sans-serif;
     transition: all 0.2s ease-in-out;
@@ -47,7 +47,7 @@
 
 .news-link {
     transition: all 0.2s ease-in-out;
-    font-size: 12px;
+    font-size: 0.7rem;
     word-wrap: normal;
 }
 
@@ -55,4 +55,16 @@
     text-decoration: underline;
     cursor: pointer;
     color: var(--white);
+}
+
+@media screen and (max-width: 905px) {
+    .news-image {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .news-image {
+        width: 100%;
+    }
 }

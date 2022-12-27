@@ -12,7 +12,7 @@ const NewsOverlay = ({ setIsNews, isNews }) => {
 
     useEffect(() => {
         if(name){
-            const newsFiltered = latestNews.filter( news =>  news.title.toLowerCase().includes(name.toLowerCase()));
+            const newsFiltered = latestNews.filter( news =>  news.name.toLowerCase().includes(name.toLowerCase()));
             setFilteredNews(newsFiltered)
         }else {
             setFilteredNews([])

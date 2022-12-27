@@ -13,7 +13,7 @@ import { findUser, isPasswordMatch, isEmailMatch,
 
 const Login = ({ users }) => {
   const router = useRouter();
-  const { setUser, setCurrentUserProfile } = useStateContext();
+  const { setUser, setCurrentUserProfile, setToken, token } = useStateContext();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [foundUser, setFoundUser] = useState(null);
@@ -47,8 +47,13 @@ const Login = ({ users }) => {
       loginUser("/api/login", `${_id}${process.env.NEXT_PUBLIC_SECRET}`);
       await setUser({ _id, userName, imageUrl, profileImage });
       const userProfile = await getCurrentUserProfile(_id);
-      setCurrentUserProfile(userProfile)
+      console.log({userProfile});
+      setCurrentUserProfile(userProfile);
+      console.log("before pushing to home")
+      console.log({_id})
+      setToken(_id);
       router.push("/home");
+      // router.push("/home");
     }
   }
 
@@ -171,7 +176,7 @@ export const getServerSideProps = async ({ req, res }) => {
     still does give you latest data as state is deleted */
     const usersQuery = encodeURIComponent(queryAllUsers());
     const url = `${sanityBaseURL}${usersQuery}`;
-    const users = await fetch(url).then(res => res.json()).catch(error => console.log(error.message));
+    const users = await fetch(url).then(res => res.json()).catch(error => console.log("msg error in login ",error.message));
     return {
       props: {
         users: users.result ? users.result : []

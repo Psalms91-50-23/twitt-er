@@ -336,7 +336,10 @@ a {
 .tweeted-image {
   border-radius: 10px;
   width: 100%;
-  height: 200px;
+  height: 100%;
+  // height: 200px;
+  max-width: 15rem;
+  max-height: 10rem;
   transition: all 0.2 ease-in-out;
   cursor: pointer;
 }

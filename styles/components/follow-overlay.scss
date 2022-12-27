@@ -56,7 +56,6 @@
     color: var(--white);
 }
 
-
 .search-news-container {
     display: flex;
     flex-direction: row;
@@ -75,7 +74,7 @@
 
 .search-input-follow {
     display: flex;
-    font-size: 1em;
+    font-size: 1rem;
     font-weight: 700;
     width: 100%;
     border: none;
@@ -97,5 +96,11 @@
 @media screen and (max-width: 400px) {
     .follow-contents {
         flex: 0.7;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .search-input-follow { 
+        font-size: 0.8rem;
     }
 }

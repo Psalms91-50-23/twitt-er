@@ -28,7 +28,9 @@ const Home = ({
   }, [])
   
   useEffect(() => {
-    setUser(currentUser);
+    if(currentUser){
+      setUser(currentUser);
+    }
   }, [currentUser, setUser])
   
   useEffect(() => {
@@ -99,7 +101,7 @@ export const getServerSideProps = async ({ req, res }) => {
   const { 
     currentUser, 
     tweets,
-    newsData, 
+    bingNewsData, 
     otherUsers, 
     profile } = data;
   return {
@@ -109,7 +111,7 @@ export const getServerSideProps = async ({ req, res }) => {
       tweets: tweets ? tweets : [],
       otherUsers: otherUsers ?  otherUsers: [],
       profile: profile ? profile : [],
-      newsData: newsData ? newsData : []
+      newsData: bingNewsData ? bingNewsData : []
     },
   }
 }
