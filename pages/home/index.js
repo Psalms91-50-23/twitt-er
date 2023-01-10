@@ -95,7 +95,7 @@ export const getServerSideProps = async ({ req, res }) => {
   if(req.cookies.token){
     userId = req.cookies.token.split(process.env.NEXT_PUBLIC_SECRET)[0];
   }
-  const url = `${process.env.NEXT_BASE_URL}/api/home/${userId}`;
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/home/${userId}`;
   const data = await fetch(url).then(res => res.json());
   const { 
     currentUser, 

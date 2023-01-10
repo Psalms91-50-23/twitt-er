@@ -18,13 +18,25 @@ export default async function handler(req,res){
             }
         };
 
+        const bingNewsOptions = {
+            method: 'GET',
+            url: 'https://bing-news-search1.p.rapidapi.com/news/search',
+            params: {q: 'latest', safeSearch: 'Off', textFormat: 'Raw', freshness: 'Day'},
+            headers: {
+                'X-BingApis-SDK': 'true',
+                'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPID_BING_NEWS_SEARCH_API_KEY,
+                'X-RapidAPI-Host': 'bing-news-search1.p.rapidapi.com'
+            }
+        }
+
         try{
             const results = await Promise.all([
                 fetch(`${sanityBaseURL}${userTweetsQuery}`),
                 fetch(`${sanityBaseURL}${profileQuery}`),
                 fetch(`${sanityBaseURL}${userQuery}`),
                 fetch(`${sanityBaseURL}${otherUsersQuery}`),
-                fetch('https://current-news.p.rapidapi.com/news', options),
+                fetch("https://bing-news-search1.p.rapidapi.com/news/search?q=latest&freshness=Day&textFormat=Raw&safeSearch=Off", bingNewsOptions),
+                //fetch('https://current-news.p.rapidapi.com/news', options),
             ])
             const finalData = await Promise.all(results.map(result => result.json()));
             res.status(200).json({
@@ -32,7 +44,8 @@ export default async function handler(req,res){
                 profile: finalData[1].result,
                 user: finalData[2].result,
                 otherUsers: finalData[3].result,
-                newsData: finalData[4].news,
+                bingNewsData: finalData[4].value
+                //newsData: finalData[4].news,
             });
         }catch(error){
             console.log(error.message);

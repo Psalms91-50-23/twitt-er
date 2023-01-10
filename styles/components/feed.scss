@@ -18,6 +18,12 @@
      }
 }
 
+@media screen and (max-width: 560px) {
+    .feed-container {
+        width: 100%;
+    }
+}
+
 @media screen and (max-width: 470px) {
 
     .feed-container {

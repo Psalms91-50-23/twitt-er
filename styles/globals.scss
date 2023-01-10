@@ -1721,7 +1721,6 @@ input:-webkit-autofill:active  {
   .feed-tweet-buttons-container {
     flex-direction: column;
   }
-
   .tweeted-image {
     height: 150px;
   }
@@ -1730,9 +1729,13 @@ input:-webkit-autofill:active  {
   }
   .tweet-file-input-container {
     margin-bottom: 10px;
+    padding-right: 0px !important;
   }
   .tweet-icons-container {
     margin-right: 0;
+  }
+  .tweet-url-input-container {
+    margin-right: 0px !important;
   }
 }
 

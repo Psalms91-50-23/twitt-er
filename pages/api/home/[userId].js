@@ -19,7 +19,7 @@ export default async function handler(req, res) {
             }
         };
         var searchQuery = "latest";
-        var bingNewsOptions = {
+        const bingNewsOptions = {
             method: 'GET',
             url: 'https://bing-news-search1.p.rapidapi.com/news/search',
             params: {q: 'latest', safeSearch: 'Off', textFormat: 'Raw', freshness: 'Day'},
@@ -29,29 +29,29 @@ export default async function handler(req, res) {
                 'X-RapidAPI-Host': 'bing-news-search1.p.rapidapi.com'
             }
         }
+        try {
+            const results = await Promise.all([
+                fetch(`${sanityBaseURL}${userTweetsQuery}`), 
+                fetch(`${sanityBaseURL}${profileQuery}`), 
+                fetch(`${sanityBaseURL}${userQuery}`),
+                fetch(`${sanityBaseURL}${otherUsersQuery}`),
+                fetch("https://bing-news-search1.p.rapidapi.com/news/search?q=latest&freshness=Day&textFormat=Raw&safeSearch=Off", bingNewsOptions),
+                // fetch('https://current-news.p.rapidapi.com/news', options),
+            ])
+            const finalData = await Promise.all(results.map(result => result.json()));
+            // console.log("bing data ",finalData[4].value);
+            res.status(200).json({ 
+                tweets: finalData[0].result, 
+                profile: finalData[1].result, 
+                currentUser: finalData[2].result,
+                otherUsers: finalData[3].result,
+                bingNewsData: finalData[4].value
+            });
+        }catch(error){
+                console.log(error.message);
+        }
     };
-    try {
-        const results = await Promise.all([
-            fetch(`${sanityBaseURL}${userTweetsQuery}`), 
-            fetch(`${sanityBaseURL}${profileQuery}`), 
-            fetch(`${sanityBaseURL}${userQuery}`),
-            fetch(`${sanityBaseURL}${otherUsersQuery}`),
-            fetch("https://bing-news-search1.p.rapidapi.com/news/search?q=latest&freshness=Day&textFormat=Raw&safeSearch=Off", bingNewsOptions),
-            // fetch('https://current-news.p.rapidapi.com/news', options),
-        ])
-        const finalData = await Promise.all(results.map(result => result.json()));
-        // console.log("bing data ",finalData[4].value);
-        res.status(200).json({ 
-            tweets: finalData[0].result, 
-            profile: finalData[1].result, 
-            currentUser: finalData[2].result,
-            otherUsers: finalData[3].result,
-            bingNewsData: finalData[4].value
-        });
-    }catch(error){
-            console.log(error.message);
-    }
-
+    
 }
 
   

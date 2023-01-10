@@ -109,7 +109,7 @@ const Tweet = ({ tweet, user }) => {
               width={ largeDeviceOnwards ? "15rem" : !smallDevices && mediumToLargeDevices ? "12rem" : "10rem"}
               // width="auto"
               config={{ 
-                youtube: { playerVars: { origin: process.env.NEXT_BASE_URL_YOUTUBE } }
+                youtube: { playerVars: { origin: process.env.NEXT_PUBLIC_BASE_URL_YOUTUBE } }
                }}
               height={ largeDeviceOnwards ? "15rem" : !smallDevices && mediumToLargeDevices ? "12rem" : "10rem"}
             />

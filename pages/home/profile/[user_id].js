@@ -498,7 +498,7 @@ const HomeProfile = ({ user, otherUsers, profile }) => {
 
 export const getServerSideProps = async ({ params: { user_id }}) => {
 
-    const data = await fetch(`${process.env.NEXT_BASE_URL}/api/home/profile/${user_id}`)
+    const data = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/home/profile/${user_id}`)
     .then(res => res.json());
     const { user, otherUsers, profile } = data;
     return {
@@ -509,5 +509,5 @@ export const getServerSideProps = async ({ params: { user_id }}) => {
        },
     }
 }
-
+ 
 export default HomeProfile
