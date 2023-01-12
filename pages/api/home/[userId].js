@@ -18,7 +18,7 @@ export default async function handler(req, res) {
               'X-RapidAPI-Host': 'current-news.p.rapidapi.com'
             }
         };
-        var searchQuery = "latest";
+        var searchQuery = "latest economy";
         const bingNewsOptions = {
             method: 'GET',
             url: 'https://bing-news-search1.p.rapidapi.com/news/search',
@@ -35,7 +35,7 @@ export default async function handler(req, res) {
                 fetch(`${sanityBaseURL}${profileQuery}`), 
                 fetch(`${sanityBaseURL}${userQuery}`),
                 fetch(`${sanityBaseURL}${otherUsersQuery}`),
-                fetch("https://bing-news-search1.p.rapidapi.com/news/search?q=latest&freshness=Day&textFormat=Raw&safeSearch=Off", bingNewsOptions),
+                fetch(`https://bing-news-search1.p.rapidapi.com/news/search?q=${searchQuery}&freshness=Day&textFormat=Raw&safeSearch=Off`, bingNewsOptions),
                 // fetch('https://current-news.p.rapidapi.com/news', options),
             ])
             const finalData = await Promise.all(results.map(result => result.json()));

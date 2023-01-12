@@ -48,6 +48,7 @@ const Home = ({
   useEffect(() => {
     setCurrentUserProfile(profile);
   }, [profile, setCurrentUserProfile]) 
+  
   if(!isLoaded){
     return (
       <div className={backgroundStyles.moving_clouds_behind}>

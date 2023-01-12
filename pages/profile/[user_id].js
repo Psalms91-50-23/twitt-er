@@ -106,7 +106,7 @@ export const getServerSideProps = async ({ params: { user_id }, req, res }) => {
     userId = req.cookies.token.split(process.env.NEXT_PUBLIC_SECRET)[0];
   }
 
-  const data = await fetch(`${process.env.NEXT_BASE_URL}/api/profile/${user_id}`, {
+  const data = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/profile/${user_id}`, {
     headers: {
       'Content-type': 'application/json; charset=UTF-8'
     },

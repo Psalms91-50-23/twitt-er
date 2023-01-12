@@ -247,10 +247,6 @@ const Signup = ({ users }) => {
     }
   }
   
-
-console.log({imageUrl});
-console.log({missingURLImage});
-console.log({missingFileImage});
   return (
     <div className={backgroundStyles.container_cloud_bg}>
         <div className={backgroundStyles.twitter_bird_bg}>
