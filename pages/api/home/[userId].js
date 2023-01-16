@@ -10,15 +10,7 @@ export default async function handler(req, res) {
         var profileQuery = encodeURIComponent(queryProfile(userId));
         var userTweetsQuery = encodeURIComponent(queryUserTweets(userId));
 
-        var options = {
-            method: 'GET',
-            headers: {
-              'X-RapidAPI-Key': "4ed20315eemsh401f1799edc76b8p1392f1jsn07280cd69cfa",
-            //   'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPID_CURRENT_NEWS_API_KEY,
-              'X-RapidAPI-Host': 'current-news.p.rapidapi.com'
-            }
-        };
-        var searchQuery = "latest economy";
+        var searchQuery = "latest news";
         const bingNewsOptions = {
             method: 'GET',
             url: 'https://bing-news-search1.p.rapidapi.com/news/search',
@@ -39,7 +31,6 @@ export default async function handler(req, res) {
                 // fetch('https://current-news.p.rapidapi.com/news', options),
             ])
             const finalData = await Promise.all(results.map(result => result.json()));
-            // console.log("bing data ",finalData[4].value);
             res.status(200).json({ 
                 tweets: finalData[0].result, 
                 profile: finalData[1].result, 
