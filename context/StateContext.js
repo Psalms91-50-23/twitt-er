@@ -56,7 +56,7 @@ export const StateContext = ({ children }) => {
             .catch(error => {console.log(error.message)})
         }
     }, [])
-
+    
     const addNewUser = (newUser) => {
         if(allUsers?.length){
             setAllUsers([...allUsers, newUser]);

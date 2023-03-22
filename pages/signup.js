@@ -148,7 +148,6 @@ const Signup = ({ users }) => {
   const handleSubmitUser = (e) => {
     e.preventDefault();
     if(!imageUrl && !profileImage) return
-    console.log("test pass missing")
     if(fileSizeError) return;
     if(!userName) return setMissingUsername(true);
     if(!validateEmail(userName)) return setEmailError(true);  
