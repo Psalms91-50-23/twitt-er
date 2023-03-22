@@ -53,7 +53,7 @@ const Login = ({ users }) => {
       await setUser({ _id, userName, imageUrl, profileImage });
       const userProfile = await getCurrentUserProfile(_id);
       setCurrentUserProfile(userProfile);
-      // setToken(_id);
+      //this fixed my problem of sending it back to starter page to login again
       window.location.reload();
     }
   }
