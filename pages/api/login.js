@@ -8,7 +8,7 @@ export default async function login(req,res) {
                 // httpOnly: false,
                 secure: false,
                 maxAge: 60*60*24,
-                // sameSite: "none",
+                sameSite: "none",
                 path: "/"
             })
         )
