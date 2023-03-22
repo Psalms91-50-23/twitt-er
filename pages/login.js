@@ -54,11 +54,7 @@ const Login = ({ users }) => {
       const userProfile = await getCurrentUserProfile(_id);
       setCurrentUserProfile(userProfile);
       // setToken(_id);
-      if(Cookie.get("token")){
-        // console.log({token: Cookie.get("token")});
-        router.push("/home");
-      }
-      // pushHome();
+      window.location.reload();
     }
   }
 
