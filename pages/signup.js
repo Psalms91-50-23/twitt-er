@@ -147,8 +147,6 @@ const Signup = ({ users }) => {
 
   const handleSubmitUser = (e) => {
     e.preventDefault();
-    console.log({missingFileImage});
-    console.log({missingURLImage});
     if(!imageUrl && !profileImage) return
     console.log("test pass missing")
     if(fileSizeError) return;
@@ -215,7 +213,6 @@ const Signup = ({ users }) => {
       });
     }
     else{
-
       if(!imageUrl){
         setMissingField(true);
         return

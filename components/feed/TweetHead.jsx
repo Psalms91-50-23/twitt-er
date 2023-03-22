@@ -332,7 +332,7 @@ const TweetHead = () => {
                     </div>
                     <RoundButton 
                         text={"Tweet"} 
-                        buttonStyle={{...buttonStyles, backgroundColor: "rgba(29,155,240,0.7)"}} 
+                        buttonStyle={{...buttonStyles, backgroundColor: "rgba(29,155,240,0.7)", cursor: "pointer"}} 
                         buttonContainerStyle={ smallToMediumDevices && !smallDevice ? {...buttonContainerStyle, alignSelf: "flex-start"} : smallToMediumDevices &&  smallDevice ? {...buttonContainerStyle, alignSelf: "center"} : buttonContainerStyle }
                         textColor={"rgb(255,255,255)"}
                         buttonHoverColor={"rgba(29, 155, 240, 1)"}

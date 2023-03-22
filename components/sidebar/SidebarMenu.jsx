@@ -26,7 +26,8 @@ const SidebarMenu = ({ sidebarContainerStyle }) => {
     marginTop: "10px",
     width: smallDevices ? "50px" : "100%",
     height: smallDevices ? "50px" : "auto",
-    borderRadius: smallDevices ?  "50%" : "30px"
+    borderRadius: smallDevices ?  "50%" : "30px",
+    cursor: "pointer"
   }
 
 
@@ -95,7 +96,7 @@ const SidebarMenu = ({ sidebarContainerStyle }) => {
           text={ !smallDevices ? "Tweet" : null} 
           icon={ smallDevices ? <GiFeather size={!smallDevices ? 22 : 25}/> : null}
           buttonContainerStyle={ smallDevices &&  style }
-          buttonStyle={buttonStyle } 
+          buttonStyle={buttonStyle} 
           textColor={"rgb(255,255,255)"}
           buttonHoverColor={"rgba(29, 155, 240, 1)"}
           onClickEvent={() => setIsTweetClicked(true)}

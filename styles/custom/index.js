@@ -45,7 +45,8 @@ export const iconStyles = {
   padding: "10px",
   color: "rgb(255,255,255)",
   fontWeight: "700",
-  minWidth: "100px"
+  minWidth: "100px",
+  cursor: "pointer"
  }
  
  export const buttonContainerStyle = {

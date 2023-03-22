@@ -1,14 +1,14 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { client } from "../lib/client";
 import Cookie from "js-cookie";
-import { useRouter }  from 'next/router';
+// import { useRouter }  from 'next/router';
 import { queryUser, queryUserTweets, queryAllUsers, queryTweet } from "../lib/queries";
 import { sanityBaseURL } from "../lib/functions"; 
 const Context = createContext();
 
 export const StateContext = ({ children }) => {
 
-    const router = useRouter();
+    // const router = useRouter();
     const [token, setToken] = useState(Cookie.get("token") ? Cookie.get("token") : null);
     const [user, setUser] = useState(null);
     const [allUsers, setAllUsers] = useState([]);
@@ -23,12 +23,13 @@ export const StateContext = ({ children }) => {
     const [isShowFollows, setIsShowFollows] = useState(false);
         
     useEffect(() => {
-        const cookieToken = Cookie.get("token") ? Cookie.get("token") : ""
-        if(cookieToken){
-            setToken(cookieToken);
-        }
-        if(cookieToken || Cookie.get("token")){
-            const userId = token.split(process.env.NEXT_PUBLIC_SECRET)[0];
+        // const cookieToken = Cookie.get("token") ? Cookie.get("token") : ""
+        // if(cookieToken){
+        //     setToken(cookieToken);
+        // }
+        // if(cookieToken || Cookie.get("token")){
+        if(Cookie.get("token")){
+            const userId = Cookie.get("token").split(process.env.NEXT_PUBLIC_SECRET)[0];
             const userQuery = encodeURIComponent(queryUser(userId));
             const userTweetsQuery = encodeURIComponent(queryUserTweets(userId));
             const fetchData = async () => {
@@ -54,7 +55,7 @@ export const StateContext = ({ children }) => {
             })
             .catch(error => {console.log(error.message)})
         }
-    }, [token,router])
+    }, [])
 
     const addNewUser = (newUser) => {
         if(allUsers?.length){

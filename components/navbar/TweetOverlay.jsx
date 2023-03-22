@@ -88,7 +88,8 @@ const TweetOverlay = ({
     const selectedFile = e.target.files[0];
     const { type } = selectedFile;
     if(selectedFile){
-        if ( type  === 'image/png' || type === 'image/svg' || type === 'image/jpeg' || type === 'image/gif' || type === 'image/tiff' || type === 'image/jpg') {
+        if ( type  === 'image/png' || type === 'image/svg' || type === 'image/jpeg' 
+        || type === 'image/gif' || type === 'image/tiff' || type === 'image/jpg') {
             setWrongImageType(false);
             setTweetImage(selectedFile)
         } else {
@@ -227,7 +228,8 @@ const TweetOverlay = ({
 
   const roundButtonContainer = {
     ...buttonContainerStyle,
-    placeSelf: "center"
+    placeSelf: "center",
+    cursor: "pointer"
   }
 
   return (

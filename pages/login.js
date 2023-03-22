@@ -10,6 +10,7 @@ import { useStateContext } from '../context/StateContext';
 import { MdLogin, MdCreate } from 'react-icons/md'
 import { findUser, isPasswordMatch, isEmailMatch,  
   matchSecret, loginUser, getCurrentUserProfile } from '../lib/functions';
+import Cookie from "js-cookie";
 
 const Login = ({ users }) => {
   const router = useRouter();
@@ -52,8 +53,12 @@ const Login = ({ users }) => {
       await setUser({ _id, userName, imageUrl, profileImage });
       const userProfile = await getCurrentUserProfile(_id);
       setCurrentUserProfile(userProfile);
-      setToken(_id);
-      pushHome();
+      // setToken(_id);
+      if(Cookie.get("token")){
+        // console.log({token: Cookie.get("token")});
+        router.push("/home");
+      }
+      // pushHome();
     }
   }
 
