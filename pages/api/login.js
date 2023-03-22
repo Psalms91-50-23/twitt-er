@@ -5,11 +5,12 @@ export default async function login(req,res) {
         res.setHeader(
             "Set-Cookie",
             cookie.serialize("token", req.body.token , {
-                // httpOnly: false,
+                httpOnly: false,
                 secure: false,
                 maxAge: 60*60*24,
                 sameSite: "none",
-                path: "/"
+                path: "/",
+                secure: "secure"
             })
         )
         res.statusCode = 200;
