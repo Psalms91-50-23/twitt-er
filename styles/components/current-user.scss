@@ -389,9 +389,11 @@
     margin-left: 10px;
     border-left: 1px solid var(--twitterBlue);
     padding-left: 10px;
+    box-sizing: border-box;
     // padding: 0px 10px 0px 0px;
     margin-top: -10px;
     height: 100vh;
+    max-width: 350px;
   
 }
 
@@ -408,7 +410,7 @@
 
 .search-input {
     flex: 1;
-    font-size: 15px;
+    font-size: 0.7rem;
     border: none;
     font-weight: 500;
     padding: 5px 5px 5px 10px;

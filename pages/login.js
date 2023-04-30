@@ -48,12 +48,15 @@ const Login = ({ users }) => {
     
     if(foundUser){
       setLoading(true);
-      loginUser("/api/login", `${_id}${process.env.NEXT_PUBLIC_SECRET}`);
-      await setUser({ _id, userName, imageUrl, profileImage });
-      const userProfile = await getCurrentUserProfile(_id);
-      setCurrentUserProfile(userProfile);
-      //this fixed my problem of sending it back to starter page to login again
-      window.location.reload();
+      await loginUser("/api/login", `${_id}${process.env.NEXT_PUBLIC_SECRET}`)
+      .then(res => {
+        setUser({ _id, userName, imageUrl, profileImage });
+        const userProfile = getCurrentUserProfile(_id);
+        setCurrentUserProfile(userProfile);
+        router.push("/home");
+      })
+      .catch(error => error.log(error));
+ 
     }
   }
 
