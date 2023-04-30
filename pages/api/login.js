@@ -10,7 +10,7 @@ export default async function login(req,res) {
                 maxAge: 60*60*24,
                 sameSite: "none",
                 path: "/",
-                secure: "secure"
+                // secure: "secure"
             })
         )
         res.statusCode = 200;

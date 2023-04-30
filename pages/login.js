@@ -10,7 +10,6 @@ import { useStateContext } from '../context/StateContext';
 import { MdLogin, MdCreate } from 'react-icons/md'
 import { findUser, isPasswordMatch, isEmailMatch,  
   matchSecret, loginUser, getCurrentUserProfile } from '../lib/functions';
-import Cookie from "js-cookie";
 
 const Login = ({ users }) => {
   const router = useRouter();

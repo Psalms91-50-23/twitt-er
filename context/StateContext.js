@@ -3,6 +3,7 @@ import { client } from "../lib/client";
 import Cookie from "js-cookie";
 import { queryUser, queryUserTweets, queryAllUsers, queryTweet } from "../lib/queries";
 import { sanityBaseURL } from "../lib/functions"; 
+
 const Context = createContext();
 
 export const StateContext = ({ children }) => {

@@ -2,6 +2,10 @@ import { sanityBaseURL } from "../../../lib/functions";
 import { queryOtherUsers, queryUser, queryUserTweets, queryProfile } from "../../../lib/queries";
 
 export default async function handler(req, res) {
+    const headers = new Headers();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    headers.append('Access-Control-Allow-Headers', 'Content-Type');
 
     if(req.method === "GET"){
         const { userId } = req.query;
@@ -27,7 +31,7 @@ export default async function handler(req, res) {
                 fetch(`${sanityBaseURL}${profileQuery}`), 
                 fetch(`${sanityBaseURL}${userQuery}`),
                 fetch(`${sanityBaseURL}${otherUsersQuery}`),
-                fetch(`https://bing-news-search1.p.rapidapi.com/news/search?q=${searchQuery}&freshness=Day&textFormat=Raw&safeSearch=Off`, bingNewsOptions),
+                fetch(`https://bing-news-search1.p.rapidapi.com/news/search?q=${searchQuery}&freshness=Day&textFormat=Raw&safeSearch=Off`, {headers,...bingNewsOptions}),
                 // fetch('https://current-news.p.rapidapi.com/news', options),
             ])
             const finalData = await Promise.all(results.map(result => result.json()));
