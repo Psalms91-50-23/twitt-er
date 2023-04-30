@@ -196,17 +196,21 @@ a {
   display: flex;
   position: relative;
   width: 100%;
+  padding-right: 0.5rem;
+  margin: 10px;
 
 }
 
 .feed-welcome-msg {
   color: var(--white);
+  margin-right: 0.5rem;
+  padding-top: 1rem;
 }
 
 .welcome-birdie {
   position: absolute;
   top: 0px;
-  right: 0px;
+  right: 10px;
   width: 34px;
   height: 30px;
   background-image: url("../public/images/one-bird-face-left.svg");
@@ -1738,6 +1742,9 @@ input:-webkit-autofill:active  {
   .tweet-url-input-container {
     margin-right: 0px !important;
   }
+  // .feed-welcome-msg {
+  //   font-size: 0.7rem;
+  // }
 }
 
 @media screen and (max-width: 300px) {
