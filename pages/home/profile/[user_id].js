@@ -11,8 +11,10 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { WormSpinner, Spinner } from "../../../components";
 import backgroundStyles from "../../../styles/module/Background.module.scss"
 
+
 const HomeProfile = ({ user, otherUsers, profile }) => {
 
+  const supportedFormats = ['image/png', 'image/jpeg', 'image/gif', 'image/svg', 'image/tiff', 'image/webp'];
   const largeDevicesOnwards = useMediaQuery('(min-width: 900px)');
   const { 
     setTweetClicked, 
@@ -74,6 +76,69 @@ const HomeProfile = ({ user, otherUsers, profile }) => {
     }
   }, [name,otherUsers, setFilteredUsers])
 
+    // Add this function to handle the upload success and extract _id
+    // const uploadUserImage = async (e) => {
+    //   const selectedFile = e.target.files[0];
+    
+    //   try {
+    //     // Check if the selected file format is supported
+    //     if (!supportedFormats.includes(selectedFile.type)) {
+    //       throw new Error('Unsupported image format');
+    //     }
+    
+    //     // Upload the image to the Sanity asset store
+    //     const imgAsset = await client.assets
+    //       .upload('image', selectedFile, { contentType: selectedFile.type, fileName: selectedFile.name })
+    //       .commit();
+    
+    //     // Extract necessary information from the uploaded asset
+    //     const { url, size, path, originalFilename, assetId, _id } = imgAsset;
+    
+    //     // Update user document with the uploaded image
+    //     const updateUserDoc = {
+    //       ...thisUser,
+    //       profileImage: {
+    //         _type: 'image',
+    //         asset: {
+    //           _ref: _id,
+    //           _type: 'reference',
+    //         },
+    //         originalFilename,
+    //         path,
+    //         size,
+    //         assetId,
+    //       },
+    //       imageUrl: url,
+    //     };
+    
+    //     // Perform the update on the user document
+    //     const updatedUser = await client.patch(thisUser._id).set(updateUserDoc).commit();
+    
+    //     // ... (your existing code)
+    
+    //   } catch (error) {
+    //     console.error(error.message);
+    //     // Handle the error as needed
+    //   }
+    // };
+    
+    
+  // const uploadUserImage = (e) => {
+  //   // ... (your existing code)
+  
+  //   const selectedFile = e.target.files[0];
+  
+  //   // Your existing code for uploading the image
+  //   client.assets
+  //     .upload('image', selectedFile, { contentType: selectedFile.type, fileName: selectedFile.name })
+  //     .then(handleUploadSuccess)
+  //     .then((_id) => {
+  //       // Use _id in your logic
+  //       setUserFileImage(selectedFile);
+  //     })
+  //     .catch((error) => console.error(error.message));
+  // };
+
   const uploadUserImage = (e) => {
     //file size in bytes below is 20mb in byte format
     const selectedFile = e.target.files[0];
@@ -125,133 +190,291 @@ const HomeProfile = ({ user, otherUsers, profile }) => {
       setUserProfile(profileDeets => ({...profileDeets, [e.target.name] : e.target.value}))
     }
   }
+
+  
+// const updateDetails = async () => {
+//   setLoading(true);
+
+//   try {
+//     // Update user table first
+//     const updateUserDoc = userFileImage
+//       ? {
+//           ...thisUser,
+//           profileImage: {
+//             _type: 'image',
+//             asset: {
+//               _ref: _id,
+//               _type: 'reference',
+//             },
+//             originalFilename,
+//             path,
+//             size,
+//             assetId,
+//           },
+//           imageUrl: url,
+//         }
+//       : imageUrl && !userFileImage
+//       ? {
+//           ...thisUser,
+//           imageUrl,
+//         }
+//       : thisUser;
+
+//     const updatedUser = await client.patch(thisUser._id).set(updateUserDoc).commit();
+//         console.log({updatedUser});
+//     // Update profile second
+//     const updateProfileDoc = userBackdropImage
+//       ? {
+//           ...userProfile,
+//           profileBackDropURL: profileBackDropURL || userBackdropImage,
+//           profileImageBackdrop: {
+//             _type: 'image',
+//             asset: {
+//               _ref: _id,
+//               _type: 'reference',
+//             },
+//             originalFilename,
+//             path,
+//             size,
+//             assetId,
+//           },
+//         }
+//       : profileBackDropURL && !userBackdropImage
+//       ? {
+//           ...userProfile,
+//           profileBackDropURL,
+//         }
+//       : userProfile;
+
+//     const updatedProfile = await client.patch(profile._id).set(updateProfileDoc).commit();
+
+//     setThisUser(updatedUser);
+//     setUser(updatedUser);
+//     setProfileData(updatedProfile);
+//     setCurrentUserProfile(updatedProfile);
+//     setLoading(false);
+//     setIsEdit(!isEdit);
+//     setImageLoading(false);
+//   } catch (error) {
+//     console.error(error.message);
+//     setLoading(false);
+//   }
+// };
+
+
+  // const updateDetails = async () => {
+  //   setLoading(true);
+  
+  //   try {
+  //     // Update user table first
+  //     const updateUserDoc = userFileImage
+  //       ? {
+  //           ...thisUser,
+  //           profileImage: {
+  //             _type: "image",
+  //             asset: {
+  //               _ref: _id,
+  //               _type: "reference",
+  //             },
+  //             originalFilename,
+  //             path,
+  //             size,
+  //             assetId,
+  //           },
+  //           imageUrl: url,
+  //         }
+  //       : imageUrl && !userFileImage
+  //       ? {
+  //           ...thisUser,
+  //           imageUrl,
+  //         }
+  //       : thisUser;
+  
+  //     const updatedUser = await client.patch(thisUser._id).set(updateUserDoc).commit();
+  
+  //     // Update profile second
+  //     const updateProfileDoc = userBackdropImage
+  //       ? {
+  //           ...userProfile,
+  //           profileBackDropURL: profileBackDropURL || userBackdropImage,
+  //           profileImageBackdrop: {
+  //             _type: "image",
+  //             asset: {
+  //               _ref: _id,
+  //               _type: "reference",
+  //             },
+  //             originalFilename,
+  //             path,
+  //             size,
+  //             assetId,
+  //           },
+  //         }
+  //       : profileBackDropURL && !userBackdropImage
+  //       ? {
+  //           ...userProfile,
+  //           profileBackDropURL,
+  //         }
+  //       : userProfile;
+  
+  //     const updatedProfile = await client.patch(profile._id).set(updateProfileDoc).commit();
+  
+  //     setThisUser(updatedUser);
+  //     setUser(updatedUser);
+  //     setProfileData(updatedProfile);
+  //     setCurrentUserProfile(updatedProfile);
+  //     setLoading(false);
+  //     setIsEdit(!isEdit);
+  //     setImageLoading(false);
+  //   } catch (error) {
+  //     console.error(error.message);
+  //     setLoading(false);
+  //   }
+  // };
+  
+  
   
   const updateDetails = async () => {
     setLoading(true);
-    const updateProfile = () => {
-      //update profile second
-      if((userBackdropImage && !profileBackDropURL) 
-      || (userBackdropImage && profileBackDropURL)){
-    
-          client.assets
-          .upload('image', userBackdropImage, { contentType: userBackdropImage.type, fileName: userBackdropImage.name})
-          .then(imgAsset => {
-            const { url, size, path, originalFilename, assetId, _id } = imgAsset;
-            const doc = {
-              ...userProfile,
-              profileBackDropURL: url,
-              profileImageBackdrop: {
-                _type: "image",
-                asset: {
-                  _ref: _id,
-                  _type: "reference"
-                },
-                originalFilename,
-                path,
-                size,
-                assetId,
+    try{
+      console.log("inside try");
+      const updateProfile = () => {
+        console.log("tesssst");
+        //update profile second
+        if((userBackdropImage && !profileBackDropURL) 
+        || (userBackdropImage && profileBackDropURL)){
+          console.log("test 1");
+            client.assets
+            .upload('image', userBackdropImage, { contentType: userBackdropImage.type, fileName: userBackdropImage.name})
+            .then(imgAsset => {
+              const { url, size, path, originalFilename, assetId, _id } = imgAsset;
+              const doc = {
+                ...userProfile,
+                profileBackDropURL: url,
+                profileImageBackdrop: {
+                  _type: "image",
+                  asset: {
+                    _ref: _id,
+                    _type: "reference"
+                  },
+                  originalFilename,
+                  path,
+                  size,
+                  assetId,
+                }
               }
+              client.patch(profile._id)
+              .set(doc)
+              .commit()
+              .then(profileResponse => {
+                setProfileData(profileResponse);
+                setCurrentUserProfile(profileResponse);
+              })
+              .then(() => {
+                setLoading(false);
+                setImageLoading(false);
+                setIsEdit(!isEdit);
+              })
+              .catch(error => console.log(error.message));
+            })
+          }
+          else if((
+            profileBackDropURL !== profile.profileBackDropURL 
+            && profileBackDropURL 
+            && !userBackdropImage)
+            || (profileBackDropURL === profile.profileBackDropURL 
+            && profileBackDropURL 
+            && !userBackdropImage)){
+              console.log("test 2");
+            const profileDoc = {
+              ...userProfile,
+              profileBackDropURL: profileBackDropURL !== profile.profileBackDropURL ? profileBackDropURL 
+              : profile.profileBackDropURL
             }
             client.patch(profile._id)
-            .set(doc)
+            .set(profileDoc)
             .commit()
             .then(profileResponse => {
+              console.log({profileResponse});
               setProfileData(profileResponse);
               setCurrentUserProfile(profileResponse);
+          })
+          .then(() => {
+            setLoading(false);
+            setIsEdit(!isEdit);
+            setImageLoading(false);
+          })
+          .catch(error => console.log(error.message));
+        }
+      }
+        //do user table update first
+        const updateUser = (callBack) => {
+          if((userFileImage && !imageUrl) || (userFileImage && imageUrl)){
+            console.log("test 3");
+            client.assets
+            .upload('image', userFileImage, { contentType: userFileImage.type, fileName: userFileImage.name})
+            .then(imgAsset => {
+              console.log({imgAsset});
+              const { url, size, path, originalFilename, assetId, _id } = imgAsset;
+              const uploadImgDoc = {
+                ...thisUser,
+                profileImage: {
+                  _type: "image",
+                  asset: {
+                    _ref: _id,
+                    _type: "reference"
+                  },
+                  originalFilename,
+                  path,
+                  size,
+                  assetId,
+                },
+                imageUrl: url
+              }
+              //updating user table  
+              client.patch(thisUser._id)
+              .set(uploadImgDoc)
+              .commit()
+              .then(userResponse => {
+                setThisUser(userResponse);
+                setUser(userResponse);
+              })
             })
             .then(() => {
-              setLoading(false);
-              setImageLoading(false);
-              setIsEdit(!isEdit);
+              console.log("before callback then test 3");
+              callBack();
             })
             .catch(error => console.log(error.message));
-          })
-        }
-        else if((
-          profileBackDropURL !== profile.profileBackDropURL 
-          && profileBackDropURL 
-          && !userBackdropImage)
-          || (profileBackDropURL === profile.profileBackDropURL 
-          && profileBackDropURL 
-          && !userBackdropImage)){
-          const profileDoc = {
-            ...userProfile,
-            profileBackDropURL: profileBackDropURL !== profile.profileBackDropURL ? profileBackDropURL 
-            : profile.profileBackDropURL
-          }
-          client.patch(profile._id)
-          .set(profileDoc)
-          .commit()
-          .then(profileResponse => {
-            setProfileData(profileResponse);
-            setCurrentUserProfile(profileResponse);
-        })
-        .then(() => {
-          setLoading(false);
-          setIsEdit(!isEdit);
-          setImageLoading(false);
-        })
-        .catch(error => console.log(error.message));
-      }
-    }
-      //do user table update first
-      const updateUser = (callBack) => {
-        if((userFileImage && !imageUrl) || (userFileImage && imageUrl)){
-          client.assets
-          .upload('image', userFileImage, { contentType: userFileImage.type, fileName: userFileImage.name})
-          .then(imgAsset => {
-            const { url, size, path, originalFilename, assetId, _id } = imgAsset;
+      
+          } else if(imageUrl !== user.imageUrl && imageUrl && !userFileImage){
+            console.log("test 4");
             const uploadImgDoc = {
               ...thisUser,
-              profileImage: {
-                _type: "image",
-                asset: {
-                  _ref: _id,
-                  _type: "reference"
-                },
-                originalFilename,
-                path,
-                size,
-                assetId,
-              },
-              imageUrl: url
+              imageUrl
             }
-            //updating user table  
-            client.patch(thisUser._id)
-            .set(uploadImgDoc)
-            .commit()
-            .then(userResponse => {
-              setThisUser(userResponse);
-              setUser(userResponse);
+             //updating user table  
+             client.patch(thisUser._id)
+             .set(uploadImgDoc)
+             .commit()
+             .then(userResponse => {
+               setThisUser(userResponse);
+               setUser(userResponse);
+             })
+            .then(() => {
+              console.log("before callback then test 4");
+              callBack();
             })
-          })
-          .then(() => {
+            .catch(error => console.log(error.message));
+          } else {
             callBack();
-          })
-          .catch(error => console.log(error.message));
-    
-        } else if(imageUrl !== user.imageUrl && imageUrl && !userFileImage){
-          const uploadImgDoc = {
-            ...thisUser,
-            imageUrl
           }
-           //updating user table  
-           client.patch(thisUser._id)
-           .set(uploadImgDoc)
-           .commit()
-           .then(userResponse => {
-             setThisUser(userResponse);
-             setUser(userResponse);
-           })
-          .then(() => {
-            callBack();
-          })
-          .catch(error => console.log(error.message));
-        } else {
-          callBack();
         }
-      }
-      updateUser(updateProfile); 
+        updateUser(updateProfile); 
+        
+    }catch(error){
+      console.log(error.message);
+      setLoading(false);
+    }
+    
   }
   
   const toggleBackDropImage = () => {
@@ -281,6 +504,10 @@ const HomeProfile = ({ user, otherUsers, profile }) => {
     paddingRight: "10px",
     width: "100%"
   }
+
+  console.log({isLoaded});
+  console.log({imageLoading});
+  console.log({isImageUrlBackdrop});
 
   if(!isLoaded){
     return (
@@ -326,11 +553,16 @@ const HomeProfile = ({ user, otherUsers, profile }) => {
             }
             { !imageLoading && (
               <img
-                className={"current-user-backdrop"}
-                src={ profileData?.profileBackDropURL ? profileData.profileBackDropURL 
-                : `/images/brick_twitter_bird.jpg`} 
-                alt={ profileData?.profileBackDropURL ? "profile backdrop" : "default profile backdrop" }
-              />
+              className={"current-user-backdrop"}
+              src={profileData?.profileBackDropURL ? `${profileData.profileBackDropURL}?${new Date().getTime()}` : `/images/brick_twitter_bird.jpg`}
+              alt={profileData?.profileBackDropURL ? "profile backdrop" : "default profile backdrop"}
+            />
+              // <img
+              //   className={"current-user-backdrop"}
+              //   src={ profileData?.profileBackDropURL ? profileData.profileBackDropURL 
+              //   : `/images/brick_twitter_bird.jpg`} 
+              //   alt={ profileData?.profileBackDropURL ? "profile backdrop" : "default profile backdrop" }
+              // />
             )
             }
             <img 

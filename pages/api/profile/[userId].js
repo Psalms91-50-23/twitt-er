@@ -35,7 +35,7 @@ export default async function handler(req,res){
                 fetch(`${sanityBaseURL}${profileQuery}`),
                 fetch(`${sanityBaseURL}${userQuery}`),
                 fetch(`${sanityBaseURL}${otherUsersQuery}`),
-                fetch("https://bing-news-search1.p.rapidapi.com/news/search?q=latest&freshness=Day&textFormat=Raw&safeSearch=Off", bingNewsOptions),
+                // fetch("https://bing-news-search1.p.rapidapi.com/news/search?q=latest&freshness=Day&textFormat=Raw&safeSearch=Off", bingNewsOptions),
                 //fetch('https://current-news.p.rapidapi.com/news', options),
             ])
             const finalData = await Promise.all(results.map(result => result.json()));
@@ -44,7 +44,7 @@ export default async function handler(req,res){
                 profile: finalData[1].result,
                 user: finalData[2].result,
                 otherUsers: finalData[3].result,
-                bingNewsData: finalData[4].value
+                // bingNewsData: finalData[4].value
                 //newsData: finalData[4].news,
             });
         }catch(error){

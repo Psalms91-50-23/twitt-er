@@ -14,7 +14,7 @@ export default async function handler(req, res) {
         var profileQuery = encodeURIComponent(queryProfile(userId));
         var userTweetsQuery = encodeURIComponent(queryUserTweets(userId));
         var searchQuery = "latest news";
-        let tempURL = `https://newsapi.org/v2/everything?q=${searchQuery}&apiKey=${process.env.NEXT_PUBLIC_NEWSAPI_KEY}`
+        let newsURL = `https://newsapi.org/v2/everything?q=${searchQuery}&apiKey=${process.env.NEXT_PUBLIC_NEWSAPI_KEY}`
         const bingNewsOptions = {
             method: 'GET',
             url: 'https://bing-news-search1.p.rapidapi.com/news/search',
@@ -41,7 +41,7 @@ export default async function handler(req, res) {
                 fetch(`${sanityBaseURL}${profileQuery}`), 
                 fetch(`${sanityBaseURL}${userQuery}`),
                 fetch(`${sanityBaseURL}${otherUsersQuery}`),
-                fetch(`${tempURL}`),
+                fetch(`${newsURL}`),
                 // fetch(`https://bing-news-search1.p.rapidapi.com/news/search?q=${searchQuery}&freshness=Day&textFormat=Raw&safeSearch=Off`, {headers,...newsAPI}),
                 // fetch('https://current-news.p.rapidapi.com/news', options),
             ])
