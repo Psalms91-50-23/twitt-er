@@ -132,6 +132,7 @@ const HomeProfile = ({ user, otherUsers, profile }) => {
       //update profile second
       if((userBackdropImage && !profileBackDropURL) 
       || (userBackdropImage && profileBackDropURL)){
+    
           client.assets
           .upload('image', userBackdropImage, { contentType: userBackdropImage.type, fileName: userBackdropImage.name})
           .then(imgAsset => {

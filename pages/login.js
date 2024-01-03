@@ -176,7 +176,7 @@ export const getServerSideProps = async ({ req, res }) => {
     /*after signing up from signup route and pushing to here, the await client
     fetch ie await client.fetch(userQuery); doesn't have the latest data, unless 
      I get temp state from context but coming closing down tab and coming back
-    still does give you latest data as state is deleted */
+    still doesn't give you latest data as state is deleted */
     const usersQuery = encodeURIComponent(queryAllUsers());
     const url = `${sanityBaseURL}${usersQuery}`;
     const users = await fetch(url)

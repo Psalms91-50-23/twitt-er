@@ -36,9 +36,6 @@ const SidebarMenu = ({ sidebarContainerStyle }) => {
     marginBottom: !smallDevices ? "10px" : "20px",
   }
 
-  // const iconStyle = {
-  //   color: "rgba(255,255,255,1)"
-  // }
 
   const titleStyle = {
     fontWeight: "700",
@@ -57,7 +54,6 @@ const SidebarMenu = ({ sidebarContainerStyle }) => {
         title={ !smallDevices ? "Explore" : null }
         containerStyle={iconContainer}
         titleStyle={titleStyle}  
-        // iconStyle={iconStyle}
       />
       <Icon 
         icon={<MdNotificationsActive size={!smallDevices ? 18 : 22}/>} 

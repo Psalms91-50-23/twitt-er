@@ -11,14 +11,12 @@ const TweetBody = () => {
   const [tweets, setTweets] = useState([]);
     
   useEffect(() => {
-
     if(currentUserTweets){
       setTweets(currentUserTweets);
     }
   }, [currentUserTweets, setTweets])
 
   useEffect(() => {
-    //updates tweets after loading goes to falsy
     if(!isLoading){
       setTweets(currentUserTweets);
     }

@@ -107,7 +107,6 @@ const Tweet = ({ tweet, user }) => {
               muted={false}
               url={tweet.tweetVideoUrl}
               width={ largeDeviceOnwards ? "15rem" : !smallDevices && mediumToLargeDevices ? "12rem" : "10rem"}
-              // width="auto"
               config={{ 
                 youtube: { playerVars: { origin: process.env.NEXT_PUBLIC_BASE_URL_YOUTUBE } }
                }}

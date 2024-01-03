@@ -4,11 +4,11 @@ const News = ({ newz }) => {
     const [showMoreDescription, setShowMoreDescription] = useState(false)
   return (
     <div className="news-container">
-        <h5 className="news-title">{newz.name}</h5>
-        { newz?.image?.thumbnail && (
+        <h5 className="news-title">{newz?.title}</h5>
+        { newz?.urlToImage && (
             <img 
                 className="news-image"
-                src={newz.image.thumbnail.contentUrl} alt="" 
+                src={newz.urlToImage} alt="" 
             />
         )
         }

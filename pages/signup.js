@@ -24,18 +24,14 @@ const Signup = ({ users }) => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
-
   const [missingUsername, setMissingUsername] = useState(false);
   const [missingPassword, setMissingPassword] = useState(false);
   const [userExistsError, setUserExistsError] = useState(false);
   const [fileInput, setFileInput] = useState(true);
-  // const [showPassword, setShowPassword] = useState(false);
-  // const [imageString, setImageString] = useState(false);
   const [loading, setLoading] = useState(false);
   const [wrongImageType, setWrongImageType] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const inputRef = useRef(null);
-  // const [latestUpdatedUsers, setLatestUpdatedUsers] = useState([]);
   const [fileSizeError, setFileSizeError] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
   const [missingField, setMissingField] = useState(false);
@@ -78,7 +74,6 @@ const Signup = ({ users }) => {
 
   useEffect(() => {
     const start = false;
-    console.log({missingFileImage});
     if(!start){
       if(profileImage){
         setMissingFileImage(false);
@@ -86,18 +81,6 @@ const Signup = ({ users }) => {
     }
     return () => start = true;
   }, [ setMissingFileImage, profileImage, missingFileImage ])
-
-  // useEffect(() => {
-  //   first
-  
-  //   return () => {
-  //     second
-  //   }
-  // }, [third])
-  
-  // useEffect(() => {
-  //   setMissingField(false);
-  // }, [imageUrl, setMissingField, profileImage, missingFileImage, missingURLImage])
   
   const resetFileInput = () => {
     // 👇️ reset input value
@@ -108,7 +91,6 @@ const Signup = ({ users }) => {
     //file size in bytes below is 20mb in byte format
     const selectedFile = e.target.files[0];
     const { type, name } = selectedFile;
-    console.log({type});
     if(selectedFile?.size > 20000000){
       setFileSizeError(true);
       return;
@@ -121,7 +103,7 @@ const Signup = ({ users }) => {
       || selectedFile.type === 'image/gif' 
       || selectedFile.type === 'image/tiff'
       || selectedFile.type === 'image/webp') {
-        console.log("4")
+      
       setWrongImageType(false);
       setProfileImage(selectedFile);
       setMissingFileImage(!missingFileImage);
@@ -335,10 +317,6 @@ const Signup = ({ users }) => {
                 {
                   errorType()
                 }
-                {/* { !missingURLImage && missingFileImage &&  (
-                  <span className={homeStyles.error_msg}>Missing profile image URL or computer image</span>
-                )
-                } */}
                 { emailError && (
                   <span className={homeStyles.error_msg}>Not a valid Email pattern, 3 characters min eg min@hotmail.com</span>
                 )

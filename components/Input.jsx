@@ -35,8 +35,6 @@ const Input = ({
             if(errorMsg){
                 setErrorMsg(false)
             }
-            console.log(e.target.name);
-            console.log(e.target.value);
             setInputValue({password : e.target.value})
             setUserDetails({...userDetails, [e.target.name]: e.target.value})
         }
@@ -44,8 +42,7 @@ const Input = ({
             if(errorMsg){
                 setErrorMsg(false)
             }
-            console.log(e.target.name);
-            console.log(e.target.value);
+
             setInputValue({userName: e.target.value})
             setUserDetails({...userDetails, userName: e.target.value})
         }
@@ -53,15 +50,12 @@ const Input = ({
             if(errorMsg){
                 setErrorMsg(false)
             }
-            console.log(e.target.name);
             setUserDetails({...userDetails, displayName: e.target.value})
-            console.log(e.target.value);
             setInputValue({displayName: e.target.value})
         }
     }
 
     const handleInputHasFocus = () => {
-        console.log("has focus");
         setInputAnimation({
             ...inputAnimation,
             inputTransition: true,
@@ -71,7 +65,6 @@ const Input = ({
     }
 
     const handleInputLostFocus = () => {
-        console.log("lost focus");
         if(inputValue.userName?.length ||
             inputValue.password?.length ||
             inputValue.displayName?.length){
@@ -86,12 +79,7 @@ const Input = ({
     }
     const style = {
         width: nameWidth? nameWidth : "",
-
     }
-
-    console.log(inputValue);
-    console.log(inputAnimation);
-    console.log("error msg in input ", errorMsg)
    
   return (
     <form autoComplete="off" className="input-formContainer" style={{marginBottom: marginBottom}}>
