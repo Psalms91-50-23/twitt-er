@@ -6,7 +6,7 @@ export default async function handler(req, res) {
     headers.append('Access-Control-Allow-Origin', '*');
     headers.append('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     headers.append('Access-Control-Allow-Headers', 'Content-Type');
-
+    //this one
     if(req.method === "GET"){
         const { userId } = req.query;
         var userQuery = encodeURIComponent(queryUser(userId));
@@ -15,26 +15,7 @@ export default async function handler(req, res) {
         var userTweetsQuery = encodeURIComponent(queryUserTweets(userId));
         var searchQuery = "latest news";
         let newsURL = `https://newsapi.org/v2/everything?q=${searchQuery}&apiKey=${process.env.NEXT_PUBLIC_NEWSAPI_KEY}`
-        const bingNewsOptions = {
-            method: 'GET',
-            url: 'https://bing-news-search1.p.rapidapi.com/news/search',
-            params: {q: 'latest', safeSearch: 'Off', textFormat: 'Raw', freshness: 'Day'},
-            headers: {
-                'X-BingApis-SDK': 'true',
-                'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPID_BING_NEWS_SEARCH_API_KEY,
-                'X-RapidAPI-Host': 'bing-news-search1.p.rapidapi.com'
-            }
-        }
-        const newsAPI = {
-            method: 'GET',
-            url: 'https://bing-news-search1.p.rapidapi.com/news/search',
-            params: {q: 'latest', safeSearch: 'Off', textFormat: 'Raw', freshness: 'Day'},
-            headers: {
-                'X-BingApis-SDK': 'true',
-                'X-RapidAPI-Key': process.env.NEXT_PUBLIC_NEWSAPI_KEY,
-                'X-RapidAPI-Host': 'bing-news-search1.p.rapidapi.com'
-            }
-        }
+        
         try {
             const results = await Promise.all([
                 fetch(`${sanityBaseURL}${userTweetsQuery}`), 
@@ -42,8 +23,6 @@ export default async function handler(req, res) {
                 fetch(`${sanityBaseURL}${userQuery}`),
                 fetch(`${sanityBaseURL}${otherUsersQuery}`),
                 fetch(`${newsURL}`),
-                // fetch(`https://bing-news-search1.p.rapidapi.com/news/search?q=${searchQuery}&freshness=Day&textFormat=Raw&safeSearch=Off`, {headers,...newsAPI}),
-                // fetch('https://current-news.p.rapidapi.com/news', options),
             ])
             const finalData = await Promise.all(results.map(async (result) => {
                 if (!result.ok) {
@@ -54,7 +33,6 @@ export default async function handler(req, res) {
                 if (!contentType || !contentType.includes('application/json')) {
                     throw new Error(`Expected JSON response but received ${contentType}`);
                 }
-
                 return result.json()
             }));
             res.status(200).json({ 

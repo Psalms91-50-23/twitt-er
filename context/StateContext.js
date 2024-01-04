@@ -128,7 +128,7 @@ export const StateContext = ({ children }) => {
                 })
             })
             .catch((error) => {
-                console.log('Upload failed:', error.message);
+                console.log('Upload failed at StateContext:', error.message);
                 setIsLoading(false);
             });
         }
