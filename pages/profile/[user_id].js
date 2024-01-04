@@ -125,7 +125,6 @@ export const getServerSideProps = async ({ params: { user_id }, req, res }) => {
       user,
       userTweets,
       profile,
-      bingNewsData,
       otherUsers
     },
   }
