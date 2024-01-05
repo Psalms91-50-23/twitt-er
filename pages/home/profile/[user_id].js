@@ -236,7 +236,8 @@ const HomeProfile = ({ user, otherUsers, profile }) => {
     color: "rgba(255,255,255,1)",
     backgroundColor: "rgba(29,155,240,0.5)",
     paddingRight: "10px",
-    width: "100%"
+    width: "100%",
+    cursor: "pointer"
   }
 
   if(!isLoaded){

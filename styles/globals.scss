@@ -1115,6 +1115,7 @@ input:-webkit-autofill:active  {
   transition: active 0.2s ease-in-out;
   background-color: var(--twitterBlueTwoFade);
   border: none;
+  // cursor: pointer;
 }
 
 .round-button:not(:active):hover {
