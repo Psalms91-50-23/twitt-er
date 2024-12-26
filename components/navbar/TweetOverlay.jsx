@@ -37,7 +37,6 @@ const TweetOverlay = ({
   //for video url
   const [videoUrl, setVideoUrl] = useState("");
   const [isVideoUrl, setIsVideoUrl] = useState(false);
-  // const [isVideoUrl, setIsVideoUrl] = useState(false);
   //image url
   const [imageUrl, setImageUrl] = useState("");
   const [isImageUrl, setIsImageUrl] = useState(false);

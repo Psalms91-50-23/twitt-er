@@ -140,13 +140,11 @@ const CustomInput = ({
                     style={ inputStyles && inputStyles }
                     className={"input"}
                     autoComplete={"off"}
-                    // autoComplete={ title === "password" ? "password" : "new-text" }
                     type={ !show && title === "password"? "password" : "text" }
                     value={ title === "password" ? passwordValue 
                     : title === "userName" ? userNameValue 
                     : title === "url" ? imageUrlValue 
                     : ""}
-                    // required
                     onChange={e => handleChange(e)}
                     onFocus={(e) => handleInputHasFocus(e)}
                     onBlur={(e) => handleInputLostFocus(e)}

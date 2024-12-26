@@ -83,7 +83,6 @@ const Signup = ({ users }) => {
   }, [ setMissingFileImage, profileImage, missingFileImage ])
   
   const resetFileInput = () => {
-    // 👇️ reset input value
     inputRef.current.value = "";
   };
 
