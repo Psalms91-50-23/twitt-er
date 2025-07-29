@@ -6,6 +6,9 @@
   "main": "package.json",
   "author": null,
   "license": "UNLICENSED",
+    "engines": {
+    "node": "18.x"
+    },
   "scripts": {
     "start": "sanity start",
     "build": "sanity build"
